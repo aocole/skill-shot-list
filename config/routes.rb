@@ -30,7 +30,7 @@ Skillshot::Application.routes.draw do
 
   get '/wrapper' => 'home#wrapper'
   get '/noop' => 'home#noop'
-  root :controller => :home, :action => :index
+  root :controller => :areas, :action => :show, :id => 'seattle'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

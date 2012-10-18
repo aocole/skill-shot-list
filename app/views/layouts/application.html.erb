@@ -1,4 +1,4 @@
-<%wordpress_host = request.host.sub('list.', 'www.')%>
+<%wordpress_host = ENV['WORDPRESS_HOST'] || request.host.sub('list.', 'www.')%>
 <%cache 'header' do%>
   <%header_url = request.scheme + "://" + wordpress_host + '/header-for-rails.php'%>
   <%=  RestClient.get(header_url).body.html_safe%>

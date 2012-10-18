@@ -7,16 +7,6 @@ class HomeController < ApplicationController
     render :nothing => true
   end
   
-  def index
-    @area = Area.find_using_slug 'seattle'
-    if @area
-      render '/areas/show'
-    else
-      flash.keep
-      redirect_to admin_index_path
-    end
-  end
-
   def wrapper
     render :partial => 'layouts/wrapper'
   end
