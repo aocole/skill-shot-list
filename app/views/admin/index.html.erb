@@ -1,0 +1,23 @@
+<h1>Admin</h1>
+
+<%=link_to "New Location", new_location_url%><br/>
+<%=link_to "New Area", new_area_url%><br/>
+Manage Localities:
+<ul>
+  <%Area.all.each do |area|%>
+    <li><%=link_to area.name, area_localities_url(area) %></li>
+  <%end%>
+</ul>
+<%=link_to "Manage Areas", areas_url%><br/>
+<%=link_to "Resolve Duplicate Title Names", duplicate_titles_url %><br/>
+<br/>
+<%=link_to "Clear all cached pages", :action => 'clear_all_cache' %><br/>
+<br/>
+<%=link_to "Recent machine additions", recent_machines_url %><br/>
+<br/>
+Print View:
+<ul>
+  <%Area.all.each do |area|%>
+    <li><%=link_to area.name, print_area_url(area) %></li>
+  <%end%>
+</ul>

@@ -1,0 +1,15 @@
+
+
+<p>
+  <b>Name:</b>
+  <%= @title.name %>
+</p>
+
+<p>
+  <b>Ipdb:</b>
+  <%= @title.ipdb_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_title_path(@title) %> |
+<%= link_to 'Back', titles_path %>

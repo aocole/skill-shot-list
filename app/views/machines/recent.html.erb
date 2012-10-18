@@ -1,0 +1,16 @@
+<h1>Newest Machines</h1>
+<table>
+  <thead>
+    <tr align="left">
+      <th>Title</th><th>Location</th><th>Added by</th><th>Added on</th>
+    </tr>
+  </thead>
+  <tbody>
+  <%@machines.each do |machine|%>
+    <tr>
+      <td><%=machine.title.name%></td> <td><%=link_to machine.location.name, machine.location%></td> <td><%=machine.creator ? machine.creator.initials : '?'%></td> <td><%=machine.created_at.to_s(:short)%></td>
+    </tr>
+  <%end%>
+  </tbody>
+</table>
+

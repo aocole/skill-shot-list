@@ -1,0 +1,33 @@
+<h1>Most Common Machines</h1>
+<table>
+  <caption>All Skill Shot</caption>
+  <thead>
+    <tr align="left">
+      <th>Title</th><th>Number</th>
+    </tr>
+  </thead>
+  <tbody>
+  <%@all.each do |machine|%>
+    <tr>
+      <td><%=machine.name%></td> <td><%=machine.cnt%></td>
+    </tr>
+  <%end%>
+  </tbody>
+</table>
+
+<table>
+  <caption>Seattle Area Only</caption>
+  <thead>
+    <tr align="left">
+      <th>Title</th><th>Number</th>
+    </tr>
+  </thead>
+  <tbody>
+  <%@seattle.each do |machine|%>
+    <tr>
+      <td><%=machine.name%></td> <td><%=machine.cnt%></td>
+    </tr>
+  <%end%>
+  </tbody>
+</table>
+

@@ -1,0 +1,25 @@
+#area_listing h2 {
+  padding-top: 0.5em; }
+  #area_listing h2 a {
+    text-decoration: none; }
+#area_listing #locality_index {
+  margin: 0.5em 0; }
+#area_listing .location, #title_listing .title {
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  padding: 1em;
+  margin-top: 1em;
+  width: 25em;
+  background-color: #fff;
+  color: #333; }
+  #area_listing .location a,
+  #area_listing .location a:hover,
+  #area_listing .location a:visited,
+  #area_listing .location a:visited:hover,
+  #title_listing .title a,
+  #title_listing .title a:hover,
+  #title_listing .title a:visited,
+  #title_listing .title a:visited:hover {
+    background-color: #fff;
+    color: #333; }

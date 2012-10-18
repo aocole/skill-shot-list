@@ -1,0 +1,47 @@
+<%wordpress_host = request.host.sub('list.', 'www.')%>
+<%cache 'header' do%>
+  <%header_url = request.scheme + "://" + wordpress_host + '/header-for-rails.php'%>
+  <%=  RestClient.get(header_url).body.html_safe%>
+<%end%>
+  <meta name="csrf-param" content="authenticity_token"/>
+  <meta name="csrf-token" content="<%=form_authenticity_token%>"/>
+<nav>
+  <div id="authentication">
+    <%if current_user%>
+      Logged in as <%= link_to current_user.initials, user_url(current_user) %> | <%=link_to "Logout", user_session_url, :method => :delete %>
+    <%else%>
+      <%=link_to "Login", new_user_session_url %>
+    <%end%>
+  </div>
+  <%cache 'trivia' do%>
+    <div id="trivia"><%=Machine.count%> pinball machines (<%=Title.count_active%> different titles) at <%=Location.count%> locations!</div>
+  <%end%>
+  <ul>
+    <%Area.all.each do |area|%>
+    <li class="menu"><%=link_to( area.name, area, {:class => (@area && @area==area ? 'current' : '')}) %></li>
+    <%end%>
+    <li><%=link_to "Titles", active_titles_url, :class => (current_page?(active_titles_url) ? 'current' : '')%></li>
+    <%if current_user && current_user.admin%>
+      <%=render :partial => 'layouts/admin_nav'%>
+    <%end%>
+  </ul>
+  <div style="clear:both;"></div>
+</nav>
+<section id="railsmain">
+  <%if alert%>
+    <div id="alert">
+      <%=alert%>
+    </div>
+  <%end%>
+  <%if notice%>
+    <div id="notice">
+      <%=notice%>
+    </div>
+  <%end%>
+  <%= yield %>
+</section>
+
+<%cache 'footer' do%>
+  <%footer_url = request.scheme + "://" + wordpress_host + '/footer-for-rails.php'%>
+  <%=  RestClient.get(footer_url).body.html_safe%>
+<%end%>

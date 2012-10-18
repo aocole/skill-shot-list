@@ -1,0 +1,15 @@
+
+
+<p>
+  <b>Name:</b>
+  <%= @locality.name %>
+</p>
+
+<p>
+  <b>Area:</b>
+  <%= @locality.area_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_area_locality_path(@area, @locality) %> |
+<%= link_to 'Back', area_localities_path(@area) %>

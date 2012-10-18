@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>Print view for <%=@area.name%></title>
+    <style type="text/css">
+h2, h3, h4 {
+  margin:0;
+  padding: 0 2px;
+}
+
+.all_ages {
+  color: white;
+  background: black;
+  display:inline-block;
+
+}
+    </style>
+  </head>
+  <body>
+    <%@area.localities.each do |locality|%>
+      <h2><%=locality.name%></h2>
+      <%locality.locations.each do |location|%>
+        <h3 class="<%if location.all_ages%>all_ages<%end%>"><%=location.name%></h3>
+        <h4 style="text-decoration: underline;"><%=location.address%></h4>
+        <%location.machines.sort.each do |machine|%>
+          <%=machine.title.name%><br/>
+        <%end%>
+        <br/>
+      <%end%>
+    <%end%>
+  </body>
+</html>

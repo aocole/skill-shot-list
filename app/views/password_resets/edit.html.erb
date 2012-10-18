@@ -1,0 +1,27 @@
+<h1>Change Password</h1>
+
+<%= form_for @user, :url => password_reset_path(:id => params[:id]), :method => :put do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :password, f.object.new_record? ? nil : "Change password" %><br />
+    <%= f.password_field :password %><br />
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation %><br />
+  </div>
+  <div class="actions">
+    <%= f.submit "Update my password and log me in"%>
+  </div>
+<% end %>

@@ -1,0 +1,13 @@
+<h1>Listing machines at <%=link_to @location.name, @location%></h1>
+
+<ul>
+<% @machines.sort.each do |machine| %>
+    <li><%= machine.title.name %> <%= link_to 'X', machine, :confirm => "Are you sure you want to remove #{machine.title.name} from #{@location.name}?", :method => :delete %></li>
+<% end %>
+</ul>
+
+<br />
+<fieldset>
+  <legend>Create New Machine at <%=@location.name%></legend>
+  <%= render 'form' %>
+</fieldset>
