@@ -1,6 +1,6 @@
 class LocationsController < ApplicationController
   before_filter :require_admin_user, :except => [:show, :index]
-  caches_action :show, :if => Proc.new{|c|!c.admin?}, :layout => false
+  caches_action :show, :if => Proc.new{|c|!c.admin?}, :layout => false, :cache_path => Proc.new{|c| {:mobile => c.mobile_device? ? '1' : '0'}}
   cache_sweeper :location_sweeper
 
   def index

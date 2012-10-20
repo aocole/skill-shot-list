@@ -1,6 +1,6 @@
 class TitlesController < ApplicationController
   before_filter :require_admin_user, :except => [:active]
-  caches_action :active, :if => Proc.new{|c|!c.admin?}, :layout => false
+  caches_action :active, :if => Proc.new{|c|!c.admin?}, :layout => false, :cache_path => Proc.new{|c| {:mobile => c.mobile_device? ? '1' : '0'}}
   cache_sweeper :title_sweeper
 
   # GET /titles

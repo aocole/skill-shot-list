@@ -19,9 +19,11 @@ class LocationSweeper < ActionController::Caching::Sweeper
   private
   def expire_cache_for(location)
     # Expire the index page now that we added a new location
-    expire_action(:controller => 'areas', :action => 'show', :id => location.area)
-    expire_action(:controller => 'locations', :action => 'show', :id => location)
-    expire_action(:controller => 'titles', :action => 'active')
+    %w{0 1}.each do |num|
+      expire_action(:controller => 'areas', :action => 'show', :id => location.area, :mobile => num)
+      expire_action(:controller => 'locations', :action => 'show', :id => location, :mobile => num)
+      expire_action(:controller => 'titles', :action => 'active', :mobile => num)
+    end
     expire_fragment('trivia')
   end
 end

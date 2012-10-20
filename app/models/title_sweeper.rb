@@ -16,7 +16,8 @@ class TitleSweeper < ActionController::Caching::Sweeper
     # Expire the index page now that we added a new title
     expire_fragment(Regexp.new("/areas/\\."))
     expire_fragment(Regexp.new("/locations/\\."))
-    expire_action(:controller => 'titles', :action => 'active')
+    expire_action(:controller => 'titles', :action => 'active', :mobile => '0')
+    expire_action(:controller => 'titles', :action => 'active', :mobile => '1')
     expire_fragment('trivia')
   end
 end

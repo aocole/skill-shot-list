@@ -1,6 +1,6 @@
 class AreasController < ApplicationController
   before_filter :require_admin_user, :except => [:show]
-  caches_action :show, :if => Proc.new{|c|!c.admin?}, :layout => false
+  caches_action :show, :if => Proc.new{|c|!c.admin?}, :layout => false, :cache_path => Proc.new{|c| {:mobile => c.mobile_device? ? '1' : '0'}}
   cache_sweeper :location_sweeper
   cache_sweeper :title_sweeper
   cache_sweeper :machine_sweeper
