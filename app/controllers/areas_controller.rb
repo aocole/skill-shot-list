@@ -19,7 +19,13 @@ class AreasController < ApplicationController
   # GET /areas/1
   # GET /areas/1.json
   def show
-    @area = Area.find_using_slug!(params[:id])
+    @area = Area.find_using_slug!(params[:id], :include => {
+      :localities => {
+        :locations => {
+          :machines => :title
+        }
+      }
+    })
 
     respond_to do |format|
       format.html # show.html.erb

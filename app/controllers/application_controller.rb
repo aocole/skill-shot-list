@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_session, :current_user, :admin?
+  before_filter :check_for_mobile
 
   def admin?
     current_user && current_user.admin
@@ -53,4 +54,25 @@ class ApplicationController < ActionController::Base
     session[:return_to] ? redirect_to(session[:return_to]) : redirect_to(*args)
     session[:return_to] = nil
   end
+
+  def check_for_mobile
+    session[:mobile_override] = params[:mobile] if params[:mobile]
+    prepare_for_mobile if mobile_device?
+  end
+
+  def prepare_for_mobile
+    prepend_view_path('app/views_mobile')
+  end
+
+  def mobile_device?
+    if session[:mobile_override]
+      session[:mobile_override] == "1"
+    else
+      # have to explicitly set mobile for now.
+      false
+      #(request.user_agent =~ /Mobile|webOS/) && (request.user_agent !~ /iPad/)
+    end
+  end
+  helper_method :mobile_device?
+
 end

@@ -1,0 +1,25 @@
+  <ul data-role="listview">
+    <%@area.localities.each do |locality|%>    
+      <li>
+        <h3><%=locality.name%></h3>
+        <span class="ui-li-count"><%=pluralize locality.locations.size, 'location'%></span>
+        <ul>
+          <%locality.locations.each do |location|%>
+            <li>
+              <div>
+                <%=location.name%> <%if location.all_ages%><span class="aav" title="All-ages Venue">AAV!</span><%end%>
+              </div>
+              <span class="ui-li-count"><%=pluralize location.machines.size, 'machine'%></span>
+              <ul>
+                <%location.machines.sort.each do |machine|%>
+                  <li><%=raw machine.title.name%></li>
+                <%end%>
+              </ul>
+            </li>
+        <%end%>
+      </ul>
+    <%end%>
+  </ul>
+
+
+
