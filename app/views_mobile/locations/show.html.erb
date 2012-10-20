@@ -1,0 +1,29 @@
+<h2><%= @location.name %></h2>
+
+
+<p>
+  <%=link_to @location.full_street_address, map_url(@location)%>
+</p>
+
+<%unless @location.url.blank?%>
+  <p>
+    <%= link_to @location.url, @location.url %>
+  </p>
+<%end%>
+
+<p>
+  <%= link_to @location.phone, "tel:#{@location.phone}" %>
+</p>
+
+<p>
+  <%if @location.all_ages %>All ages!<%else%>21+ only<%end%>
+</p>
+
+<h3>Machines<%if current_user%> <small>(<%=link_to 'edit', location_machines_path(@location)%>)</small><%end%></h3>
+<ul>
+  <%@location.machines.sort.each do |machine|%>
+    <li><%=link_to machine.title.name.html_safe, machine.title.ipdb_url%></li>
+  <%end%>
+</ul>
+
+

@@ -1,0 +1,13 @@
+<ul data-role="listview">
+  <%@titles.each do |title|%>
+    <li>
+      <h3><%=raw title.name%></h3>
+      <span class="ui-li-count">at <%=pluralize title.locations.size, 'location'%></span>
+      <ul>
+        <%title.locations.each do |location|%>
+          <li><%=link_to location.name, location%></li>
+        <%end%>
+      </ul>
+    </li>
+  <%end%>
+</ul>
