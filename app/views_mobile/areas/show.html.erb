@@ -7,7 +7,7 @@
           <%locality.locations.each do |location|%>
             <li>
               <div>
-                <%=location.name%> <%if location.all_ages%><%=image_tag 'allages.png'%><%end%>
+                <%=location.name%> <%if location.all_ages%><%=image_tag 'allages.png', :title => "All-Ages Venue!", :alt => "All-Ages Venue!"%><%end%>
               </div>
               <span class="ui-li-count"><%=pluralize location.machines.size, 'machine'%></span>
               <ul>
