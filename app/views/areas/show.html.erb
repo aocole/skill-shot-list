@@ -27,13 +27,12 @@
 
 <script type="text/javascript">
   $(document).ready(function(){
-    <%center = @area.center%>
-    var center = new google.maps.LatLng(<%=center[0]%>, <%=center[1]%>);
     var myOptions = {
-      zoom: 11,
-      center: center,
       mapTypeId: google.maps.MapTypeId.HYBRID
     };
+
+    // used to center and zoom the map
+    var bounds = new google.maps.LatLngBounds();
 
     // Sample custom marker code created with Google Map Custom Marker Maker
     // http://powerhut.co.uk/googlemaps/custom_markers.php
@@ -75,8 +74,10 @@
           infoWindow.setContent("<b><%=escape_javascript(link_to(location.name, location))%></b><br/><%=location.full_street_address%>");
           infoWindow.open(map, this);
         }, marker));
+        bounds.extend(latlng);
       <%end%>
     <%end%>
+    map.fitBounds(bounds);
   });
 
 </script>
