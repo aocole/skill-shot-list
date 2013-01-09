@@ -5,6 +5,7 @@ capybara-*.html
 .rspec
 /.bundle
 /vendor/bundle
+/vendor/cache/*
 /log/*
 /tmp/*
 /db/*.sqlite3
@@ -15,4 +16,4 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 /config/database.yml
-
+*.sublime-*

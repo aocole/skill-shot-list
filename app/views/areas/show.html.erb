@@ -1,11 +1,13 @@
 <section id="area_listing">
   <h1><%= @area.name %></h1>
   <div id="map" style="width:600px; height: 550px; float:right;"></div>
-  <ul id="locality_index">
-    <%@area.localities.each do |locality|%>
-      <li><%=link_to locality.name, "##{locality.name}"%></li>
-    <%end%>
-  </ul>
+  <% if area.localities.size > 1 %>
+    <ul id="locality_index">
+      <%@area.localities.each do |locality|%>
+        <li><%=link_to locality.name, "##{locality.name}"%></li>
+      <%end%>
+    </ul>
+  <% end %>
 
   <%@area.localities.each do |locality|%>
     <h2><a id="<%=locality.name%>"></a><%=locality.name%></h2>
