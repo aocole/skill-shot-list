@@ -3,18 +3,20 @@
       <li>
         <h3><%=locality.name%></h3>
         <span class="ui-li-count"><%=pluralize locality.locations.size, 'location'%></span>
-        <ul>
+        <ul data-role="listview" data-split-icon="info">
           <%locality.locations.each do |location|%>
             <li>
-              <div>
-                <%=location.name%> <%if location.all_ages%><%=image_tag 'allages.png', :title => "All-Ages Venue!", :alt => "All-Ages Venue!"%><%end%>
-              </div>
+              <a href="#"><%=location.name%><%if location.all_ages%><%=image_tag 'allages.png', :title => "All-Ages Venue!", :alt => "All-Ages Venue!", :class => "ui-li-icon"%><%end%></a>
               <span class="ui-li-count"><%=pluralize location.machines.size, 'machine'%></span>
-              <ul>
+              <ul data-role="listview" data-split-icon="info">
                 <%location.machines.sort.each do |machine|%>
-                  <li><%=raw machine.title.name%></li>
+                  <li>
+                    <a href="#"><%=raw machine.title.name%></a>
+                    <%= link_to "IPDB", machine.title.ipdb_url, :'data-rel' => 'external', :'data-transition' => "pop"%>
+                  </li>
                 <%end%>
               </ul>
+              <%= link_to location.name, location_url(location) %>
             </li>
         <%end%>
       </ul>
