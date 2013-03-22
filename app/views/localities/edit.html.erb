@@ -1,6 +1,8 @@
 <h1>Editing locality</h1>
 
-<%= render 'form' %>
+<%= form_for(@locality, :url => area_locality_path(@area, @locality)) do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+<% end %>
 
 <%= link_to 'Show', @locality %> |
 <%= link_to 'Back', localities_path %>

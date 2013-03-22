@@ -67,7 +67,7 @@ class LocalitiesController < ApplicationController
     params[:locality].delete_if{|k,v|!valid_keys.include?(k)}
     respond_to do |format|
       if @locality.update_attributes(params[:locality])
-        format.html { redirect_to @locality, :notice => 'Locality was successfully updated.' }
+        format.html { redirect_to area_locality_path(@area, @locality), :notice => 'Locality was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render :action => "edit" }

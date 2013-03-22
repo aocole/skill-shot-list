@@ -1,4 +1,3 @@
-<%= form_for(@locality, :url => area_localities_path(@area)) do |f| %>
   <% if @locality.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@locality.errors.count, "error") %> prohibited this locality from being saved:</h2>
@@ -19,4 +18,3 @@
 <div class="actions">
     <%= f.submit %>
   </div>
-<% end %>
