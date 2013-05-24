@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -29,7 +30,6 @@ ActiveRecord::Schema.define(:version => 20120316184117) do
     t.string   "cached_slug"
   end
 
-  add_index "localities", ["area_id"], :name => "localities_area_id_fk"
   add_index "localities", ["cached_slug"], :name => "index_localities_on_cached_slug"
 
   create_table "locations", :force => true do |t|
@@ -58,10 +58,6 @@ ActiveRecord::Schema.define(:version => 20120316184117) do
     t.datetime "updated_at"
     t.integer  "creator_id"
   end
-
-  add_index "machines", ["creator_id"], :name => "machines_creator_id_fk"
-  add_index "machines", ["location_id"], :name => "machines_location_id_fk"
-  add_index "machines", ["title_id"], :name => "machines_title_id_fk"
 
   create_table "slugs", :force => true do |t|
     t.string   "scope"
