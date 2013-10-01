@@ -9,7 +9,7 @@ gem 'rack', '1.2.5'
 
 gem 'mysql2', "~> 0.2.7"
 gem 'json'
-gem 'foreigner'
+gem 'foreigner', "~> 1.4.2"
 gem 'geocoder'
 gem 'htmlentities'
 
