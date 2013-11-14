@@ -51,17 +51,6 @@ class TitlesController < ApplicationController
   # GET /titles/1/edit
   def edit
     @title = Title.find(params[:id])
-    @title.attributes = params[:title]
-
-    respond_to do |format|
-      if @title.save
-        format.html { redirect_to @title, :notice => 'Title was successfully updated.' }
-        format.json { render :json => @title, :status => :created, :location => @title }
-      else
-        format.html { render :action => "edit" }
-        format.json { render :json => @title.errors, :status => :unprocessable_entity }
-      end
-    end
   end
 
   # POST /titles
@@ -84,7 +73,7 @@ class TitlesController < ApplicationController
   # PUT /titles/1.json
   def update
     @title = Title.find(params[:id])
-    valid_keys = %w{name}
+    valid_keys = %w{name ipdb_id}
     params[:title].delete_if{|k,v|!valid_keys.include?(k)}
 
     respond_to do |format|
