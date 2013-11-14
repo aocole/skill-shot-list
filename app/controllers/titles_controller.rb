@@ -51,7 +51,7 @@ class TitlesController < ApplicationController
   # GET /titles/1/edit
   def edit
     @title = Title.find(params[:id])
-    @title.attributes(params[:title])
+    @title.attributes = params[:title]
 
     respond_to do |format|
       if @title.save
