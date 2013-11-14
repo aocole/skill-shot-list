@@ -51,6 +51,17 @@ class TitlesController < ApplicationController
   # GET /titles/1/edit
   def edit
     @title = Title.find(params[:id])
+    @title.attributes(params[:title])
+
+    respond_to do |format|
+      if @title.save
+        format.html { redirect_to @title, :notice => 'Title was successfully updated.' }
+        format.json { render :json => @title, :status => :created, :location => @title }
+      else
+        format.html { render :action => "edit" }
+        format.json { render :json => @title.errors, :status => :unprocessable_entity }
+      end
+    end
   end
 
   # POST /titles
