@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(:version => 20120316184117) do
 
   create_table "areas", :force => true do |t|
     t.string   "name",        :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "cached_slug"
   end
 
@@ -25,8 +25,8 @@ ActiveRecord::Schema.define(:version => 20120316184117) do
   create_table "localities", :force => true do |t|
     t.string   "name",        :null => false
     t.integer  "area_id",     :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "cached_slug"
   end
 
@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(:version => 20120316184117) do
     t.string   "url"
     t.string   "phone"
     t.boolean  "all_ages"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "city"
     t.string   "state"
     t.string   "postal_code"
@@ -54,8 +54,8 @@ ActiveRecord::Schema.define(:version => 20120316184117) do
   create_table "machines", :force => true do |t|
     t.integer  "title_id",    :null => false
     t.integer  "location_id", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.integer  "creator_id"
   end
 
@@ -74,8 +74,8 @@ ActiveRecord::Schema.define(:version => 20120316184117) do
   create_table "titles", :force => true do |t|
     t.string   "name"
     t.integer  "ipdb_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "status"
   end
 
@@ -90,8 +90,8 @@ ActiveRecord::Schema.define(:version => 20120316184117) do
     t.integer  "login_count",       :default => 0,     :null => false
     t.datetime "last_login_at"
     t.string   "initials"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.string   "perishable_token",  :default => "",    :null => false
   end
 

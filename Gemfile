@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3'
+ruby '2.0.0'
 
-gem 'rails', '~>3.0.20'
-gem 'rake'
+gem 'rails', '~>3.2.16'
+gem 'rake', '~>10.1.0'
 gem 'rack'
 
 # Bundle edge Rails instead:
@@ -18,7 +18,10 @@ gem 'htmlentities'
 gem 'authlogic'
 gem 'rest-client'
 gem 'airbrake'
-gem 'slugged', '~> 1.1'
+gem 'slugged'
+
+# heroku thing to redirect logs to stdout
+gem 'rails_12factor', group: :production
 
 # Use unicorn as the web server
 gem 'unicorn'
