@@ -25,17 +25,17 @@ class MachinesController < ApplicationController
   end
 
   def common
-    @all = Machine.find :all, 
-      :order => 'cnt desc', 
-      :limit => 10, 
-      :group => 'title_id', 
-      :joins => 'join titles on titles.id=machines.title_id', 
+    @all = Machine.find :all,
+      :order => 'cnt desc',
+      :limit => 10,
+      :group => 'title_id',
+      :joins => 'join titles on titles.id=machines.title_id',
       :select => 'titles.name, count(*) as cnt'
-    @seattle = Machine.find :all, 
-      :order => 'cnt desc', 
-      :limit => 10, 
-      :group => 'title_id', 
-      :select => 'titles.name, count(*) as cnt', 
+    @seattle = Machine.find :all,
+      :order => 'cnt desc',
+      :limit => 10,
+      :group => 'title_id',
+      :select => 'titles.name, count(*) as cnt',
       :conditions => 'areas.name = "seattle"',
       :joins => "\
         join titles on titles.id=machines.title_id \

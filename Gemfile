@@ -1,13 +1,13 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.20'
+gem 'rails', '~> 3.0.20'
 gem 'rake', '0.8.7'
 gem 'rack', '1.2.5'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'mysql2', "~> 0.2.7"
+gem 'pg'
 gem 'json'
 gem 'foreigner', "~> 1.4.2"
 gem 'geocoder'
@@ -16,7 +16,7 @@ gem 'htmlentities'
 gem 'authlogic'
 gem 'rest-client'
 gem 'airbrake'
-gem 'slugged'
+gem 'slugged', '~> 1.1'
 
 # Use unicorn as the web server
 # gem 'unicorn'

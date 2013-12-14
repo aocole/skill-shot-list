@@ -10,7 +10,10 @@ class TitlesController < ApplicationController
   end
 
   def active
-    @titles = Title.select('distinct title.*').joins('as title inner join machines as machine on machine.title_id=title.id').includes(:locations)
+    @titles = Title.
+      select('distinct title.*, trim(leading \'The \' from name) ').
+      joins('as title inner join machines as machine on machine.title_id=title.id').
+      includes(:locations)
 
     respond_to do |format|
       format.html

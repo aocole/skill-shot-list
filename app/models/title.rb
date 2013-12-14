@@ -1,9 +1,6 @@
 class Title < ActiveRecord::Base
-  default_scope order("IF(
-            LEFT(name, 4) = 'The ',
-            MID(name, 5),
-            name
-           )")
+  default_scope order("trim(leading 'The ' from name)")
+
   class STATUS
     HIDDEN = 'hidden'
   end
