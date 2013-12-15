@@ -11,9 +11,7 @@ class ApplicationController < ActionController::Base
     if session[:mobile_override]
       session[:mobile_override] == "1"
     else
-      # have to explicitly set mobile for now.
-      false
-      #(request.user_agent =~ /Mobile|webOS/) && (request.user_agent !~ /iPad/)
+      (request.user_agent =~ /Mobile|webOS/) && (request.user_agent !~ /iPad/)
     end
   end
 
