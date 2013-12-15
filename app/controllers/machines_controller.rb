@@ -4,7 +4,7 @@ class MachinesController < ApplicationController
   cache_sweeper :machine_sweeper
 
   def require_location
-    @location = Location.find_using_slug!(params[:location_id], :include => :machines)
+    @location = Location.includes(:machines).find_using_slug!(params[:location_id])
   end
 
   # GET /machines
@@ -21,7 +21,13 @@ class MachinesController < ApplicationController
   end
 
   def recent
-    @machines = Machine.find :all, :order => 'created_at desc', :limit => 100, :include => [:creator, :title, :location]
+    @machine_changes = MachineChange.includes(
+      :machine => [
+          :created_by,
+          :title,
+          :location
+        ]
+    ).order('machine_changes.created_at desc').limit(100)
   end
 
   def common
@@ -80,7 +86,7 @@ class MachinesController < ApplicationController
     @machine = Machine.new({
         :location => @location,
         :title => @title,
-        :creator => current_user
+        :created_by => current_user
       })
 
     respond_to do |format|
@@ -117,6 +123,8 @@ class MachinesController < ApplicationController
   # DELETE /machines/1.json
   def destroy
     @machine = Machine.find(params[:id])
+    @machine.deleted_by = current_user
+    @machine.save!
     @machine.destroy
 
     respond_to do |format|

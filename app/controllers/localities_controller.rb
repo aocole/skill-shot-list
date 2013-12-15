@@ -3,7 +3,7 @@ class LocalitiesController < ApplicationController
   before_filter :require_admin_user
 
   def require_area
-    @area = Area.find_using_slug!(params[:area_id], :include => :localities)
+    @area = Area.includes(:localities).find_using_slug!(params[:area_id])
   end
 
   # GET /localities

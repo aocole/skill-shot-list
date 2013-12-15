@@ -15,13 +15,16 @@ gem 'foreigner', "~> 1.4.2"
 gem 'geocoder'
 gem 'htmlentities'
 
+# using unofficial fork to work around https://github.com/goncalossilva/acts_as_paranoid/issues/62
+gem "acts_as_paranoid", "~>0.4.0", :github => 'tkupari/acts_as_paranoid', :ref => '305151879ea8e525d0cd18761f7595ce330d1794'
+
 gem 'authlogic'
 gem 'rest-client'
 gem 'airbrake'
 gem 'slugged'
 
-# heroku thing to redirect logs to stdout
-gem 'rails_12factor', group: :production
+# heroku stuff
+gem 'rails_12factor'
 
 # Use unicorn as the web server
 gem 'unicorn'

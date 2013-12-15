@@ -1,14 +1,22 @@
-<h1>Newest Machines</h1>
+<h1>Newest Machine Changes</h1>
 <table>
   <thead>
     <tr align="left">
-      <th>Title</th><th>Location</th><th>Added by</th><th>Added on</th>
+      <th>Title</th>
+      <th>Change</th>
+      <th>Location</th>
+      <th>Changed by</th>
+      <th>Changed on</th>
     </tr>
   </thead>
   <tbody>
-  <%@machines.each do |machine|%>
+  <%@machine_changes.each do |machine_change|%>
     <tr>
-      <td><%=machine.title.name%></td> <td><%=link_to machine.location.name, machine.location%></td> <td><%=machine.creator ? machine.creator.initials : '?'%></td> <td><%=machine.created_at.to_s(:short)%></td>
+      <td><%=machine_change.machine.title.name%></td>
+      <td style="padding:0 1em;"><%=machine_change.add? ? 'added to' : 'removed from'%></td>
+      <td><%=link_to machine_change.machine.location.name, machine_change.machine.location%></td>
+      <td><%=machine_change.add? ? machine_change.machine.created_by.initials : machine_change.machine.deleted_by.initials%></td>
+      <td title="<%=machine_change.created_at.to_s(:long)%>"><%=machine_change.created_at.to_s(:short)%></td>
     </tr>
   <%end%>
   </tbody>

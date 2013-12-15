@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/tkupari/acts_as_paranoid.git
+  revision: 305151879ea8e525d0cd18761f7595ce330d1794
+  ref: 305151879ea8e525d0cd18761f7595ce330d1794
+  specs:
+    acts_as_paranoid (0.4.2)
+      activerecord (~> 3.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -115,6 +123,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_paranoid (~> 0.4.0)!
   airbrake
   authlogic
   foreigner (~> 1.4.2)

@@ -4,6 +4,7 @@ class MachineSweeper < ActionController::Caching::Sweeper
   # If our sweeper detects that a Machine was created call this
   def after_create(machine)
     expire_cache_for(machine)
+    MachineChange.create! machine: machine, change_type: MachineChange::ChangeType::CREATE
   end
 
   # If our sweeper detects that a Machine was updated call this
@@ -14,6 +15,7 @@ class MachineSweeper < ActionController::Caching::Sweeper
   # If our sweeper detects that a Machine was deleted call this
   def after_destroy(machine)
     expire_cache_for(machine)
+    MachineChange.create! machine: machine, change_type: MachineChange::ChangeType::DELETE
   end
 
   private
@@ -26,5 +28,5 @@ class MachineSweeper < ActionController::Caching::Sweeper
     end
     expire_fragment('trivia')
   end
-  
+
 end
