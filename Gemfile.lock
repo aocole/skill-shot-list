@@ -22,6 +22,8 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
+    active_model_serializers (0.8.1)
+      activemodel (>= 3.0)
     activemodel (3.2.16)
       activesupport (= 3.2.16)
       builder (~> 3.0.0)
@@ -118,18 +120,19 @@ GEM
       raindrops (~> 0.7)
     uuid (2.3.7)
       macaddr (~> 1.0)
+    yajl-ruby (1.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers
   acts_as_paranoid (~> 0.4.0)!
   airbrake
   authlogic
   foreigner (~> 1.4.2)
   geocoder
   htmlentities
-  json
   pg
   rack
   rails (~> 3.2.16)
@@ -138,3 +141,4 @@ DEPENDENCIES
   rest-client
   slugged
   unicorn
+  yajl-ruby
