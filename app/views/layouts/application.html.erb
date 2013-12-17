@@ -1,7 +1,12 @@
 <%wordpress_host = ENV['WORDPRESS_HOST'] || request.host.sub('list.', 'www.')%>
 <%cache 'header' do%>
   <%header_url = request.scheme + "://" + wordpress_host + '/header-for-rails.php'%>
-  <%=  RestClient.get(header_url).body.html_safe rescue "Skill Shot Header" %>
+  <%
+    header = RestClient.get(header_url).body.html_safe rescue "Skill Shot Header"
+    logger.info "Ingy, this is the header I got:"
+    logger.info header
+  %>
+  <%= header %>
 <%end%>
   <meta name="csrf-param" content="authenticity_token"/>
   <meta name="csrf-token" content="<%=form_authenticity_token%>"/>
