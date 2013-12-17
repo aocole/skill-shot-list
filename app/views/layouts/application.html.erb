@@ -1,16 +1,6 @@
-<%wordpress_host = ENV['WORDPRESS_HOST'] || request.host.sub('list.', 'www.')%>
-<%cache 'header' do%>
-  <%header_url = request.scheme + "://" + wordpress_host + '/header-for-rails.php'%>
-  <%
-    header = RestClient.get(header_url).body.html_safe rescue "Skill Shot Header"
-    logger.info "Ingy, this is the header I got:"
-    logger.info header
-  %>
-  <%= header %>
-  <meta name="ingy's special token"/>
-<%end%>
-  <meta name="csrf-param" content="authenticity_token"/>
-  <meta name="csrf-token" content="<%=form_authenticity_token%>"/>
+<%=render :partial => 'layouts/header'%>
+<meta name="csrf-param" content="authenticity_token"/>
+<meta name="csrf-token" content="<%=form_authenticity_token%>"/>
 <nav>
   <div id="authentication">
     <%if current_user%>
