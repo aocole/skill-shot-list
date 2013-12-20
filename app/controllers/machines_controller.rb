@@ -1,6 +1,6 @@
 class MachinesController < ApplicationController
   before_filter :require_location, :except => [:edit, :update, :destroy, :recent]
-  before_filter :require_user, :except => [:show]
+  before_filter :require_user, :except => [:show, :index]
   cache_sweeper :machine_sweeper
 
   def require_location
@@ -15,7 +15,7 @@ class MachinesController < ApplicationController
     @titles = Title.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html {require_user}
       format.json { render :json => @machines }
     end
   end

@@ -4,17 +4,22 @@ class LocationsController < ApplicationController
   cache_sweeper :location_sweeper
 
   def index
-    redirect_to :root
+    @location = Location.all
+
+    respond_to do |format|
+      format.html { redirect_to :root }
+      format.json { render :json => @location }
+    end
   end
 
   # GET /locations/1
   # GET /locations/1.json
   def show
-    @location = Location.find_using_slug!(params[:id])
+    @location = Location.includes(:machines => [:title]).find_using_slug!(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render :json => @location }
+      format.json { render :json => @location, :serializer => LocationDetailSerializer }
     end
   end
 

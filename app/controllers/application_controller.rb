@@ -15,6 +15,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def default_serializer_options
+    {
+      root: false
+    }
+  end
+
   private
 
   def current_user_session
@@ -56,7 +62,7 @@ class ApplicationController < ActionController::Base
   end
 
   def store_location
-    session[:return_to] = request.request_uri
+    session[:return_to] = request.url
   end
 
   def redirect_back_or_default(*args)
