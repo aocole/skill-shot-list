@@ -24,6 +24,7 @@ class LocationSweeper < ActionController::Caching::Sweeper
       expire_action(:controller => 'locations', :action => 'show', :id => location, :mobile => num)
       expire_action(:controller => 'titles', :action => 'active', :mobile => num)
     end
+    expire_action(:controller => 'locations', :action => 'show', :id => location, :format => 'json')
     expire_fragment('trivia')
   end
 end

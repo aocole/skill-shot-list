@@ -26,6 +26,7 @@ class MachineSweeper < ActionController::Caching::Sweeper
       expire_action(:controller => 'locations', :action => 'show', :id => machine.location, :mobile => num)
       expire_action(:controller => 'titles', :action => 'active', :mobile => num)
     end
+    expire_action(:controller => 'locations', :action => 'show', :id => machine.location, :format => 'json')
     expire_fragment('trivia')
   end
 
