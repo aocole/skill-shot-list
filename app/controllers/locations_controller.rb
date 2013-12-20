@@ -19,7 +19,12 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render :json => @location, :serializer => LocationDetailSerializer }
+      format.json {
+        render(
+          {:json => @location, :serializer => LocationDetailSerializer},
+          {:layout => false}
+        )
+      }
     end
   end
 
