@@ -36,7 +36,10 @@ class ApplicationController < ActionController::Base
   def require_admin_user
     if require_user
       unless current_user.admin
-        redirect_to :back, :alert => "You are not authorized to access that page"
+        respond_to do |format|
+          format.html {redirect_to :back, :alert => "You are not authorized to access that page"}
+          format.json {render :json => {:error => 'unauthorized', :message => "You are not authorized to access that page"}, :status => 403}
+        end
       end
     else
       return false
@@ -47,8 +50,13 @@ class ApplicationController < ActionController::Base
     if current_user
       return true
     else
-      store_location
-      redirect_to new_user_session_url, :alert=> "You must be logged in to access this page"
+      respond_to do |format|
+        format.html {
+          store_location
+          redirect_to new_user_session_url, :alert=> "You must be logged in to access this page"
+        }
+        format.json {render :json => {:error => 'unauthorized', :message => "You must be logged in to access this page"}, :status => 403}
+      end
       return false
     end
   end
