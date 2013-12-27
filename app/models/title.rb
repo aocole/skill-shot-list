@@ -1,5 +1,6 @@
 class Title < ActiveRecord::Base
-  default_scope order("trim(leading 'The ' from name)")
+  DEFAULT_ORDER = "regexp_replace(name, '^The ', '')"
+  default_scope order(DEFAULT_ORDER)
 
   class STATUS
     HIDDEN = 'hidden'

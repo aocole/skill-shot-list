@@ -11,8 +11,9 @@ class TitlesController < ApplicationController
 
   def active
     @titles = Title.
-      select('distinct title.*, trim(leading \'The \' from name) ').
+      select("distinct title.*, #{Title::DEFAULT_ORDER}").
       joins('as title inner join machines as machine on machine.title_id=title.id').
+      where('machine.deleted_at is null').
       includes(:locations)
 
     respond_to do |format|
@@ -22,7 +23,10 @@ class TitlesController < ApplicationController
   end
 
   def duplicate
-    @titles = Title.select('titles.*, count(name) as duplicate_count').group('name HAVING duplicate_count > 1')
+    @titles = Title.
+      select('name, count(name) as duplicate_count').
+      group('name').
+      having('count(name) > 1')
   end
 
   def dupe_resolve
