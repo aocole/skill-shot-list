@@ -6,7 +6,7 @@ class TitlesController < ApplicationController
   # GET /titles
   # GET /titles.json
   def index
-    redirect_to :root
+    active
   end
 
   def active

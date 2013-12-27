@@ -1,5 +1,5 @@
 class UserSessionsController < ApplicationController
-  before_filter :require_no_user, :only => [:new, :create]
+  before_filter :require_no_user, :only => [:new]
   before_filter :require_user, :only => :destroy
 
   def new
@@ -8,10 +8,19 @@ class UserSessionsController < ApplicationController
 
   def create
     @user_session = UserSession.new(params[:user_session])
-    if @user_session.save
-      redirect_back_or_default root_url, :notice => "Login successful!"
-    else
-      render :action => :new
+    respond_to do |format|
+      if @user_session.save
+        format.html { redirect_back_or_default root_url, :notice => "Login successful!" }
+        format.json {
+          render :json =>
+          {
+            :success => true
+          }
+        }
+      else
+        format.html { render :action => :new }
+        format.json { render :json => {:success => false} }
+      end
     end
   end
 
