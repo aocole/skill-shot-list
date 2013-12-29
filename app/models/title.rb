@@ -5,7 +5,7 @@ class Title < ActiveRecord::Base
   class STATUS
     HIDDEN = 'hidden'
   end
-  default_scope where(['status IS NULL OR status != ?', STATUS::HIDDEN]).order('name asc')
+  default_scope where(['status IS NULL OR status != ?', STATUS::HIDDEN])
   validates_uniqueness_of :ipdb_id
   validates_presence_of :name
   validates_inclusion_of :status, :in => STATUS.constants.collect{|name|STATUS.const_get(name)}, :allow_nil => true
