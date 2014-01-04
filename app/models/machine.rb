@@ -1,6 +1,6 @@
 class Machine < ActiveRecord::Base
   acts_as_paranoid :columns => 'deleted_at', :column_type => 'time'
-  belongs_to :location, :touch => true
+  belongs_to :location, :touch => true, :with_deleted => true
   belongs_to :title
   belongs_to :created_by, :class_name => 'User'
   belongs_to :deleted_by, :class_name => 'User'

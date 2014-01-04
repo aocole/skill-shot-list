@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131215212043) do
+ActiveRecord::Schema.define(:version => 20140103235059) do
 
   create_table "areas", :force => true do |t|
     t.string   "name",        :limit => 510, :null => false
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20131215212043) do
     t.float    "longitude"
     t.integer  "locality_id"
     t.string   "cached_slug", :limit => 510
+    t.datetime "deleted_at"
   end
 
   create_table "machine_changes", :force => true do |t|

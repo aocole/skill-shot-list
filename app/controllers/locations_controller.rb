@@ -93,7 +93,12 @@ class LocationsController < ApplicationController
   # DELETE /locations/1
   # DELETE /locations/1.json
   def destroy
-    @location = Location.includes(:area).find_using_slug!(params[:id]) # area needed for cache sweeper
+    @location = Location.includes(:area, :machines).find_using_slug!(params[:id]) # area needed for cache sweeper
+    @location.machines.each do |machine|
+      machine.deleted_by = current_user
+      machine.save!
+    end
+
     @location.destroy
 
     respond_to do |format|
