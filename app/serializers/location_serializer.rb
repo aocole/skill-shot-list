@@ -7,5 +7,10 @@ class LocationSerializer < BaseSerializer
     :longitude,
     :phone,
     :url,
-    :all_ages
+    :all_ages,
+    :num_games
+
+  def num_games
+    object.machines.size
+  end
 end

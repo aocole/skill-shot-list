@@ -14,11 +14,14 @@ class LocationsController < ApplicationController
   cache_sweeper :location_sweeper
 
   def index
-    @location = Location.all
-
     respond_to do |format|
       format.html { redirect_to :root }
-      format.json { render :json => @location }
+      format.json { render :json => Location.
+        unscoped. # sigh, i shouldn't have used default_scope
+        where('deleted_at is null').
+        includes(:machines).
+        order('name asc') 
+      }
     end
   end
 
