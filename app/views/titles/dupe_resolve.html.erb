@@ -1,8 +1,12 @@
 <%@titles.each do |title|%>
-<div style="margin-bottom: 3em;">
-  <%=form_for title do |f|%>
-    <%=f.label :name%>: <%=f.text_field :name%> <%=submit_tag%> <%= link_to 'Hide', title, :method => :delete, :confirm => "Are you sure you want to hide #{title.name}?" %>
-  <%end%>
-  <iframe src="<%=title.ipdb_url%>" width="100%" height="250px"></iframe>
-</div>
+  <div style="margin-bottom: 3em;">
+    <%=form_for title do |f|%>
+      <%=f.label :name%>: <%=f.text_field :name%> <%=submit_tag%> <%= link_to 'Hide', title, :method => :delete, :confirm => "Are you sure you want to hide #{title.name}?" %>
+    <%end%>
+    <iframe src="<%=title.ipdb_url%>" width="100%" height="250px"></iframe>
+  </div>
+<%end%>
+<%if @titles.empty?%>
+
+<h1>No Results</h2>
 <%end%>

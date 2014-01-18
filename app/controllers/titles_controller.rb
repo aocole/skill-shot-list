@@ -109,7 +109,7 @@ class TitlesController < ApplicationController
   end
 
   def search
-    @titles = params[:term].blank? ? [] : Title.find(:all, :conditions => ["name like ?", "%#{params[:term]}%"])
+    @titles = params[:term].blank? ? [] : Title.find(:all, :conditions => ["name ilike ?", "%#{params[:term]}%"])
     respond_to do |format|
       format.html { render :action => 'dupe_resolve'}
       format.json { render :json => @titles.collect{|title|{:label => title.name, :value => title.id}} }
