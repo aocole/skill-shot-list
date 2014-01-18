@@ -12,7 +12,8 @@
   <tbody>
   <%@machine_changes.each do |machine_change|%>
     <tr>
-      <td><%=machine_change.machine.title.name%></td>
+      <% title = machine_change.machine.title %>
+      <td><%=title ? title.name : '?'%></td>
       <td style="padding:0 1em;"><%=machine_change.add? ? 'added to' : 'removed from'%></td>
       <td><%=link_to machine_change.machine.location.name, machine_change.machine.location%></td>
       <td><%=machine_change.add? ? machine_change.machine.created_by.initials : machine_change.machine.deleted_by.initials%></td>
