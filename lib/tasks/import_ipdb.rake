@@ -36,13 +36,13 @@ namespace :import do
       force_encoding('UTF-8')
     coder = HTMLEntities.new
     f.scan(/<tr>.+?\?gid=(\d+)&.+?>([^<]*)</) do |ipdb_id, name|
-      title = Title.find_by_ipdb_id(ipdb_id)
-      title ||= Title.new
+      next if Title.find_by_ipdb_id(ipdb_id)
+      title = Title.new
       title.name = coder.decode(name)
       title.ipdb_id = ipdb_id
       if title.changed?
         if title.save
-          puts "Updated #{title.name}".yellow
+          puts "#{title.name}".green
         else
           errors = title.errors.full_messages.join(', ')
           if errors == 'Ipdb has already been taken'
