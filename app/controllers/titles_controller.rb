@@ -6,7 +6,11 @@ class TitlesController < ApplicationController
   # GET /titles
   # GET /titles.json
   def index
-    active
+    @titles = Title.all
+    respond_to do |format|
+      format.html
+      format.json { render :json => @titles }
+    end
   end
 
   def active
