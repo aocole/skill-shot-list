@@ -1,6 +1,8 @@
   <%= stylesheet_link_tag "scaffolds", 'machines', 'locations', 'areas', 'jquery-ui-1.8.16.custom.css' %>
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-  <%= javascript_include_tag "jquery-1.6.2.min.js", "jquery-ui-1.8.16.custom.min.js", "jquery-ujs", "application" %>
+<script type='text/javascript' src='http://www.skill-shot.com/wp-includes/js/jquery/jquery.js?ver=1.10.2'></script>
+<script type='text/javascript' src='http://www.skill-shot.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+  <%= javascript_include_tag "jquery-ui-1.8.16.custom.min.js", "jquery-ujs", "application" %>
   <%if Rails.env.production?%>
     <script type="text/javascript">
 
