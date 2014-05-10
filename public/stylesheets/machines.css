@@ -7,3 +7,8 @@
 .ui-autocomplete-input {
   margin: 0;
   padding: 0.48em 0 0.47em 0.45em; }
+
+/*hide drop-down arrow*/
+#new_machine > div.ui-widget > span.custom-combobox > a {
+  display: none;
+}
