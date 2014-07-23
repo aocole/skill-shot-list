@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :require_no_user, :only => [:new, :create]
-  before_filter :require_user, :only => [:show, :edit, :update]
+  before_filter :require_user
 
   # GET /users/1
   # GET /users/1.xml
@@ -35,6 +34,7 @@ class UsersController < ApplicationController
     valid_keys = %w{email initials password password_confirmation}
     params[:user].delete_if{|k,v|!valid_keys.include?(k)}
     @user = User.new(params[:user])
+    @user.admin = false
 
     respond_to do |format|
       if @user.save
