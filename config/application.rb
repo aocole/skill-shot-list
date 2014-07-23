@@ -7,6 +7,7 @@ require 'rails/all'
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module Skillshot
+  require_relative '../lib/block_easou_spider'
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -51,5 +52,7 @@ module Skillshot
     config.action_mailer.raise_delivery_errors = true
     config.action_mailer.perform_deliveries = true
     config.assets.initialize_on_precompile = false
+
+    config.middleware.use Rack::BlockEasouSpider
   end
 end

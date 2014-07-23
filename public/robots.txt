@@ -3,3 +3,8 @@
 # To ban all spiders from the entire site uncomment the next two lines:
 # User-Agent: *
 # Disallow: /
+
+User-agent: Mozilla/5.0 (compatible; EasouSpider; +http://www.easou.com/search/spider.html)
+Disallow: /
+
+Allow: /
