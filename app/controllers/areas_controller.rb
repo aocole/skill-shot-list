@@ -1,11 +1,12 @@
 class AreasController < ApplicationController
   before_filter :require_admin_user, :except => [:show]
+  layout Proc.new{|c|c.params[:id] == 'wordpress' ? 'empty' : 'application'}
   caches_action :show, 
     :if => Proc.new{|c|!c.admin?}, 
     :layout => false, 
     :cache_path => Proc.new{|c| {
         :mobile => c.mobile_device? ? '1' : '0',
-        :wordpress => c.params[:id] == 'wordpress' ? '1' : '0'
+        :callback => c.params[:callback]
       }
     }
   cache_sweeper :location_sweeper
@@ -34,8 +35,10 @@ class AreasController < ApplicationController
           }
         }
       ).all
-      s = render_to_string :template => 'areas/wordpress', :layout => false
-      render :json => [s]
+      s = render_to_string :template => 'areas/wordpress', :formats => [:html], :layout => false
+      respond_to do |format|
+        format.json { render :json => [s] }
+      end
       return
     else
       @area = Area.includes(
