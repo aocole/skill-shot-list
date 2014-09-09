@@ -4,7 +4,9 @@ class AreasController < ApplicationController
     :if => Proc.new{|c|!c.admin?}, 
     :layout => false, 
     :cache_path => Proc.new{|c| {
-      :mobile => c.mobile_device? ? '1' : '0'}
+        :mobile => c.mobile_device? ? '1' : '0',
+        :wordpress => c.params[:id] == 'wordpress' ? '1' : '0'
+      }
     }
   cache_sweeper :location_sweeper
   cache_sweeper :title_sweeper
