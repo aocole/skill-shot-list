@@ -70,11 +70,29 @@ var buildInfo = function(location) {
   return $(info)[0];
 }
 
+var onLocationsSet = function() {
+  jQuery.each(locations, function(_, location){
+    latlng = new google.maps.LatLng(location.latitude, location.longitude);
+    marker = new google.maps.Marker({
+      position: latlng,
+      map: map,
+      icon: image,
+      shadow: shadow,
+      shape: shape,
+      title: location.name
+    });
+    google.maps.event.addListener(marker, 'click', jQuery.proxy(function(){
+      infoWindow.setContent(buildInfo(location));
+      infoWindow.open(map, this);
+    }, marker));
+    bounds.extend(latlng);
+  })
+
+}
+
 jQuery(function(){
-  if (document.getElementById("map") != null) {
-    map = new google.maps.Map(document.getElementById("map"), myOptions);
-    if (locations != undefined) {
-      onLocationsSet();
-    }
+  map = new google.maps.Map(document.getElementById("map"), myOptions);
+  if (locations != undefined) {
+    onLocationsSet();
   }
 });
