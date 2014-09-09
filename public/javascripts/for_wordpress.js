@@ -67,7 +67,7 @@ var buildInfo = function(location) {
   info += "</ul>";
 
   info += "</div>";
-  return $(info)[0];
+  return jQuery(info)[0];
 }
 
 var onLocationsSet = function() {
