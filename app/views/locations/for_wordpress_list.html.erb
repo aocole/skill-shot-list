@@ -1,0 +1,14 @@
+<html>
+<body>
+
+<!-- omit from wordpress -->
+<%= javascript_include_tag 'jquery-1.11.0.min.js' %>
+<%= javascript_include_tag 'for_wordpress_list' %>
+
+<script src="<%=url_for(:controller => :areas, :action => :show, :id => :wordpress, :callback=> 'setLocationsList') %>" type="text/javascript"></script>
+
+<div id="list"></div>
+
+</body>
+</html>
+

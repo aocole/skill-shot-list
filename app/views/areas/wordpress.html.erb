@@ -1,0 +1,3 @@
+<% @areas.each do |area| %>
+  <%= render :partial => 'listing', :locals => {:area => area, :map => false} %>
+<% end %>

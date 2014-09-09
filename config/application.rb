@@ -8,6 +8,7 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module Skillshot
   require_relative '../lib/block_easou_spider'
+  require "rack/contrib/jsonp"
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -54,5 +55,6 @@ module Skillshot
     config.assets.initialize_on_precompile = false
 
     config.middleware.use Rack::BlockEasouSpider
+    config.middleware.use Rack::JSONP
   end
 end

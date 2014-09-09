@@ -1,6 +1,11 @@
 class AreasController < ApplicationController
   before_filter :require_admin_user, :except => [:show]
-  caches_action :show, :if => Proc.new{|c|!c.admin?}, :layout => false, :cache_path => Proc.new{|c| {:mobile => c.mobile_device? ? '1' : '0'}}
+  caches_action :show, 
+    :if => Proc.new{|c|!c.admin?}, 
+    :layout => false, 
+    :cache_path => Proc.new{|c| {
+      :mobile => c.mobile_device? ? '1' : '0'}
+    }
   cache_sweeper :location_sweeper
   cache_sweeper :title_sweeper
   cache_sweeper :machine_sweeper
@@ -19,13 +24,26 @@ class AreasController < ApplicationController
   # GET /areas/1
   # GET /areas/1.json
   def show
-    @area = Area.includes(
-      :localities => {
-        :locations => {
-          :machines => :title
+    if params[:id] == 'wordpress'
+      @areas = Area.includes(
+        :localities => {
+          :locations => {
+            :machines => :title
+          }
         }
-      }
-    ).find_using_slug!(params[:id])
+      ).all
+      s = render_to_string :template => 'areas/wordpress', :layout => false
+      render :json => [s]
+      return
+    else
+      @area = Area.includes(
+        :localities => {
+          :locations => {
+            :machines => :title
+          }
+        }
+      ).find_using_slug!(params[:id])
+    end
 
     respond_to do |format|
       format.html # show.html.erb

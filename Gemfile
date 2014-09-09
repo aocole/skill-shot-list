@@ -13,6 +13,7 @@ gem 'foreigner', "~> 1.4.2"
 gem 'geocoder'
 gem 'htmlentities'
 gem "active_model_serializers"
+gem "rack-contrib"
 
 gem 'jquery-rails', '~> 2.1'
 
@@ -30,4 +31,3 @@ gem 'foreman', group: :development
 
 # Use unicorn as the web server
 gem 'unicorn'
-

@@ -1,5 +1,5 @@
 class LocationsController < ApplicationController
-  before_filter :require_admin_user, :except => [:show, :index]
+  before_filter :require_admin_user, :except => [:show, :index, :for_wordpress, :for_wordpress_list]
   caches_action :show, :if => Proc.new{|c|!c.admin? && c.params[:format] != 'json'}, :layout => false, :cache_path => Proc.new{|c|
     {
       :mobile => c.mobile_device? ? '1' : '0'
@@ -16,12 +16,20 @@ class LocationsController < ApplicationController
   def index
     respond_to do |format|
       format.html { redirect_to :root }
-      format.json { render :json => Location.
-        unscoped. # sigh, i shouldn't have used default_scope
-        where('deleted_at is null').
-        includes(:machines).
-        order('name asc') 
-      }
+      format.json { render :json => regular_locations}
+    end
+  end
+
+  def for_wordpress
+    respond_to do |format|
+      format.html {render :layout => false}
+      format.json {render :json => regular_locations, :each_serializer => LocationDetailSerializer}
+    end
+  end
+
+  def for_wordpress_list
+    respond_to do |format|
+      format.html {render :layout => false}
     end
   end
 
@@ -109,4 +117,15 @@ class LocationsController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  private
+
+  def regular_locations
+    Location.
+        unscoped. # sigh, i shouldn't have used default_scope
+        where('deleted_at is null').
+        includes(:machines).
+        order('name asc')
+  end
+
 end

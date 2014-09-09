@@ -76,6 +76,8 @@ GEM
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
+    rack-contrib (1.1.0)
+      rack (>= 0.9.1)
     rack-ssl (1.3.4)
       rack
     rack-test (0.6.2)
@@ -145,6 +147,7 @@ DEPENDENCIES
   htmlentities
   jquery-rails (~> 2.1)
   pg
+  rack-contrib
   rails (~> 3.2.16)
   rails_12factor
   rest-client

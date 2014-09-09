@@ -15,6 +15,8 @@ Skillshot::Application.routes.draw do
     get :recent, :on => :collection
   end
   resources :locations, :shallow => true do
+    get :for_wordpress, :on => :collection
+    get :for_wordpress_list, :on => :collection
     resources :machines
   end
   resources :localities, :shallow => true do

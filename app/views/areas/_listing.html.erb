@@ -1,0 +1,28 @@
+<section id="area_listing">
+  <h1><%= area.name %></h1>
+  <% if map %>
+    <div id="map" style="width:600px; height: 550px; float:right;"></div>
+  <% end %>
+  <% if area.localities.size > 1 %>
+    <ul id="locality_index">
+      <%area.localities.each do |locality|%>
+        <li><%=link_to locality.name, "##{locality.name}"%></li>
+      <%end%>
+    </ul>
+  <% end %>
+
+  <%area.localities.each do |locality|%>
+    <h2><a id="<%=locality.name%>"></a><%=locality.name%></h2>
+    <%locality.locations.each do |location|%>
+      <div class="location">
+        <h3><%=link_to_if map, location.name, location%> <%if location.all_ages%><span class="aav" title="All-ages Venue">AAV!</span><%end%></h3>
+        <h4><%=link_to_unless map, location.address, "http://maps.google.com/maps?q=#{CGI.escape(location.full_street_address)}" %></h4>
+        <ul>
+          <%location.machines.sort.each do |machine|%>
+            <li><%=raw machine.title.name%></li>
+          <%end%>
+        </ul>
+      </div>
+    <%end%>
+  <%end%>
+</section>
