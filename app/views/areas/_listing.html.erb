@@ -6,14 +6,15 @@
   <% if area.localities.size > 1 %>
     <ul id="locality_index">
       <%area.localities.each do |locality|%>
-        <li><%=link_to locality.name, "##{locality.name}"%></li>
+        <li><%=link_to locality.name, "##{locality.cached_slug}"%></li>
       <%end%>
     </ul>
   <% end %>
 
   <%area.localities.each do |locality|%>
-    <h2><a id="<%=locality.name%>"></a><%=locality.name%></h2>
+    <h2><a id="<%=locality.cached_slug%>"></a><%=locality.name%></h2>
     <%locality.locations.each do |location|%>
+      <a id="<%=location.cached_slug%>"></a>
       <div class="location">
         <h3><%=link_to_if map, location.name, location%> <%if location.all_ages%><span class="aav" title="All-ages Venue">AAV!</span><%end%></h3>
         <h4><%=link_to_unless map, location.address, "http://maps.google.com/maps?q=#{CGI.escape(location.full_street_address)}" %></h4>
