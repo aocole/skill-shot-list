@@ -32,6 +32,7 @@ Skillshot::Application.routes.draw do
 
   get '/wrapper' => 'home#wrapper'
   get '/noop' => 'home#noop'
+  get '/login' => 'user_sessions#new'
   root :controller => :areas, :action => :show, :id => 'seattle'
 
   # The priority is based upon order of creation:

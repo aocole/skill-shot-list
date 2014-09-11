@@ -2,6 +2,19 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_session, :current_user, :admin?, :mobile_device?
   before_filter :check_for_mobile
+  before_filter :redirect_to_wordpress
+
+  def redirect_to_wordpress
+    return if current_user
+    return if kind_of? UserSessionsController
+    return unless request.format.html?
+    if kind_of?(TitlesController) && request.path_parameters[:action] == 'active'
+      redirect_to 'http://www.skill-shot.com/pinball-titles', status: 301
+      return false
+    end
+    redirect_to 'http://www.skill-shot.com/pinball-list', status: 301
+    return false
+  end
 
   def admin?
     current_user && current_user.admin
