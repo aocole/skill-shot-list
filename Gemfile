@@ -29,7 +29,7 @@ gem 'slugged'
 gem 'rails_12factor'
 gem 'foreman', group: :development
 
-gem 'pry', group: :development
+gem 'pry-rails', group: :development
 
 # Use unicorn as the web server
 gem 'unicorn'

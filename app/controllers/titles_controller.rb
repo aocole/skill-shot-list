@@ -1,6 +1,18 @@
 class TitlesController < ApplicationController
   before_filter :require_admin_user, :except => [:active]
-  caches_action :active, :if => Proc.new{|c|!c.admin?}, :layout => false, :cache_path => Proc.new{|c| {:mobile => c.mobile_device? ? '1' : '0'}}
+  layout Proc.new{|c|
+    c.request.path_parameters[:action] == 'active' && c.request.format.json? ? 
+    'empty' : 
+    'application'
+  }
+  caches_action :active, 
+    :if => Proc.new{|c|!c.admin?}, 
+    :layout => false, 
+    :cache_path => Proc.new{|c| {
+        :mobile => c.mobile_device? ? '1' : '0',
+        :callback => c.params[:callback]
+      }
+    }
   cache_sweeper :title_sweeper
 
   # GET /titles
@@ -19,7 +31,13 @@ class TitlesController < ApplicationController
       joins('as title inner join machines as machine on machine.title_id=title.id').
       where('machine.deleted_at is null').
       includes(:locations)
-
+    if params[:wordpress]
+      s = render_to_string :template => 'titles/wordpress', :formats => [:html], :layout => false
+      respond_to do |format|
+        format.json { render :json => [s] }
+      end
+      return
+    end
     respond_to do |format|
       format.html
       format.json { render :json => @titles }

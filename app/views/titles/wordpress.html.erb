@@ -1,0 +1,13 @@
+<section id="title_listing">
+  <h1>Titles</h1>
+  <%@titles.each do |title|%>
+    <div class="title">
+      <h3><%=raw title.name%></h3>
+      <ul>
+        <%title.locations.each do |location|%>
+          <li><%=link_to location.name, location%></li>
+        <%end%>
+      </ul>
+    </div>
+  <%end%>
+</section>
