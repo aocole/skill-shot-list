@@ -6,12 +6,14 @@
   <% if area.localities.size > 1 %>
     <ul id="locality_index">
       <%area.localities.each do |locality|%>
+        <% next if locality.locations.size.zero? %>
         <li><%=link_to locality.name, "##{locality.cached_slug}"%></li>
       <%end%>
     </ul>
   <% end %>
 
   <%area.localities.each do |locality|%>
+    <% next if locality.locations.size.zero? %>
     <h2><a id="<%=locality.cached_slug%>"></a><%=locality.name%></h2>
     <%locality.locations.each do |location|%>
       <a id="<%=location.cached_slug%>"></a>
