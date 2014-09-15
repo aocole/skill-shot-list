@@ -38,6 +38,7 @@ class AreasController < ApplicationController
       s = render_to_string :template => 'areas/wordpress', :formats => [:html], :layout => false
       respond_to do |format|
         format.json { render :json => [s] }
+        format.html { render :text => s }
       end
       return
     else
