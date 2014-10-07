@@ -77,7 +77,7 @@ class ApplicationController < ActionController::Base
   def require_no_user
     if current_user
       store_location
-      redirect_to :back, :alert => "You must be logged out to access this page"
+      redirect_to :root
       return false
     end
   end
