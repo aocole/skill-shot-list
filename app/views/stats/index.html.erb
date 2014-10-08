@@ -27,10 +27,7 @@
 
   var scaleX = d3.time.scale()
             .range([padding, w-padding])
-            .domain([
-              d3.min(dataset, function(d){return new Date(d[0])}), 
-              d3.max(dataset, function(d){return new Date(d[0])})
-            ]);
+            .domain(d3.extent(dataset, function(d){return new Date(d[0])}));
   var scaleY = d3.scale.linear()
             .range([padding, h-padding])
             .domain([
@@ -64,7 +61,7 @@
   var yAxis = d3.svg.axis()
                   .scale(scaleY)
                   .orient("left")
-                  .ticks(5);
+                  .ticks(20);
 
   svg.append("g")
       .attr("class", "axis")
