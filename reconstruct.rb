@@ -50,7 +50,14 @@ Hash[
   'CC', 'Cactus Canyon',
   'TZ', 'Twilight Zone',
   'DM', 'Demolition Man',
-  'TOM', 'Theatre of Magic'
+  'TOM', 'Theatre of Magic',
+  'DW', 'Doctor Who',
+  'TOTAN', 'Tales of the Arabian Nights',
+  'T2', 'Terminator 2: Judgment Day',
+  'NGG', 'No Good Gofers',
+  'IJ', 'Indiana Jones (Williams)',
+  'IJ(S)', 'Indiana Jones (Stern)',
+  'GNR', "Guns N' Roses"
 ].each do |abbrev, name|
   titles[abbrev] = Title.where(name: name).first
   raise "Couldn't find #{name}" if titles[abbrev].nil?
@@ -58,17 +65,18 @@ end
 
 def match_list(name, list)
   if list[name]
-    puts "#{name} => #{list[name].name}".green
-    return
+    # puts "#{name} => #{list[name].name}".green
+    return list[name]
   end
   regexp = Regexp.compile(name.sub(/\bthe \b/i, ''), Regexp::IGNORECASE)
-  matches = list.keys.select{|name| name =~ regexp}.collect{|name|list[name]}
+  matches = list.keys.select{|name| name.gsub(/’/, "'") =~ regexp}.collect{|name|list[name]}
   if matches.size == 0
     puts "Couldn't find match for #{name}".red
   elsif matches.size > 1
     puts "#{name} matched #{matches.collect(&:name).join(', ')}".red
   else
-    puts "#{name} => #{matches.first.name}".green
+    return matches.first
+    # puts "#{name} => #{matches.first.name}".green
   end  
 end
 

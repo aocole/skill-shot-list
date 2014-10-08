@@ -1,24 +1,35 @@
 ---
-Downtown/SLU:
+Downtown:
+  Seattle Waterfront Arcade:
+    - TSPP
+    - POTC
+  AMC Pacific Place 11:
+    - Elvis
+  Thistle:
+    - NGG
   Gameworks:
     - High Roller Casino
     - SP
     - SW
+Queen Anne/East Lake:
   Cafe Venus:
     - AFM
-  5 Point Laundry:
-    - Mary Shelley's Frankenstein
-  Hurricane:
-    - SP
-    - T3
-    - TSPP
-    - POTC
   El Corazon:
     - Police Force
   Zoo:
     - MM
     - TSPP
     - SP
+    - IJ
+  Spectator:
+    - NGG
+  Fun Forest Arcade:
+    - DW
+    - T2
+  Floyd's Place:
+    - CFTBL
+    - MM
+Belltown/Denny Regrade:
   Shorty's:
     - TAF
     - CP
@@ -38,6 +49,22 @@ Downtown/SLU:
     - WOF
   Lava Lounge:
    - Gilligan's Island
+  5 Point Laundry:
+    - Mary Shelley's Frankenstein
+  Hurricane:
+    - T3
+    - TSPP
+    - POTC
+Pioneer Square/SODO:
+  Hooverville:
+    - TZ
+    - Getaway
+    - Elvis
+    - Centaur
+  Cowgirls Inc:
+    - AFM
+  Fuel:
+    - JY
 Capitol Hill/Central:
     Madison Pub:
       - SM
@@ -48,7 +75,7 @@ Capitol Hill/Central:
     Cuff:
       - AFM
       - SWE1
-      - MB
+      - TOTAN
     Twilight Exit:
       - MM
       - JY
@@ -56,7 +83,7 @@ Capitol Hill/Central:
       - SWE1
       - MM
     12th Ave Laundry:
-      - Taxi
+      - Tee'd Off
     Redwood:
       - AFM
     Neighbours:
@@ -74,20 +101,26 @@ Georgetown:
       - FH
       - CC
     Georgetown Liquor Company:
-      - TZ
-      - Asteroid Annie and the Aliens
+      - CFTBL
     Stellar Pizza:
       - DM
       - IJ
       - FT
+    Uncle Mo's:
+      - Getaway
+    9LB Hammer:
+      - No Fear
+      - MM
 U-District/North Side:
   Galway Arms:
     - CFTBL
     - STTNG
     - TZ
   Teddy's Tavern:
-    - Cleopatra
     - SS
+  College Inn:
+    - WCS
+    - TAF
   Sure Shot:
     - Wizard
     - Hocus Pocus
@@ -101,14 +134,35 @@ U-District/North Side:
   Dante's:
     - TOM
     - BSD
+  Earl's:
+    - POTC
+  Knarr:
+    - WCS
+    - RFM
+  Beth's:
+    - LOTR
+    - TAF
+    - TSPP
+    - AFM
+    - RollerCoaster Tycoon
+Fremont/Wallingford/Ballard:
+  Tin Hat:
+    - DW
+    - STTNG
+  Goldies:
+    - MM
+  Ballard Grill:
+    - MM
+    - POTC
+  Snoose Junction:
+    - Hurricane
+    - TAF
   Buckaroo Tavern:
     - WCS
     - TSPP
+  Al's:
+    - WCS
   High Dive:
     - PZ
   Fremont Dock:
-    - Getaway
     - The Sopranos
-  Knarr Tavern:
-    - WCS
-    - MM
