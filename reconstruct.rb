@@ -34,6 +34,7 @@ U District/North Side:
   - Pink Gorilla
   - Shanty Tavern
   - Resevoir
+  - Caroline Tavern
 Greenwood/Green Lake:
   - Little Red Hen
   - Sundown Saloon
