@@ -65,11 +65,11 @@ West Seattle:
     - POTC
 White Center:
   Full Tilt Ice Cream White Center:
-    - Black Knight 2000
     - FT
+    - Getaway
     - Jokerz!
     - RS
-    - Tee'd Off
+    - SWE1
   Barrel Tavern:
     - Popeye
   Locker Room:
@@ -105,7 +105,6 @@ Belltown/Denny Regrade:
     - TSPP
 Pioneer Square:
   Seattle Pinball Museum:
-    - AC/DC (Pro)
     - AFM
     - Attila the Hun
     - Bow and Arrow
@@ -151,8 +150,8 @@ SODO:
     - Dirty Harry
 Capitol Hill:
   C.C. Attle's:
-    - FT
-    - Sharkey's Shootout
+    - LOTR
+    - T3
   Canterbury:
     - DM
     - IJ
@@ -163,6 +162,8 @@ Capitol Hill:
     - T3
   Lather Daddy:
     - Dr. Dude
+  LTD. Art Gallery:
+    - T2
   Madison Pub:
     - BBH
     - FGY
@@ -192,6 +193,9 @@ Central District/Madison Park:
     - Ready...Aim...Fire!
   Red Onion:
     - Tales from the Crypt
+  Neighbor Lady:
+    - JY
+    - MM
   Twilight Exit:
     - TSPP
     - T2
@@ -203,14 +207,13 @@ Georgetown:
     - TZ
   Calamity Jane's:
     - Getaway
-    - WW
   Georgetown Liquor Company:
     - Gilligan's Island
   Jules Maes Saloon:
     - CFTBL
     - DW
-    - FT
     - STTNG
+    - WW
   Marco Polo:
     - FT
     - SWE1
@@ -223,14 +226,12 @@ U-District/North Side:
   Cafe Racer:
     - Jacks To Open
   College Inn:
-    - WCS
     - TAF
+    - WCS
   Dante's:
     - BSD
   Earl's:
     - FT
-  Galway Arms:
-    - TOTAN
   Kathy's:
     - NGG
   Knarr:
@@ -247,21 +248,23 @@ U-District/North Side:
     - TSPP
 Fremont/Wallingford:
   Add-a-Ball:
+    - Baby Pac-man
     - Captain Fantastic
-    - Dragonfist
-    - Lethal Weapon 3
+    - IJ(S)
     - "The Machine: Bride of Pinbot"
-    - Mr. & Mrs. Pac-man Pinball
     - Nitro Ground Shaker
+    - Old Chicago
+    - Pool Sharks
+    - Radical!
     - Stars
     - Surf Champ
+    - TZ
+    - WOF
   Al's:
     - DW
   Iron Bull:
     - BBH
     - NBA
-  Pete's Fremont Fire Pit:
-    - Mr. & Mrs. Pac-man Pinball
   Grizzled Wizard:
     - EATPM
 Ballard:
@@ -272,13 +275,14 @@ Ballard:
   Cafe Mox:
     - MM
   Full Tilt Ice Cream Ballard:
-    - AFM
     - Black Knight 2000
     - BSD
+    - Centaur
     - CFTBL
     - Diner
+    - IM
     - JM
-    - MB
+    - LOTR
     - NGG
     - POTC
     - Shadow
@@ -287,8 +291,6 @@ Ballard:
   Golden City:
     - Cyclone
     - T2
-  Goofy's:
-    - CSI
   Pizza Hut:
     - LOTR
   Sloop Tavern:
@@ -306,17 +308,17 @@ Ballard:
     - TAF
 Greenwood/Greenlake:
   Beth's:
-    - LOTR
+    - CSI
     - WOF
   Crosswalk Tavern:
-    - SWE1
+    - DW
   Duck Island:
     - IJ(S)
     - SS
   Ed's Kort Haus:
-    - Monopoly
+    - JY
   Sully's Snow Goose:
-    - Super-Flite
+    - Jumping Jack
     - Target Alpha
   Sweet Lou's:
     - MM
@@ -324,5 +326,6 @@ Columbia City:
   Full Tilt Columbia City:
     - AFM
     - Black Knight 2000
+    - Congo
+    - Popeye
     - TZ
-    - WCS
