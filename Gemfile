@@ -30,6 +30,8 @@ gem 'rails_12factor'
 gem 'foreman', group: :development
 
 gem 'pry-rails', group: :development
+gem 'colored', group: :development
 
 # Use unicorn as the web server
 gem 'unicorn'
+
