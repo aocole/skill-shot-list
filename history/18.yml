@@ -1,0 +1,298 @@
+---
+Downtown:
+  Pacific Place 11:
+    - Elvis
+  Greyhound:
+    - SS
+  Seattle Waterfront Arcade:
+    - IM
+    - T3
+  Gameworks:
+    - Sopranos
+    - High Roller Casino
+    - SP
+Queen Anne:
+  Mecca:
+    - IM
+  Jabu's:
+    - NBA
+  Bandit's:
+    - CC
+  Funhouse:
+    - "24"
+    - SM
+    - TZ
+  Jillian's:
+    - RollerCoaster Tycoon
+    - TSPP
+    - SP
+Eastlake:
+  Zoo:
+    - RFM
+    - IJ
+    - TOTAN
+    - TOM
+  Cafe Venus:
+    - JY
+  Victory Lounge:
+    - SS
+  El Corazon:
+    - Taxi
+West Seattle:
+  Alki Tavern:
+    - POTC
+  Feedback Lounge:
+    - JY
+    - Sharkey's Shootout
+  Admiral Pub:
+    - IJ(S)
+  Rocksports:
+    - MM
+  Tug Tavern:
+    - Indianapolis 500
+White Center:
+  Locker Room:
+    - FT
+  Papa's:
+    - Playboy
+  Full Tilt Ice Cream White Center:
+    - Congo
+    - Street Fighter II
+    - Count Down
+    - Gilligan's Island
+    - EATPM
+  Barrel Tavern:
+    - TOTAN
+    - Baby Pac-man
+Belltown/Denny Regrade:
+  Shorty's:
+    - TAF
+    - Avatar
+    - Baby Pac-man
+    - Batman
+    - Centaur
+    - CP
+    - FGY
+    - Fathom
+    - IJ
+    - IM
+    - MM
+    - MB
+    - RFM
+    - Rolling Stones
+    - Speakeasy
+    - Surf Champ
+    - TOTAN
+  Hurricane:
+    - LOTR
+    - TSPP
+    - POTC
+  Lava Lounge:
+   - FH
+Pioneer Square:
+  Seattle Pinball Museum:
+    - Attila the Hun
+    - Aztec
+    - Black Jack
+    - Black Pyramid
+    - Captain Fantastic
+    - Circus
+    - Comet
+    - Disk Jockey
+    - Flash Gordon
+    - Four Million B.C.
+    - Fun Land
+    - Galactic Girl
+    - Gorgar
+    - Hang Glider
+    - Hurricane
+    - King Pin
+    - Laser War
+    - Lost World
+    - Mata Hari
+    - Monaco
+    - Mystic
+    - Pinball (EM)
+    - Rack-a-Ball
+    - RFM
+    - Rolling Stones
+    - Spin Out
+    - Super Score
+    - Swing-Along
+    - Texan
+    - Time Zone
+    - Tri Zone
+    - Wagon Train
+    - Wizard
+    - TZ
+  Cowgirls Inc:
+    - RBION
+  Fenix:
+    - Embryon
+  Joe's Bar and Grill:
+    - MB
+SODO:
+  Hooverville:
+    - POTC
+    - CSI
+    - RS
+    - EBD
+  Siren Tavern:
+    - JY
+  Radar:
+    - Incredible Hulk
+Capitol Hill:
+  Canterbury:
+    - WW
+    - TAF
+  Madison Pub:
+    - FGY
+    - BBH
+    - IM
+  Cuff:
+    - TAF
+    - POTC
+  Comet: 
+    - Congo
+  Highline:
+    - AFM
+  Redwood:
+    - MB
+  Lookout:
+    - Mary Shelley's Frankenstein
+    - TSPP
+  Elite:
+    - LOTR
+  12th Ave Laundry:
+    - Dr. Dude
+  Seattle Tattoo Emporium:
+    - Hot Shot
+    - Pro-Football
+    - Twin Win
+  Roanoke:
+    - FT
+Central District/Madison Park:
+  Twilight Exit:
+    - FT
+    - DW
+  Girlie Press:
+    - Wild Wild West
+  Red Onion:
+    - T3
+Georgetown:
+    Jules Maes Saloon:
+      - STTNG
+      - FT
+      - FH
+      - CFTBL
+    Georgetown Liquor Company:
+      - Bally Game Show
+    Stellar Pizza:
+      - DM
+      - IJ
+      - JY
+    9LB Hammer:
+      - WWF Royal Rumble
+      - SWE1
+    Calamity Jane's:
+      - JY
+      - Jack-Bot
+    Tiger Lounge:
+      - Dipsy Doodle
+      - Space Mission
+      - Expressway
+      - Grand Prix
+      - Hokus Pokus
+      - High Hand
+      - Super Straight
+      - Top Card
+    Marco Polo:
+      - FT
+      - CSI
+    Auto Quest:
+      - TZ
+U-District/North Side:
+  Galway Arms:
+    - MB
+  Sure Shot:
+    - Wizard
+    - Sure Shot
+    - Space Mission
+  Dante's:
+    - TOM
+    - BSD
+  Knarr:
+    - WCS
+  Rat and Raven:
+    - MM
+  College Inn:
+    - WCS
+    - TAF
+  Earl's:
+    - FT
+    - LOTR
+  South Campus Center:
+    - STTNG
+  Cafe Racer:
+    - Jacks To Open
+Fremont/Wallingford:
+  Al's:
+    - T2
+  Grizzled Wizard:
+    - Black Knight 2000
+  Iron Bull:
+    - MM
+  Dubliner:
+    - SP
+  ADD Motor Works:
+    - Dragonfist
+    - Pinball (EM)
+    - Nitro Ground Shaker
+    - Stars
+Ballard:
+  Snoose Junction:
+    - WCS
+    - MB
+  Sloop Tavern:
+    - TSPP
+  Tin Hat:
+    - DW
+    - AFM
+  The Josephine:
+    - Jumping Jack
+    - Big Shot
+  2 Bit Saloon:
+    - FT
+  Golden City:
+    - FT
+    - Cyclone
+  Ballard Grill:
+    - High Roller Casino
+  Zesto's:
+    - FH
+  Pizza Hut:
+    - LOTR
+Greenwood/Greenlake:
+  Beth's:
+    - LOTR
+    - WOF
+  Duck Island:
+    - MM
+    - IJ(S)
+  Ed's Kort Haus:
+    - Monopoly
+  Crosswalk Tavern:
+    - Flintstones
+  Sweet Lou's:
+    - MM
+  Sully's Snow Goose:
+    - Jet Spin
+    - Strato-Flite
+Beacon Hill:
+  AMF Imperial Lanes:
+    - DM
+  Full Tilt Columbia City:
+    - T2
+    - Cactus Jack's
+    - TSPP
+    - No Fear

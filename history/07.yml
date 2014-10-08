@@ -1,45 +1,52 @@
 ---
 Downtown:
+  Thistle:
+    - NGG
+  Greyhound:
+    - CFTBL
   Seattle Waterfront Arcade:
     - TSPP
     - POTC
-  Thistle:
-    - NGG
   Gameworks:
     - Sopranos
     - High Roller Casino
     - SP
     - SW
 Queen Anne/East Lake:
-  Cafe Venus:
-    - AFM
-  El Corazon:
-    - DW
-  Zoo:
-    - MM
-    - TSPP
-    - SP
-    - IJ
-  Spectator:
-    - NGG
   Fun Forest Arcade:
     - DW
     - T2
   Floyd's Place:
     - CFTBL
     - MM
+  Spectator:
+    - NGG
+  Ozzie's:
+    - SWE1
   Funhouse:
     - CFTBL
-White Center:
+  Zoo:
+    - MM
+    - TSPP
+    - SP
+    - IJ
+  Cafe Venus:
+    - AFM
+  El Corazon:
+    - DW
+White Center/West Seattle:
+  Alki Tavern:
+    - T3
+  Barrel Tavern:
+    - AFM
   Full Tilt Ice Cream White Center:
-    - Kiss
-    - Lost World
+    - Jacks To Open
     - Sinbad
+    - Mr. & Mrs. Pac-man Pinball
     - FH
+    - Hulk
     - TZ
     - NGG
-    - Blackout
-    - Time Machine
     - Ready...Aim...Fire!
 Belltown/Denny Regrade:
   Shorty's:
@@ -47,21 +54,22 @@ Belltown/Denny Regrade:
     - Baby Pac-man
     - Batman
     - CP
+    - CSI
     - EK
     - FGY
     - Fathom
     - IJ(S)
-    - JY
     - MM
     - MB
-    - POTC
+    - TOTAN
     - RFM
     - Speakeasy
     - STTNG
     - Surf Champ
+    - TOTAN
     - WOF
   Lava Lounge:
-   - FT
+   - Gilligan's Island
   5 Point Laundry:
     - Mary Shelley's Frankenstein
   Hurricane:
@@ -72,79 +80,64 @@ Pioneer Square/SODO:
   Hooverville:
     - TZ
     - Getaway
-    - Elvis
+    - SM
     - Centaur
   Cowgirls Inc:
     - SWE1
   Fuel:
     - JY
 Capitol Hill/Central:
+    Canterbury:
+      - MM
+      - NGG
     Madison Pub:
       - Batman
       - FGY
       - IJ(S)
-    Elite:
-      - TSPP
     Cuff:
       - AFM
-      - SWE1
+      - TOTAN
       - POTC
-    Twilight Exit:
-      - MM
-      - JY
-    Canterbury:
-      - SWE1
-      - MM
-    12th Ave Laundry:
-      - Police Force
+    Wild Rose:
+      - Dirty Harry
+    Comet: 
+      - NGG
+      - FT
     Redwood:
       - AFM
     Neighbours:
       - Monopoly
-    Eagle:
-      - SP
-      - NASCAR
+    Elite:
+      - TSPP
     King Cobra:
       - MB
-      - FH
-    Comet: 
-      - NGG
-      - FT
-    Wild Rose:
-      - Dirty Harry
+    12th Ave Laundry:
+      - Police Force
     Roanoke:
       - TOM
 Georgetown:
-    Calamity Jane's:
-      - Hurricane
-      - Jack-Bot
-    Marco Polo:
-      - GNR
     Jules Maes Saloon:
       - SS
       - FT
       - FH
       - CC
     Georgetown Liquor Company:
-      - CFTBL
+      - STTNG
     Stellar Pizza:
       - DM
       - IJ
       - FT
     9LB Hammer:
-      - No Fear
+      - JY
       - MM
+    Calamity Jane's:
+      - Hurricane
+      - Jack-Bot
+    Marco Polo:
+      - GNR
 U-District/North Side:
-  Dante's:
-    - TOM
-    - BSD
-  College Inn:
-    - WCS
-    - TAF
-  Galway Arms:
-    - FT
-    - STTNG
-    - TZ
+  Teddy's Tavern:
+    - No Fear
   Beth's:
     - LOTR
     - TSPP
@@ -152,45 +145,62 @@ U-District/North Side:
   Duck Island:
     - TAF
     - AFM
-  Teddy's Tavern:
-    - Time Machine
+  Galway Arms:
+    - FT
+    - JY
+    - TZ
   Sure Shot:
     - Wizard
     - Sure Shot
     - Space Mission
+  Dante's:
+    - TOM
+    - BSD
   Piccolo's Pizza:
-    - SW
     - Gold Ball
     - Dr. Dude
-  Earl's:
-    - POTC
   Knarr:
     - WCS
     - RFM
-Fremont/Wallingford/Ballard:
+  College Inn:
+    - WCS
+    - TAF
+  Earl's:
+    - POTC
+Fremont/Wallingford:
+  Al's:
+    - WCS
+  Goldies:
+    - MM
+  Buckaroo Tavern:
+    - TSPP
+  Dubliner:
+    - SP
+  Fremont Dock:
+    - NASCAR
+  High Dive:
+    - RollerCoaster Tycoon
+Ballard:
+  Snoose Junction:
+    - WCS
+    - TAF
+  2 Bit Saloon:
+    - TAF
+    - SS
+  Molly Maguires:
+    - Monopoly
   Tin Hat:
     - AFM
     - MM
-  Goldies:
-    - MM
   Ballard Grill:
     - MM
-  Snoose Junction:
-    - Hurricane
-    - TAF
-  Buckaroo Tavern:
-    - TSPP
-  Al's:
-    - WCS
-  High Dive:
-    - RollerCoaster Tycoon
-  Fremont Dock:
-    - NASCAR
-  Molly Maguires:
-    - Monopoly
-  Dubliner:
-    - SP
-  2 Bit Saloon:
-    - JY
+Greenwood/Greenlake:
+  Ed's Kort Haus:
     - SS
-
+  Little Red Hen:
+    - RS
+  Crosswalk Tavern:
+    - Flintstones
+Beacon Hill:
+  AMF Imperial Lanes:
+    - DM
