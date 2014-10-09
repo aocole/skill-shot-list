@@ -1,3 +1,4 @@
+require 'history'
 class StatsController < ApplicationController
   before_filter :require_admin_user
 
@@ -49,6 +50,18 @@ class StatsController < ApplicationController
     end
 
     # @oldest_machines = Machine.order("created_at asc").limit(40)
+  end
+
+  def index2
+    current_count = 0
+    @machines_over_time = []
+    changes = History.reconstruct_changes.sort{|a,b|a.created_at <=> b.created_at}
+    changes.each do |change|
+      current_count += change.change_type == MachineChange::ChangeType::CREATE ? 1 : -1
+      @machines_over_time << [change.created_at, current_count]
+    end
+
+    render action: 'index'
   end
 
 end

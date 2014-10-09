@@ -7,6 +7,7 @@ Skillshot::Application.routes.draw do
   get "admin/clear_all_cache"
 
   get "stats/index"
+  get "stats/index2"
 
   resources :areas do
     get :print, :on => :member

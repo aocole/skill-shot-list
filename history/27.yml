@@ -1,5 +1,5 @@
 ---
-__DATE__: 06/2012
+__DATE__: 01/2013
 Downtown:
   Pacific Place 11:
     - Elvis
@@ -9,135 +9,128 @@ Downtown:
     - High Roller Casino
     - Sopranos
     - SP
+  Orange Dracula:
+    - BSD
+  Greyhound:
+    - RFM
   Seattle Waterfront Arcade:
     - IM
-    - T3
-    - TRON
 Queen Anne:
   Bandit's:
-    - CC
+    - IM
   Floyd's Place:
     - IM
-  Hula Hula:
-    - CSI
   Jabu's:
-    - IM
-    - Shadow
+    - SM
   Mecca:
     - LOTR
-  Funhouse:
-    - "24"
-    - FH
-    - SM
-    - TZ
 Eastlake:
   Zoo:
-    - DM
-    - IJ
+    - JY
+    - TSPP
     - TOM
-    - WPT
 SLU:
   Cafe Venus:
     - AFM
-  El Corazon:
-    - JY
-  Jillian's:
-    - RollerCoaster Tycoon
-    - TSPP
   Lunch Box Laboratory:
     - Checkpoint
   Victory Lounge:
-    - Hurricane
+    - TZ
+  World Sports Grille:
+    - RollerCoaster Tycoon
+    - TSPP
 West Seattle:
   Benbow Room:
     - WPT
+  Corner Pocket:
+    - SS
   Feedback Lounge:
-    - FT
-    - NGG
-    - Whirlwind
-  Rocksports:
-    - Tee'd Off
-  Shipwreck Tavern:
-    - T2
-    - Vector
-  Admiral Pub:
-    - IJ(S)
+    - Pinbot
+    - WW
   Alki Tavern:
-    - POTC
+    - LOTR
 White Center:
   Full Tilt Ice Cream White Center:
+    - Dr. Dude
     - FT
-    - Getaway
-    - Jokerz!
     - RS
-    - SWE1
-  Barrel Tavern:
-    - Popeye
+    - TSPP
+    - Transformers
+  Southgate Roller Rink:
+    - Charlie's Angels
+    - Cyclone
+    - Whirlwind
   Locker Room:
     - NGG
   Zippy's:
     - Monopoly
-    - WW
+    - WCS
 Belltown/Denny Regrade:
   Lava Lounge:
     - DW
   Rabbit Hole:
     - Jack-Bot
   Shorty's:
+    - AC/DC Let There Be Rock Limited Edition
     - TAF
-    - Baby Pac-man
-    - Batman
+    - The Avengers (Limited Edition)
     - Centaur
     - CP
     - Elektra
     - FGY
+    - Granny and the Gators
     - IJ
-    - Avatar
     - MM
     - MB
     - RFM
     - Speakeasy
     - Surf Champ
-    - TOTAN
+    - TOM
     - Transformers Limited Edition ("Combo")
-    - TRON
+    - X-Men (Wolverine LE)
   Hurricane:
-    - LOTR
-    - TSPP
+    - TAF
+    - Hurricane
+    - TRON
 Pioneer Square:
+  Fenix:
+    - Embryon
+  Joe's Bar and Grill:
+    - FT
+  Oasis Tea Zone:
+    - Space Invaders
   Seattle Pinball Museum:
-    - AFM
+    - Asteroid Annie and the Aliens
     - Attila the Hun
+    - Black Hole
+    - Black Pyramid
     - Bow and Arrow
-    - Breakshot
     - Captain Fantastic
     - CP
     - Circus
+    - Dracula
+    - F-14 Tomcat
     - Flipper Football
     - Four Million BC
     - Fun Land
-    - Galactic Girl
-    - Gorgar
-    - Hang Glider
-    - Hyperball
-    - King Pin
-    - Lost World
+    - King Tut
+    - Kiss
+    - Loop the Loop
     - MB
-    - New World
-    - Power Play
-    - Rapid Fire
+    - Mystic
+    - NBA Fastbreak
+    - Night Club
+    - Pinbot
     - RFM
     - RBION
     - Rolling Stones
-    - TSPP
-    - Space Hawk
+    - The Simpsons
     - Spin Out
     - SWE1
     - Swing-Along
+    - Tales from the Crypt
+    - TOTAN
     - Time Zone
-    - Wizard
-  Temple Billiards:
-    - Sharkey's Shootout
 SODO:
   Hooverville:
     - EBD
@@ -148,68 +141,92 @@ SODO:
     - Cyclone
     - Diner
   Siren Tavern:
-    - Dirty Harry
+    - NGG
 Capitol Hill:
+  Artful Dodger Tattoo:
+    - Jacks Open
+    - Target Alpha
+    - Twin Win
+    - Wild Life
   C.C. Attle's:
-    - LOTR
-    - T3
+    - DW
+    - WPT
   Canterbury:
     - DM
     - IJ
-  Comet: 
-    - TAF
+  Cha Cha:
+    - Getaway
+    - SM
+  Comet:
+    - "Freddy: A Nightmare on Elm Street"
+    - Road Kings
   Highline:
     - MM
-    - T3
+    - MB
+  Hillside Bar:
+    - "24"
+    - Avatar
+  John John's Gameroom:
+    - TAF
+    - Baby Pac-man
+    - BSD
+    - Captain Fantastic
+    - Jumping Jack
+    - Radical!
+    - SM
+    - Tales from the Crypt
+    - Who Dunnit
   Lather Daddy:
-    - Dr. Dude
+    - Getaway
   LTD. Art Gallery:
     - T2
   Madison Pub:
     - BBH
     - FGY
     - IM
+  Narwhal:
+    - TAF
+    - AFM
+    - Baby Pac-man
+    - FT
+    - FH
+    - JY
+    - LOTR
+    - MM
+    - TSPP
   Roanoke:
     - FT
   Seattle Tattoo Emporium:
     - Hot Shot
     - Super Straight
     - Wizard
-  Chieftain:
-    - LOTR
   Cuff:
     - POTC
     - WPT
-  Elite:
-    - TAF
   Lookout:
+    - LOTR
     - POTC
-    - TSPP
   Redwood:
-    - NGG
+    - AFM
 Central District/Madison Park:
   Girlie Press:
     - Wild Wild West
   Pritty Boys:
     - Ready...Aim...Fire!
   Red Onion:
-    - Tales from the Crypt
+    - AFM
   Neighbor Lady:
     - JY
     - MM
   Twilight Exit:
-    - TSPP
-    - T2
+    - LOTR
+    - Sharkey's Shootout
 Georgetown:
   9LB Hammer:
-    - FH
-    - NGG
-  Auto Quest:
-    - TZ
-  Calamity Jane's:
-    - Getaway
+    - SWE1
+    - T3
   Georgetown Liquor Company:
-    - Gilligan's Island
+    - FT
   Jules Maes Saloon:
     - CFTBL
     - DW
@@ -220,47 +237,47 @@ Georgetown:
     - SWE1
   Stellar Pizza:
     - Flintstones
+  Blu Grouse:
+    - Hang Glider
   The Mix:
     - ST
     - Tee'd Off
 U-District/North Side:
-  Cafe Racer:
-    - Jacks To Open
+  Caroline Tavern:
+    - IJ
   College Inn:
     - TAF
     - WCS
   Dante's:
     - BSD
   Earl's:
-    - FT
+    - Playboy
   Kathy's:
-    - NGG
+    - MB
   Knarr:
     - TOM
   Resevoir:
     - MM
   Sure Shot:
-    - Space Mission
-    - Sure Shot
-    - Wizard
+    - Aladdin's Castle
+    - Galactic Girl
+    - Monaco
   Kraken:
     - TOTAN
   Rat and Raven:
     - TSPP
 Fremont/Wallingford:
   Add-a-Ball:
-    - Baby Pac-man
-    - Captain Fantastic
+    - CP
+    - Dragonfist
+    - GNR
     - IJ(S)
     - "The Machine: Bride of Pinbot"
+    - MB
     - Nitro Ground Shaker
     - Old Chicago
-    - Pool Sharks
-    - Radical!
     - Stars
     - Surf Champ
-    - TZ
-    - WOF
   Al's:
     - DW
   Iron Bull:
@@ -270,41 +287,39 @@ Fremont/Wallingford:
     - EATPM
 Ballard:
   2 Bit Saloon:
+    - EATPM
     - T2
   Ballard Grill:
     - TSPP
   Cafe Mox:
     - MM
   Full Tilt Ice Cream Ballard:
+    - Batman
     - Black Knight 2000
     - BSD
-    - Centaur
     - CFTBL
-    - Diner
     - IM
+    - Jack-Bot
     - JM
     - LOTR
     - NGG
     - POTC
-    - Shadow
     - Whirlwind
     - WW
+    - WCS
   Golden City:
-    - Cyclone
+    - Breakshot
     - T2
   Pizza Hut:
     - LOTR
   Sloop Tavern:
     - TSPP
-  Snoose Junction:
-    - MB
-    - WCS
   The Josephine:
     - Big Shot
     - Jumping Jack
   Tin Hat:
     - MB
-    - Transformers
+    - TSPP
   Wingmasters:
     - TAF
 Greenwood/Greenlake:
@@ -325,8 +340,8 @@ Greenwood/Greenlake:
     - MM
 Columbia City:
   Full Tilt Columbia City:
-    - AFM
+    - TAF
     - Black Knight 2000
     - Congo
-    - Popeye
-    - TZ
+    - DW
+    - X-Men (Pro)
