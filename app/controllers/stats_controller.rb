@@ -54,7 +54,7 @@ class StatsController < ApplicationController
 
   def index2
     current_count = 0
-    @machines_over_time = []
+    @machines_over_time = {}
     @title_count = Hash.new(0)
     @titles_over_time = {}
     changes = History.reconstruct_changes.sort{|a,b|a.created_at <=> b.created_at}
@@ -62,12 +62,16 @@ class StatsController < ApplicationController
       delta = change.change_type == MachineChange::ChangeType::CREATE ? 1 : -1
 
       current_count += delta
-      @machines_over_time << [change.created_at, current_count]
+      @machines_over_time[change.created_at] = current_count
 
       @title_count[change.machine.title] += delta
-      @titles_over_time[change.machine.title.name] ||= []
-      @titles_over_time[change.machine.title.name] << [change.created_at, @title_count[change.machine.title]]
+      @titles_over_time[change.machine.title.name] ||= {}
+      @titles_over_time[change.machine.title.name][change.created_at] = @title_count[change.machine.title]
+    end
 
+    titles = @titles_over_time.keys
+    titles.each do |title|
+      @titles_over_time[title] = @titles_over_time[title].to_a
     end
 
     render action: 'index'
