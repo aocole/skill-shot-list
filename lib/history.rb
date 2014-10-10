@@ -1,5 +1,4 @@
 require 'yaml'
-require 'colored'
 
 class History
   def self.reconstruct_changes
