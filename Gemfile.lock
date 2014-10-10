@@ -48,7 +48,6 @@ GEM
       request_store (~> 1.0)
     builder (3.0.4)
     coderay (1.1.0)
-    colored (1.2)
     dotenv (0.7.0)
     erubis (2.7.0)
     foreigner (1.4.2)
@@ -151,7 +150,6 @@ DEPENDENCIES
   acts_as_paranoid (~> 0.4.0)!
   airbrake
   authlogic
-  colored
   foreigner (~> 1.4.2)
   foreman
   geocoder
