@@ -1,26 +1,16 @@
-# m = MachineChange.
-#       where("localities.area_id = 1").
-#       order('created_at desc').
-#                 joins('
-#                   join machines on machines.id = machine_changes.machine_id 
-#                   join locations on locations.id = machines.location_id
-#                   join localities on localities.id = locations.locality_id
-#                   ')
-
-
 require 'yaml'
 require 'colored'
 
 class History
   def self.reconstruct_changes
 
-    localities = Locality.unscoped
-    localities = Hash[localities.collect{|loc| [loc.name, loc]}]
+    @@localities = Locality.unscoped
+    @@localities = Hash[@@localities.collect{|loc| [loc.name, loc]}]
 
-    locations = Location.unscoped
-    locations = Hash[locations.collect{|loc| [loc.name, loc]}]
-    locations['12th Ave Laundry'] = Location.find_by_cached_slug 'lather-daddy'
-    locations['ADD Motor Works'] = Location.find_by_cached_slug 'add-a-ball-amusements'
+    @@locations = Location.unscoped
+    @@locations = Hash[@@locations.collect{|loc| [loc.name, loc]}]
+    @@locations['12th Ave Laundry'] = Location.find_by_cached_slug 'lather-daddy'
+    @@locations['ADD Motor Works'] = Location.find_by_cached_slug 'add-a-ball-amusements'
     old_locations =<<END
 ---
 Downtown:
@@ -42,6 +32,7 @@ Greenwood/Green Lake:
   - Little Red Hen
   - Sundown Saloon
   - Sweet Lou's
+  - Lylas Family Espresso
 SODO:
   - Goldies
   - Club Motor
@@ -111,15 +102,15 @@ South Lake Union:
 END
     old_locations = YAML.load(old_locations)
     old_locations.each do |locality_name, location_names|
-      locality = localities[locality_name]
+      locality = @@localities[locality_name]
       raise "Couldn't find #{locality_name}" if locality.nil?
       location_names.each do |location_name|
-        locations[location_name] = Location.new(locality: locality, name: location_name)
+        @@locations[location_name] = Location.new(locality: locality, name: location_name)
       end
     end
 
-    titles = Title.unscoped
-    titles = Hash[titles.collect{|loc| [loc.name, loc]}]
+    @@titles = Title.unscoped.where("status is null or status != ?", Title::STATUS::HIDDEN)
+    @@titles = Hash[@@titles.collect{|loc| [loc.name, loc]}]
     Hash[
       'SP', 'South Park',
       'SW', 'Star Wars (Data East)',
@@ -175,74 +166,112 @@ END
       'RBION', "Ripley's Believe It or Not!",
       'EATPM', "Elvira and the Party Monsters",
       'WPT', "World Poker Tour",
-      'JM', "Johnny Mnemonic"
+      'JM', "Johnny Mnemonic",
+      'WOZ', "The Wizard of Oz",
+      'JP', "Jurassic Park",
+      'Pinball', 'Pinball (SS)'
     ].each do |abbrev, name|
-      titles[abbrev] = Title.where(name: name).first
-      raise "Couldn't find #{name}" if titles[abbrev].nil?
+      @@titles[abbrev] = Title.where(name: name).first
+      raise "Couldn't find #{name}" if @@titles[abbrev].nil?
     end
 
     machine_changes = []
 
     old_state = {}
     Dir.glob("#{Rails.root}/history/*.yml").sort.each do |filename|
-      new_state = {}
-      issue = YAML.load_file(filename)
-      date = Time.parse(issue.delete('__DATE__'))
-      issue.each do |neighborhood, hood_locations|
-        hood_locations.each do |location_pair|
-          location_name = location_pair.first
-          location = match_list(location_name, locations)
-          new_state[location] = []
-          games = location_pair.last
-          games.each do |name|
-            title = match_list(name, titles)
-            new_state[location] << title
-          end
-        end
-      end
-
-      # resolve changes necessary to get to new_state from old_state
-      new_state.each do |new_location, new_games|
-        old_games = old_state.delete(new_location)
-        if old_games.nil?
-          # new_location is new this issue
-          old_games = []
-        end
-        added_games = new_games - old_games
-        removed_games = old_games - new_games
-        added_games.each do |title|
-          mc = MachineChange.new(
-            change_type: MachineChange::ChangeType::CREATE, 
-          )
-          mc.machine = Machine.new(title: title, location: new_location)
-          mc.created_at = date
-          machine_changes << mc
-        end
-        removed_games.each do |title|
-          mc = MachineChange.new(
-            change_type: MachineChange::ChangeType::DELETE, 
-          )
-          mc.machine = Machine.new(title: title, location: new_location)
-          mc.created_at = date
-          machine_changes << mc
-        end
-      end
-
-      # locations still left in old_state no longer exist, delete all their games
-      old_state.each do |old_location, old_games|
-        old_games.each do |title|
-          mc = MachineChange.new(
-            change_type: MachineChange::ChangeType::DELETE, 
-          )
-          mc.machine = Machine.new(title: title, location: old_location)
-          mc.created_at = date
-          machine_changes << mc
-        end
-      end
+      new_changes, new_state = created_changes_from_state_file(old_state, filename)
+      machine_changes += new_changes
       old_state = new_state
-    end 
+    end
+
+    # OK, now we're at a state after issue 31 (October 2013). It will still be a couple
+    # months before I enable change tracking in the database, but issue 32 doesn't come
+    # out until another month after that. Let's get the changes that issue 32 has recorded
+    # and compare that to what we have in the database.
+    issue_32_changes, new_state = created_changes_from_state_file(old_state, "#{Rails.root}/history/32._yml")
+
+    # these ignorable changes are changes that I manually verified are in the DB already
+    ignorable_changes = YAML.load_file("#{Rails.root}/history/ignore32._yml")
+    issue_32_changes.delete_if do |change|
+      change_in_words = change.to_words
+      ignorable_changes.include?(change_in_words)
+    end
+
+    # Changes that are left are ones we missed
+    machine_changes += issue_32_changes
+
+    organic_machine_changes = MachineChange.
+      where("localities.area_id = 1 AND machine_changes.updated_at != ?", Time.at(1387148957)).
+      order('machine_changes.created_at asc').
+                joins('
+                  join machines on machines.id = machine_changes.machine_id 
+                  join locations on locations.id = machines.location_id
+                  join localities on localities.id = locations.locality_id
+                  ')
+
+    machine_changes += organic_machine_changes
     return machine_changes
 
+  end
+
+  def self.created_changes_from_state_file old_state, filename
+    new_state = {}
+    machine_changes = []
+    issue = YAML.load_file(filename)
+    date = Time.parse(issue.delete('__DATE__'))
+    issue.each do |neighborhood, hood_locations|
+      hood_locations.each do |location_pair|
+        location_name = location_pair.first
+        location = match_list(location_name, @@locations)
+        new_state[location] = []
+        games = location_pair.last
+        games.each do |name|
+          title = match_list(name, @@titles)
+          new_state[location] << title
+        end
+      end
+    end
+
+    # resolve changes necessary to get to new_state from old_state
+    new_state.each do |new_location, new_games|
+      old_games = old_state.delete(new_location)
+      if old_games.nil?
+        # new_location is new this issue
+        old_games = []
+      end
+      added_games = new_games - old_games
+      removed_games = old_games - new_games
+      added_games.each do |title|
+        mc = MachineChange.new(
+          change_type: MachineChange::ChangeType::CREATE, 
+        )
+        mc.machine = Machine.new(title: title, location: new_location)
+        mc.created_at = date
+        machine_changes << mc
+      end
+      removed_games.each do |title|
+        mc = MachineChange.new(
+          change_type: MachineChange::ChangeType::DELETE, 
+        )
+        mc.machine = Machine.new(title: title, location: new_location)
+        mc.created_at = date
+        machine_changes << mc
+      end
+    end
+
+    # locations still left in old_state no longer exist, delete all their games
+    old_state.each do |old_location, old_games|
+      old_games.each do |title|
+        mc = MachineChange.new(
+          change_type: MachineChange::ChangeType::DELETE, 
+        )
+        mc.machine = Machine.new(title: title, location: old_location)
+        mc.created_at = date
+        machine_changes << mc
+      end
+      old_location.deleted_at = date
+    end
+    return machine_changes, new_state
   end
 
   def self.match_list(name, list)

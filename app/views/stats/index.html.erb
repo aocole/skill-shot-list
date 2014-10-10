@@ -16,6 +16,12 @@
     font-family: sans-serif;
     font-size: 11px;
 }
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1px;
+}
 </style>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
@@ -32,25 +38,34 @@
             .range([padding, h-padding])
             .domain([
               d3.max(dataset, function(d){return d[1]}),
-              0//d3.min(dataset, function(d){return d[1]}) 
+              80//d3.min(dataset, function(d){return d[1]}) 
             ]);
   var svg = d3.select("#railsmain")
               .append("svg")
             .attr("width", w)
               .attr("height", h);
 
-  svg.selectAll("circle")
-     .data(dataset)
-     .enter()
-     .append("circle")
-     .attr("fill", "black")   
-     .attr("cx", function(d) {
-          return scaleX(new Date(d[0]));
-     })
-     .attr("cy", function(d) {
-          return scaleY(d[1]);
-     })
-     .attr("r", 1);
+  // svg.selectAll("circle")
+  //    .data(dataset)
+  //    .enter()
+  //    .append("circle")
+  //    .attr("fill", "black")   
+  //    .attr("cx", function(d) {
+  //         return scaleX(new Date(d[0]));
+  //    })
+  //    .attr("cy", function(d) {
+  //         return scaleY(d[1]);
+  //    })
+  //    .attr("r", 1);
+
+  var line = d3.svg.line()
+    .x(function(d) { return scaleX(new Date(d[0])) })
+    .y(function(d) { return scaleY(d[1]) });
+
+  svg.append("path")
+      .datum(dataset)
+      .attr("class", "line")
+      .attr("d", line);
 
   var xAxis = d3.svg.axis().scale(scaleX).orient("bottom");
   svg.append("g")

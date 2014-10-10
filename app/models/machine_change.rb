@@ -21,4 +21,8 @@ class MachineChange < ActiveRecord::Base
     change_type == ChangeType::DELETE
   end
   alias delete? remove?
+
+  def to_words
+    "#{machine.title.name} #{change_type == ChangeType::CREATE ? 'added to' : 'removed from'} #{machine.location.name}"
+  end
 end
