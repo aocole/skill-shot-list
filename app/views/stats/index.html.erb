@@ -19,11 +19,10 @@
 
 .line {
   fill: none;
-  stroke-width: 2px;
+  stroke-width: 3px;
 }
 </style>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<%# javascript_include_tag 'labeler' %>
 <script>
   var dataset = <%= @machines_over_time.collect{|pair|pair[0] = pair[0].to_i * 1000; pair}.to_json.html_safe %>
 
@@ -83,102 +82,85 @@
 
 
 // Individual title analysis
+<% [@titles_over_time, @localities_over_time].each do |data_over_time| %>
+    var dataset = <%= data_over_time.each do |title, time_series|
+      time_series.collect do |pair|
+        pair[0] = pair[0].to_i * 1000
+        pair
+      end
+    end.to_json.html_safe
+    %>
 
-  var dataset = <%= @titles_over_time.each do |title, time_series|
-    time_series.collect do |pair|
-      pair[0] = pair[0].to_i * 1000
-      pair
-    end
-  end.to_json.html_safe
-  %>
-
-  w = 800
-  h = 500
-  padding = 30
+    w = 800
+    h = 500
+    padding = 30
 
 
-  var counts_for_scale = d3.values(dataset).map(function(time_series) {
-    return d3.extent(time_series, function(time_count_pair){
-      return time_count_pair[1]
-    })
-  }).reduce(function(a, b) {
-    return a.concat(b);
-  })
-  var scaleY = d3.scale.linear()
-            .range([padding, h-padding])
-            .domain([d3.max(counts_for_scale), 0]);
-  var svg = d3.select("#railsmain")
-              .append("svg")
-              .attr("width", w+100)
-              .attr("height", h);
-
-  colorScale = d3.scale.category10();
-  var colorIndex = 0;
-  // var label_array = [];
-  // var anchor_array = [];
-  d3.entries(dataset).forEach(function(entry){
-    var gameName = entry.key;
-    var timeSeries = entry.value
-    // if (d3.mean(timeSeries, function(time_count_pair){return time_count_pair[1]}) < 4.4) {
-    if (d3.max(timeSeries, function(time_count_pair){return time_count_pair[1]}) < 8) {
-      return // Don't clutter the plot with low-count games
-    }
-    var color = colorScale(colorIndex++ % 20);
-    var line = d3.svg.line()
-      .x(function(d) { 
-        return scaleX(new Date(d[0])) 
+    var counts_for_scale = d3.values(dataset).map(function(time_series) {
+      return d3.extent(time_series, function(time_count_pair){
+        return time_count_pair[1]
       })
-      .y(function(d) { 
-        return scaleY(d[1]) 
-      });
-    svg.append("path")
-        .datum(timeSeries)
-        .attr("class", "line")
-        .attr("stroke", color)
-        .attr("title", gameName)
-        .attr("d", line);
-    var label = svg.append("text")
-        .text(gameName)
-        .attr("x", scaleX(new Date(timeSeries[timeSeries.length-1][0])) + 5)
-        .attr("y", scaleY(timeSeries[timeSeries.length-1][1]) + 10)
-        .attr("font-family", "sans-serif")
-        .attr("font-size", "11px")
-        .attr("fill", color);
-    // anchor_array[anchor_array.length] = {
-    //   x: label.attr("x"),
-    //   y: label.attr("y"),
-    //   r: 2
-    // }
-    // label_array[label_array.length] = {
-    //   x: label.attr("x"),
-    //   y: label.attr("y"),
-    //   name: gameName,
-    //   width: 0.0,
-    //   height: 0.0
-    // }
-  })
+    }).reduce(function(a, b) {
+      return a.concat(b);
+    })
+    var scaleY = d3.scale.linear()
+              .range([padding, h-padding])
+              .domain([d3.max(counts_for_scale), 0]);
+    var svg = d3.select("#railsmain")
+                .append("svg")
+                .attr("width", w+100)
+                .attr("height", h);
 
-  // var labels = d3.labeler()
-  //              .label(label_array)
-  //              .anchor(anchor_array)
-  //              .width(w+100)
-  //              .height(h)
-  //              .start();
+    colorScale = d3.scale.category20();
+    var colorIndex = 0;
+    d3.entries(dataset).forEach(function(entry){
+      var gameName = entry.key;
+      var timeSeries = entry.value
+      // if (d3.mean(timeSeries, function(time_count_pair){return time_count_pair[1]}) < 4.4) {
+      if (d3.max(timeSeries, function(time_count_pair){return time_count_pair[1]}) < 7) {
+        return // Don't clutter the plot with low-count games
+      }
+      var color = colorScale(colorIndex++ % 20);
+      var line = d3.svg.line()
+        .x(function(d) { 
+          return scaleX(new Date(d[0])) 
+        })
+        .y(function(d) { 
+          return scaleY(d[1]) 
+        });
+      svg.append("path")
+          .datum(timeSeries)
+          .attr("class", "line")
+          .attr("stroke", color)
+          .attr("title", gameName)
+          .attr("d", line);
+      svg.append("text")
+          .text(gameName)
+          .attr("x", scaleX(new Date(timeSeries[timeSeries.length-1][0])) + 5)
+          .attr("y", scaleY(timeSeries[timeSeries.length-1][1]) + 10)
+          .attr("font-family", "sans-serif")
+          .attr("class", "label")
+          .attr("font-size", "11px")
+          .attr("fill", color);
+    })
 
-  var xAxis = d3.svg.axis().scale(scaleX).orient("bottom");
-  svg.append("g")
-    .attr("class", "axis")
-    .attr("transform", "translate(0," + (h - padding) + ")")
-    .call(xAxis);
+    var labels = d3.select('.label')
 
-  var yAxis = d3.svg.axis()
-                  .scale(scaleY)
-                  .orient("left")
-                  .ticks(10);
-
-  svg.append("g")
+    var xAxis = d3.svg.axis().scale(scaleX).orient("bottom");
+    svg.append("g")
       .attr("class", "axis")
-      .attr("transform", "translate(" + padding + ",0)")
-      .call(yAxis);
+      .attr("transform", "translate(0," + (h - padding) + ")")
+      .call(xAxis);
+
+    var yAxis = d3.svg.axis()
+                    .scale(scaleY)
+                    .orient("left")
+                    .ticks(10);
+
+    svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(" + padding + ",0)")
+        .call(yAxis);
+<%end%>
 </script>
 

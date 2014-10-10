@@ -168,7 +168,8 @@ END
       'JM', "Johnny Mnemonic",
       'WOZ', "The Wizard of Oz",
       'JP', "Jurassic Park",
-      'Pinball', 'Pinball (SS)'
+      'Pinball', 'Pinball (SS)',
+      'WW', 'White Water'
     ].each do |abbrev, name|
       @@titles[abbrev] = Title.where(name: name).first
       raise "Couldn't find #{name}" if @@titles[abbrev].nil?
