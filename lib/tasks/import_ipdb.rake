@@ -26,12 +26,13 @@ namespace :import do
   task :ipdb => :environment do
     I18n.enforce_available_locales = true
     require 'htmlentities'
-    unless ENV['file']
-      puts "Must specify 'file={filename}'"
-      exit
+    ipdb_file = ARGV[1] || File.join(Rails.root, 'ipdb.html')
+    unless File.exist?(ipdb_file)
+      puts "Couldn't find file '#{ipdb_file}'. Please specifify `rake #{ARGV[0]} {filename}`."
+      exit 1
     end
     ActiveRecord::Base.logger = nil
-    f = File.read(ENV['file']).
+    f = File.read(ipdb_file).
       encode("UTF-8", 'ASCII', :invalid => :replace, :undef => :replace, :replace => "").
       force_encoding('UTF-8')
     coder = HTMLEntities.new
