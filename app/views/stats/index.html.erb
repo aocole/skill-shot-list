@@ -50,7 +50,7 @@ body {
   var line = d3.svg.line()
     .x(function(d) { return scaleX(new Date(d[0])) })
     .y(function(d) { return scaleY(d[1]) })
-    .interpolate('basis');
+    .interpolate('cardinal');
 
   svg.append("path")
       .datum(dataset)
@@ -87,6 +87,8 @@ body {
 
 // Individual title analysis
 <% [@titles_over_time, @localities_over_time].each_with_index do |data_over_time, index| %>
+    var TITLES = <% if index.zero? %>true<% else %>false<%end%>;
+      
     var dataset = <%= data_over_time.each do |title, time_series|
       time_series.collect do |pair|
         pair[0] = pair[0].to_i * 1000
@@ -117,7 +119,18 @@ body {
 
     var strokeStyles = ["none", "3 3", "8 2", "12 2 2 2", "1", "12 2 2 2 2 2"]
     var strokeIndex = 0;
-    var arrayData = d3.entries(dataset)
+    var arrayData = d3.entries(dataset).filter(function(el){
+      if (!TITLES) {
+        return true
+      }
+      // else we're filtering titles. Only return games that have had at least
+      // N machines on location at some point
+      return d3.max(
+        el.value.map(function(point){
+            return point[1]
+          })
+        ) > 7
+    })
 
     var colorScale = d3.scale.category10();
     colorScale.domain(d3.keys(dataset));
@@ -132,7 +145,7 @@ body {
       .y(function(d) { 
         return scaleY(d[1]) 
       })
-      .interpolate('basis');
+      .interpolate('cardinal');
 
     svg.selectAll("path").data(arrayData).enter()
       .append("path")
@@ -166,7 +179,6 @@ body {
       .attr("class", "axis")
       .attr("transform", "translate(0," + (h - padding) + ")")
       .call(xAxis);
-
     var yAxis = d3.svg.axis()
                     .scale(scaleY)
                     .orient("left")

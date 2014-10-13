@@ -81,23 +81,28 @@ class StatsController < ApplicationController
       #     warnings << ("Tried to remove #{change.machine.title.name} from #{change.machine.location.name} (#{change.created_at}) but there isn't one there!")
       #   end
       # end
+
+      # This smooths out spikyness caused by games being added and removed from a location
+      # on the same day
+      adjusted_change_time = change.created_at.at_midnight
+
       current_count += delta
-      @machines_over_time[change.created_at] = current_count
+      @machines_over_time[adjusted_change_time] = current_count
 
       @title_count[change.machine.title] += delta
       @titles_over_time[change.machine.title.name] ||= {}
-      @titles_over_time[change.machine.title.name][change.created_at] = @title_count[change.machine.title]
+      @titles_over_time[change.machine.title.name][adjusted_change_time] = @title_count[change.machine.title]
 
       @locality_count[change.machine.location.locality] += delta
       @localities_over_time[change.machine.location.locality.name] ||= {}
-      @localities_over_time[change.machine.location.locality.name][change.created_at] = @locality_count[change.machine.location.locality]
+      @localities_over_time[change.machine.location.locality.name][adjusted_change_time] = @locality_count[change.machine.location.locality]
       if change.machine.location.locality == psid && change.machine.location != spm 
         @locality_count[idwospm] += delta
         @localities_over_time[idwospm] ||= {}
-        @localities_over_time[idwospm][change.created_at] = @locality_count[idwospm]
+        @localities_over_time[idwospm][adjusted_change_time] = @locality_count[idwospm]
       end
     end
-    last_date = changes.last.created_at
+    last_date = changes.last.created_at.at_midnight
     [@titles_over_time, @localities_over_time].each do |dataset|
       dataset.each do |name, time_series_hash|
         last_date_of_this_hash = time_series_hash.keys.max
