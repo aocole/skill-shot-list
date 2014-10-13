@@ -116,55 +116,50 @@ body {
                 .attr("height", h);
 
     var strokeStyles = ["none", "3 3", "8 2", "12 2 2 2", "1", "12 2 2 2 2 2"]
-    colorScale = d3.scale.category10();
-    var colorIndex = 0;
     var strokeIndex = 0;
-    d3.entries(dataset).forEach(function(entry){
-      var entryName = entry.key;
-      var timeSeries = entry.value
-      // if (d3.mean(timeSeries, function(time_count_pair){return time_count_pair[1]}) < 4.4) {
-      if (<%=index%> == 0 && d3.max(timeSeries, function(time_count_pair){return time_count_pair[1]}) < 8) {
-        return // Don't clutter the plot with low-count games
-      }
-      var color = colorScale(colorIndex++ % 10);
-      var line = d3.svg.line()
-        .x(function(d) { 
-          return scaleX(new Date(d[0])) 
-        })
-        .y(function(d) { 
-          return scaleY(d[1]) 
-        })
-        .interpolate('basis');
-      svg.append("path")
-          .datum(timeSeries)
-          .attr("class", "line")
-          .attr("stroke", color)
-          .style("stroke-dasharray", function(){return strokeStyles[strokeIndex++ % strokeStyles.length]})
-          .attr("title", entryName)
-          .attr("d", line);
+    var arrayData = d3.entries(dataset)
 
-      var yPos = scaleY(timeSeries[timeSeries.length-1][1]) + 10;
-      var xPos = scaleX(new Date(timeSeries[timeSeries.length-1][0])) + 5;
-      if (entryName == "Fish Tales") {
-        yPos += 60;
-        xPos -= 50
-      } else if (entryName == "Ballard") {
-        yPos -= 40;
-      } else if (entryName == "Georgetown") {
-        yPos += 100;
-        xPos -= 80;
-      }
-      svg.append("text")
-          .text(entryName)
-          .attr("x", xPos)
-          .attr("y", yPos)
-          .attr("font-family", "sans-serif")
-          .attr("class", "label")
-          .attr("font-size", "18px")
-          .attr("fill", color);
-    })
+    var colorScale = d3.scale.category10();
+    colorScale.domain(d3.keys(dataset));
+    var colorFunc = function(d){
+      return colorScale(d.key)
+    };
 
-    var labels = d3.select('.label')
+    var line = d3.svg.line()
+      .x(function(d) { 
+        return scaleX(new Date(d[0])) 
+      })
+      .y(function(d) { 
+        return scaleY(d[1]) 
+      })
+      .interpolate('basis');
+
+    svg.selectAll("path").data(arrayData).enter()
+      .append("path")
+        .attr("class", "line")
+        .attr("stroke", colorFunc)
+        .style("stroke-dasharray", function(){
+          return strokeStyles[strokeIndex++ % strokeStyles.length]
+        })
+        .datum(function(d){return d.value})
+        .attr("d", line);
+    svg.selectAll("text").data(arrayData).enter()
+      .append("text")
+        .text(function(d){
+          return d.key
+        })
+        .attr("x", function(d) {
+          var timeSeries = d.value;
+          return scaleX(new Date(timeSeries[timeSeries.length-1][0])) + 5
+        })
+        .attr("y", function(d){
+          var timeSeries = d.value;
+          return scaleY(timeSeries[timeSeries.length-1][1]) + 10
+        })
+        .attr("font-family", "sans-serif")
+        .attr("class", "label")
+        .attr("font-size", "18px")
+        .attr("fill", colorFunc);
 
     var xAxis = d3.svg.axis().scale(scaleX).orient("bottom");
     svg.append("g")
