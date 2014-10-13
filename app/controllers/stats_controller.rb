@@ -63,6 +63,9 @@ class StatsController < ApplicationController
     @locality_count = Hash.new(0)
     @localities_over_time = {}
     changes = History.reconstruct_changes.sort{|a,b|a.created_at <=> b.created_at}
+    spm = Location.find_by_cached_slug 'seattle-pinball-museum'
+    psid = Locality.find_by_cached_slug 'pioneer-square-international-district'
+    idwospm = "Pioneer Sq./ID w/o SPM"
     changes.each do |change|
       delta = change.change_type == MachineChange::ChangeType::CREATE ? 1 : -1
       # state[change.machine.location.name] ||= []
@@ -88,8 +91,37 @@ class StatsController < ApplicationController
       @locality_count[change.machine.location.locality] += delta
       @localities_over_time[change.machine.location.locality.name] ||= {}
       @localities_over_time[change.machine.location.locality.name][change.created_at] = @locality_count[change.machine.location.locality]
+      if change.machine.location.locality == psid && change.machine.location != spm 
+        @locality_count[idwospm] += delta
+        @localities_over_time[idwospm] ||= {}
+        @localities_over_time[idwospm][change.created_at] = @locality_count[idwospm]
+      end
     end
-    # log_state(state, 'reconstructed_state')
+    last_date = changes.last.created_at
+    [@titles_over_time, @localities_over_time].each do |dataset|
+      dataset.each do |name, time_series_hash|
+        last_date_of_this_hash = time_series_hash.keys.max
+        last_value = time_series_hash[last_date_of_this_hash]
+        time_series_hash[last_date] = last_value
+      end
+    end
+
+    [
+      "Belltown/Denny Regrade", 
+      "U District/North Side",
+      "White Center",
+      "Greenwood/Green Lake",
+      "SODO",
+      "Columbia City",
+      "Downtown",
+      "Eastlake",
+      "Queen Anne",
+      "Central District/Madison Park",
+      "South Lake Union",
+      "West Seattle"].each do |hood|
+      @localities_over_time.delete(hood)
+    end
+    @localities_over_time["Pioneer Sq./ID"] = @localities_over_time.delete "Pioneer Square/International District"
 
     [@titles_over_time, @localities_over_time].each do |data_over_time|
       data = data_over_time.keys
@@ -98,7 +130,7 @@ class StatsController < ApplicationController
       end
     end
 
-    render action: 'index'
+    render action: 'index', layout: false
     # logger.warn warnings.join("\n")
     # real_machines = Machine.
     #               where("localities.area_id = 1").

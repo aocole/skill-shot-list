@@ -1,5 +1,8 @@
+<html>
+<body>
+
 <style>
-#railsmain {
+body {
   color: black;
   background-color: white;
   padding: 10px;
@@ -14,7 +17,7 @@
 
 .axis text {
     font-family: sans-serif;
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .line {
@@ -39,14 +42,15 @@
               d3.max(dataset, function(d){return d[1]}),
               80//d3.min(dataset, function(d){return d[1]}) 
             ]);
-  var svg = d3.select("#railsmain")
+  var svg = d3.select("body")
               .append("svg")
               .attr("width", w)
               .attr("height", h);
 
   var line = d3.svg.line()
     .x(function(d) { return scaleX(new Date(d[0])) })
-    .y(function(d) { return scaleY(d[1]) });
+    .y(function(d) { return scaleY(d[1]) })
+    .interpolate('basis');
 
   svg.append("path")
       .datum(dataset)
@@ -82,7 +86,7 @@
 
 
 // Individual title analysis
-<% [@titles_over_time, @localities_over_time].each do |data_over_time| %>
+<% [@titles_over_time, @localities_over_time].each_with_index do |data_over_time, index| %>
     var dataset = <%= data_over_time.each do |title, time_series|
       time_series.collect do |pair|
         pair[0] = pair[0].to_i * 1000
@@ -106,41 +110,57 @@
     var scaleY = d3.scale.linear()
               .range([padding, h-padding])
               .domain([d3.max(counts_for_scale), 0]);
-    var svg = d3.select("#railsmain")
+    var svg = d3.select("body")
                 .append("svg")
-                .attr("width", w+100)
+                .attr("width", w+500)
                 .attr("height", h);
 
-    colorScale = d3.scale.category20();
+    var strokeStyles = ["none", "3 3", "8 2", "12 2 2 2", "1", "12 2 2 2 2 2"]
+    colorScale = d3.scale.category10();
     var colorIndex = 0;
+    var strokeIndex = 0;
     d3.entries(dataset).forEach(function(entry){
-      var gameName = entry.key;
+      var entryName = entry.key;
       var timeSeries = entry.value
       // if (d3.mean(timeSeries, function(time_count_pair){return time_count_pair[1]}) < 4.4) {
-      if (d3.max(timeSeries, function(time_count_pair){return time_count_pair[1]}) < 7) {
+      if (<%=index%> == 0 && d3.max(timeSeries, function(time_count_pair){return time_count_pair[1]}) < 8) {
         return // Don't clutter the plot with low-count games
       }
-      var color = colorScale(colorIndex++ % 20);
+      var color = colorScale(colorIndex++ % 10);
       var line = d3.svg.line()
         .x(function(d) { 
           return scaleX(new Date(d[0])) 
         })
         .y(function(d) { 
           return scaleY(d[1]) 
-        });
+        })
+        .interpolate('basis');
       svg.append("path")
           .datum(timeSeries)
           .attr("class", "line")
           .attr("stroke", color)
-          .attr("title", gameName)
+          .style("stroke-dasharray", function(){return strokeStyles[strokeIndex++ % strokeStyles.length]})
+          .attr("title", entryName)
           .attr("d", line);
+
+      var yPos = scaleY(timeSeries[timeSeries.length-1][1]) + 10;
+      var xPos = scaleX(new Date(timeSeries[timeSeries.length-1][0])) + 5;
+      if (entryName == "Fish Tales") {
+        yPos += 60;
+        xPos -= 50
+      } else if (entryName == "Ballard") {
+        yPos -= 40;
+      } else if (entryName == "Georgetown") {
+        yPos += 100;
+        xPos -= 80;
+      }
       svg.append("text")
-          .text(gameName)
-          .attr("x", scaleX(new Date(timeSeries[timeSeries.length-1][0])) + 5)
-          .attr("y", scaleY(timeSeries[timeSeries.length-1][1]) + 10)
+          .text(entryName)
+          .attr("x", xPos)
+          .attr("y", yPos)
           .attr("font-family", "sans-serif")
           .attr("class", "label")
-          .attr("font-size", "11px")
+          .attr("font-size", "18px")
           .attr("fill", color);
     })
 
@@ -164,3 +184,5 @@
 <%end%>
 </script>
 
+</body>
+</html>
