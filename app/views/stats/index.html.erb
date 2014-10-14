@@ -26,6 +26,7 @@ body {
 }
 </style>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<%= javascript_include_tag "labeler" %>
 <script>
   var dataset = <%= @machines_over_time.collect{|pair|pair[0] = pair[0].to_i * 1000; pair}.to_json.html_safe %>
 
@@ -170,7 +171,7 @@ body {
           return scaleY(timeSeries[timeSeries.length-1][1]) + 10
         })
         .attr("font-family", "sans-serif")
-        .attr("class", "label")
+        .attr("class", "label<%=index-%>")
         .attr("font-size", "18px")
         .attr("fill", colorFunc);
 
@@ -188,6 +189,43 @@ body {
         .attr("class", "axis")
         .attr("transform", "translate(" + padding + ",0)")
         .call(yAxis);
+
+
+    // Automatic label placement
+    var labelElements<%=index-%> = svg.selectAll("text.label<%=index-%>");
+    var labelArray<%=index-%> = labelElements<%=index-%>[0].map(function(el){
+      el = d3.select(el)
+      return {
+        x: +el.attr("x"),
+        y: +el.attr("y"),
+        name: el.text(),
+        width: el[0][0].getBBox().width,
+        height: el[0][0].getBBox().height
+      }
+    })
+    var anchorArray<%=index-%> = labelElements<%=index-%>[0].map(function(el){
+      el = d3.select(el)
+      return {
+        x: el.attr("x"),
+        y: el.attr("y"),
+        r: 7 // arbitrary radius for the anchor
+      }
+    })
+    var labeler = d3.labeler()
+               .label(labelArray<%=index-%>)
+               .anchor(anchorArray<%=index-%>)
+               .width(w)
+               .height(h)
+               .start(1000);
+    labelElements<%=index-%>
+        .transition()
+        .duration(800)
+        .attr("x", function(d, i) { 
+          return labeler.label()[i].x; 
+        })
+        .attr("y", function(d, i) { 
+          return labeler.label()[i].y; 
+        });               
 <%end%>
 </script>
 

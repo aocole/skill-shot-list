@@ -229,6 +229,7 @@ d3.labeler = function() {
         }
         currT = cooling_schedule(currT, initialT, nsweeps);
       }
+      return labeler;
   };
 
   labeler.width = function(x) {
