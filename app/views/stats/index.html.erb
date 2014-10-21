@@ -1,232 +1,30 @@
 <html>
 <body>
 
-<style>
-body {
-  color: black;
-  background-color: white;
-  padding: 10px;
-}
-
-.axis path,
-.axis line {
-    fill: none;
-    stroke: black;
-    shape-rendering: crispEdges;
-}
-
-.axis text {
-    font-family: sans-serif;
-    font-size: 12px;
-}
-
-.line {
-  fill: none;
-  stroke-width: 3px;
-}
-</style>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<%= stylesheet_link_tag "graph" %>
 <%= javascript_include_tag "labeler" %>
-<script>
-  var dataset = <%= @machines_over_time.collect{|pair|pair[0] = pair[0].to_i * 1000; pair}.to_json.html_safe %>
+<%if @action == 'index2'%>
+  <script>
+    <% ['titles_over_time', 'localities_over_time'].each do |data_over_time| %>
+      var <%=data_over_time-%> = <%= instance_variable_get('@'+data_over_time).each do |title, time_series|
+        time_series.collect do |pair|
+          pair[0] = pair[0].to_i * 1000
+          pair
+        end
+      end.to_json.html_safe
+      %>
+    <%end%>
+    var machines_over_time = <%= @machines_over_time.collect{|pair|pair[0] = pair[0].to_i * 1000; pair}.to_json.html_safe %>
+  </script>
+<%else%>
+<%= javascript_include_tag "stat_data" %>
 
-  w = 800
-  h = 500
-  padding = 30
-
-  var scaleX = d3.time.scale()
-            .range([padding, w-padding])
-            .domain(d3.extent(dataset, function(d){return new Date(d[0])}));
-  var scaleY = d3.scale.linear()
-            .range([padding, h-padding])
-            .domain([
-              d3.max(dataset, function(d){return d[1]}),
-              80//d3.min(dataset, function(d){return d[1]}) 
-            ]);
-  var svg = d3.select("body")
-              .append("svg")
-              .attr("width", w)
-              .attr("height", h);
-
-  var line = d3.svg.line()
-    .x(function(d) { return scaleX(new Date(d[0])) })
-    .y(function(d) { return scaleY(d[1]) })
-    .interpolate('cardinal');
-
-  svg.append("path")
-      .datum(dataset)
-      .attr("class", "line")
-      .attr("stroke", "steelblue")
-      .attr("d", line);
-
-  var xAxis = d3.svg.axis().scale(scaleX).orient("bottom");
-  svg.append("g")
-    .attr("class", "axis")
-    .attr("transform", "translate(0," + (h - padding) + ")")
-    .call(xAxis);
-
-  var yAxis = d3.svg.axis()
-                  .scale(scaleY)
-                  .orient("left")
-                  .ticks(20);
-
-  svg.append("g")
-      .attr("class", "axis")
-      .attr("transform", "translate(" + padding + ",0)")
-      .call(yAxis);
-
-
-
-
-
-
-
-
-
-
-
-
-// Individual title analysis
-<% [@titles_over_time, @localities_over_time].each_with_index do |data_over_time, index| %>
-    var TITLES = <% if index.zero? %>true<% else %>false<%end%>;
-      
-    var dataset = <%= data_over_time.each do |title, time_series|
-      time_series.collect do |pair|
-        pair[0] = pair[0].to_i * 1000
-        pair
-      end
-    end.to_json.html_safe
-    %>
-
-    w = 800
-    h = 500
-    padding = 30
-
-
-    var counts_for_scale = d3.values(dataset).map(function(time_series) {
-      return d3.extent(time_series, function(time_count_pair){
-        return time_count_pair[1]
-      })
-    }).reduce(function(a, b) {
-      return a.concat(b);
-    })
-    var scaleY = d3.scale.linear()
-              .range([padding, h-padding])
-              .domain([d3.max(counts_for_scale), 0]);
-    var svg = d3.select("body")
-                .append("svg")
-                .attr("width", w+500)
-                .attr("height", h);
-
-    var strokeStyles = ["none", "3 3", "8 2", "12 2 2 2", "1", "12 2 2 2 2 2"]
-    var strokeIndex = 0;
-    var arrayData = d3.entries(dataset).filter(function(el){
-      if (!TITLES) {
-        return true
-      }
-      // else we're filtering titles. Only return games that have had at least
-      // N machines on location at some point
-      return d3.max(
-        el.value.map(function(point){
-            return point[1]
-          })
-        ) > 7
-    })
-
-    var colorScale = d3.scale.category10();
-    colorScale.domain(d3.keys(dataset));
-    var colorFunc = function(d){
-      return colorScale(d.key)
-    };
-
-    var line = d3.svg.line()
-      .x(function(d) { 
-        return scaleX(new Date(d[0])) 
-      })
-      .y(function(d) { 
-        return scaleY(d[1]) 
-      })
-      .interpolate('cardinal');
-
-    svg.selectAll("path").data(arrayData).enter()
-      .append("path")
-        .attr("class", "line")
-        .attr("stroke", colorFunc)
-        .style("stroke-dasharray", function(){
-          return strokeStyles[strokeIndex++ % strokeStyles.length]
-        })
-        .datum(function(d){return d.value})
-        .attr("d", line);
-    svg.selectAll("text").data(arrayData).enter()
-      .append("text")
-        .text(function(d){
-          return d.key
-        })
-        .attr("x", function(d) {
-          var timeSeries = d.value;
-          return scaleX(new Date(timeSeries[timeSeries.length-1][0])) + 5
-        })
-        .attr("y", function(d){
-          var timeSeries = d.value;
-          return scaleY(timeSeries[timeSeries.length-1][1]) + 10
-        })
-        .attr("font-family", "sans-serif")
-        .attr("class", "label<%=index-%>")
-        .attr("font-size", "18px")
-        .attr("fill", colorFunc);
-
-    var xAxis = d3.svg.axis().scale(scaleX).orient("bottom");
-    svg.append("g")
-      .attr("class", "axis")
-      .attr("transform", "translate(0," + (h - padding) + ")")
-      .call(xAxis);
-    var yAxis = d3.svg.axis()
-                    .scale(scaleY)
-                    .orient("left")
-                    .ticks(10);
-
-    svg.append("g")
-        .attr("class", "axis")
-        .attr("transform", "translate(" + padding + ",0)")
-        .call(yAxis);
-
-
-    // Automatic label placement
-    var labelElements<%=index-%> = svg.selectAll("text.label<%=index-%>");
-    var labelArray<%=index-%> = labelElements<%=index-%>[0].map(function(el){
-      el = d3.select(el)
-      return {
-        x: +el.attr("x"),
-        y: +el.attr("y"),
-        name: el.text(),
-        width: el[0][0].getBBox().width,
-        height: el[0][0].getBBox().height
-      }
-    })
-    var anchorArray<%=index-%> = labelElements<%=index-%>[0].map(function(el){
-      el = d3.select(el)
-      return {
-        x: el.attr("x"),
-        y: el.attr("y"),
-        r: 7 // arbitrary radius for the anchor
-      }
-    })
-    var labeler = d3.labeler()
-               .label(labelArray<%=index-%>)
-               .anchor(anchorArray<%=index-%>)
-               .width(w)
-               .height(h)
-               .start(1000);
-    labelElements<%=index-%>
-        .transition()
-        .duration(800)
-        .attr("x", function(d, i) { 
-          return labeler.label()[i].x; 
-        })
-        .attr("y", function(d, i) { 
-          return labeler.label()[i].y; 
-        });               
 <%end%>
+<%= javascript_include_tag "grapher" %>
+
+
+<script>
 </script>
 
 </body>

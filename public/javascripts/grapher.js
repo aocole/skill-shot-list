@@ -1,0 +1,183 @@
+  w = 800
+  h = 500
+  padding = 30
+
+  var addTitle = function(svg) {
+    svg.append('text').text("Number of machines")
+        .attr("x", 40)
+        .attr("y", 40)
+        .attr("font-family", "sans-serif")
+        .attr("class", "graphtitle")
+        .attr("font-size", "18px")
+        .attr("fill", 'black');
+    svg.append('text').text("over time")
+        .attr("x", 40)
+        .attr("y", 60)
+        .attr("font-family", "sans-serif")
+        .attr("class", "graphtitle")
+        .attr("font-size", "18px")
+        .attr("fill", 'black');
+  }
+
+  var scaleX = d3.time.scale()
+            .range([padding, w-padding])
+            .domain(d3.extent(machines_over_time, function(d){return new Date(d[0])}));
+  var scaleY = d3.scale.linear()
+            .range([padding, h-padding])
+            .domain([
+              d3.max(machines_over_time, function(d){return d[1]}),
+              80//d3.min(machines_over_time, function(d){return d[1]}) 
+            ]);
+  var svg = d3.select("body")
+              .append("svg")
+              .attr("width", w)
+              .attr("height", h);
+
+  var line = d3.svg.line()
+    .x(function(d) { return scaleX(new Date(d[0])) })
+    .y(function(d) { return scaleY(d[1]) })
+    .interpolate('cardinal');
+
+  svg.append("path")
+      .datum(machines_over_time)
+      .attr("class", "line")
+      .attr("stroke", "steelblue")
+      .attr("d", line);
+
+  var xAxis = d3.svg.axis().scale(scaleX).orient("bottom");
+  svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(0," + (h - padding) + ")")
+    .call(xAxis);
+
+  var yAxis = d3.svg.axis()
+                  .scale(scaleY)
+                  .orient("left")
+                  .ticks(20);
+
+  svg.append("g")
+      .attr("class", "axis")
+      .attr("transform", "translate(" + padding + ",0)")
+      .call(yAxis);
+
+  addTitle(svg);
+
+
+// Individual title analysis
+[titles_over_time, localities_over_time].forEach(function(data_over_time, index) {
+  var TITLES = index == 0 ? true : false;
+    
+  var counts_for_scale = d3.values(data_over_time).map(function(time_series) {
+    return d3.extent(time_series, function(time_count_pair){
+      return time_count_pair[1]
+    })
+  }).reduce(function(a, b) {
+    return a.concat(b);
+  })
+  var scaleY = d3.scale.linear()
+            .range([padding, h-padding])
+            .domain([d3.max(counts_for_scale), 0]);
+  var svg = d3.select("body")
+              .append("svg")
+              .attr("width", w+500)
+              .attr("height", h);
+
+  var strokeStyles = ["none", "3 3", "8 2", "12 2 2 2", "1", "12 2 2 2 2 2"]
+  var strokeIndex = 0;
+  var arrayData = d3.entries(data_over_time).filter(function(el){
+    if (!TITLES) {
+      return true
+    }
+    // else we're filtering titles. Only return games that have had at least
+    // N machines on location at some point
+    return d3.max(
+      el.value.map(function(point){
+          return point[1]
+        })
+      ) > 7
+  })
+
+  var colorScale = d3.scale.category10();
+  colorScale.domain(d3.keys(data_over_time));
+  var colorFunc = function(d){
+    return colorScale(d.key)
+  };
+
+  var line = d3.svg.line()
+    .x(function(d) { 
+      return scaleX(new Date(d[0])) 
+    })
+    .y(function(d) { 
+      return scaleY(d[1]) 
+    })
+    .interpolate('cardinal');
+
+  svg.selectAll("path").data(arrayData).enter()
+    .append("path")
+      .attr("class", "line")
+      .attr("stroke", colorFunc)
+      .style("stroke-dasharray", function(){
+        return strokeStyles[strokeIndex++ % strokeStyles.length]
+      })
+      .datum(function(d){return d.value})
+      .attr("d", line);
+  svg.selectAll("text").data(arrayData).enter()
+    .append("text")
+      .text(function(d){
+        return d.key
+      })
+      .attr("x", function(d) {
+        var timeSeries = d.value;
+        return scaleX(new Date(timeSeries[timeSeries.length-1][0])) + 5
+      })
+      .attr("y", function(d){
+        var timeSeries = d.value;
+        return scaleY(timeSeries[timeSeries.length-1][1]) + 10
+      })
+      .property("anchor", function(d){
+        var timeSeries = d.value;
+        return {
+          x:scaleX(new Date(timeSeries[timeSeries.length-1][0])),
+          y:scaleY(timeSeries[timeSeries.length-1][1]),
+          r:7
+        }
+      })
+      .attr("font-family", "sans-serif")
+      .attr("class", "label" + index)
+      .attr("font-size", "18px")
+      .attr("fill", colorFunc);
+
+  var xAxis = d3.svg.axis().scale(scaleX).orient("bottom");
+  svg.append("g")
+    .attr("class", "axis")
+    .attr("transform", "translate(0," + (h - padding) + ")")
+    .call(xAxis);
+  var yAxis = d3.svg.axis()
+                  .scale(scaleY)
+                  .orient("left")
+                  .ticks(10);
+
+  svg.append("g")
+      .attr("class", "axis")
+      .attr("transform", "translate(" + padding + ",0)")
+      .call(yAxis);
+
+
+  // Automatic label placement
+  var labeler = d3.labeler()
+      .label(svg.selectAll("text.label" + index))
+      .start();
+  labeler.label()
+      .transition()
+      .duration(800)
+      .attr("x", function(d, i) { 
+        return this.alpx; 
+      })
+      .attr("y", function(d, i) { 
+        return this.alpy; 
+      });
+
+  addTitle(svg);
+
+
+});     
