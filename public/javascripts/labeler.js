@@ -1,11 +1,20 @@
-// https://github.com/tinker10/D3-Labeler/blob/master/labeler.js
 (function() {
+
+// returns a random node in the selection
+d3.selection.prototype.randomNode = function() {
+  return d3_selection_randomNode(this);
+};
+
+function d3_selection_randomNode(groups) {
+  var group = groups[Math.floor(Math.random() * groups.length)];
+  return group[Math.floor(Math.random() * group.length)];
+}
 
 d3.labeler = function() {
   var lab = [],
       anc = [],
-      w = 1, // box width
-      h = 1, // box width
+      w, // box width
+      h, // box width
       labeler = {};
 
   var max_move = 5.0,
@@ -27,174 +36,145 @@ d3.labeler = function() {
   var user_defined_energy, 
       user_defined_schedule;
 
-  energy = function(index) {
   // energy function, tailored for label placement
+  energy = function(label) {
+    var ener = 0,
+        dx = label.alpx - label.anchor.alpx,
+        dy = label.anchor.alpy - label.alpy,
+        dist = Math.sqrt(dx * dx + dy * dy),
+        overlap = true,
+        amount = 0
+        theta = 0;
 
-      var m = lab.length, 
-          ener = 0,
-          dx = lab[index].x - anc[index].x,
-          dy = anc[index].y - lab[index].y,
-          dist = Math.sqrt(dx * dx + dy * dy),
-          overlap = true,
-          amount = 0
-          theta = 0;
+    // penalty for length of leader line
+    if (dist > 0) ener += dist * w_len;
 
-      // penalty for length of leader line
-      if (dist > 0) ener += dist * w_len;
+    // label orientation bias
+    dx /= dist;
+    dy /= dist;
+    if (dx > 0 && dy > 0) { ener += 0 * w_orient; }
+    else if (dx < 0 && dy > 0) { ener += 1 * w_orient; }
+    else if (dx < 0 && dy < 0) { ener += 2 * w_orient; }
+    else { ener += 3 * w_orient; }
 
-      // label orientation bias
-      dx /= dist;
-      dy /= dist;
-      if (dx > 0 && dy > 0) { ener += 0 * w_orient; }
-      else if (dx < 0 && dy > 0) { ener += 1 * w_orient; }
-      else if (dx < 0 && dy < 0) { ener += 2 * w_orient; }
-      else { ener += 3 * w_orient; }
+    var x21 = label.alpx,
+        y21 = label.alpy - label.height + 2.0,
+        x22 = label.alpx + label.width,
+        y22 = label.alpy + 2.0;
+    var x11, x12, y11, y12, x_overlap, y_overlap, overlap_area;
 
-      var x21 = lab[index].x,
-          y21 = lab[index].y - lab[index].height + 2.0,
-          x22 = lab[index].x + lab[index].width,
-          y22 = lab[index].y + 2.0;
-      var x11, x12, y11, y12, x_overlap, y_overlap, overlap_area;
+    lab.each(function() {
+      var otherLabel = this;
+      if (label != otherLabel) {
+        // penalty for intersection of leader lines
+        overlap = intersect(label.anchor.alpx, label.alpx, otherLabel.anchor.alpx, otherLabel.alpx,
+                        label.anchor.alpy, label.alpy, otherLabel.anchor.alpy, otherLabel.alpy);
+        if (overlap) ener += w_inter;
 
-      for (var i = 0; i < m; i++) {
-        if (i != index) {
-
-          // penalty for intersection of leader lines
-          overlap = intersect(anc[index].x, lab[index].x, anc[i].x, lab[i].x,
-                          anc[index].y, lab[index].y, anc[i].y, lab[i].y);
-          if (overlap) ener += w_inter;
-
-          // penalty for label-label overlap
-          x11 = lab[i].x;
-          y11 = lab[i].y - lab[i].height + 2.0;
-          x12 = lab[i].x + lab[i].width;
-          y12 = lab[i].y + 2.0;
-          x_overlap = Math.max(0, Math.min(x12,x22) - Math.max(x11,x21));
-          y_overlap = Math.max(0, Math.min(y12,y22) - Math.max(y11,y21));
-          overlap_area = x_overlap * y_overlap;
-          ener += (overlap_area * w_lab2);
-          }
-
-          // penalty for label-anchor overlap
-          x11 = anc[i].x - anc[i].r;
-          y11 = anc[i].y - anc[i].r;
-          x12 = anc[i].x + anc[i].r;
-          y12 = anc[i].y + anc[i].r;
-          x_overlap = Math.max(0, Math.min(x12,x22) - Math.max(x11,x21));
-          y_overlap = Math.max(0, Math.min(y12,y22) - Math.max(y11,y21));
-          overlap_area = x_overlap * y_overlap;
-          ener += (overlap_area * w_lab_anc);
-
+        // penalty for label-label overlap
+        x11 = otherLabel.alpx;
+        y11 = otherLabel.alpy - otherLabel.height + 2.0;
+        x12 = otherLabel.alpx + otherLabel.width;
+        y12 = otherLabel.alpy + 2.0;
+        x_overlap = Math.max(0, Math.min(x12,x22) - Math.max(x11,x21));
+        y_overlap = Math.max(0, Math.min(y12,y22) - Math.max(y11,y21));
+        overlap_area = x_overlap * y_overlap;
+        ener += (overlap_area * w_lab2);
       }
-      return ener;
+
+      // penalty for label-anchor overlap
+      x11 = otherLabel.anchor.alpx - otherLabel.anchor.r;
+      y11 = otherLabel.anchor.alpy - otherLabel.anchor.r;
+      x12 = otherLabel.anchor.alpx + otherLabel.anchor.r;
+      y12 = otherLabel.anchor.alpy + otherLabel.anchor.r;
+      x_overlap = Math.max(0, Math.min(x12,x22) - Math.max(x11,x21));
+      y_overlap = Math.max(0, Math.min(y12,y22) - Math.max(y11,y21));
+      overlap_area = x_overlap * y_overlap;
+      ener += (overlap_area * w_lab_anc);
+    })
+
+    return ener;
   };
 
-  mcmove = function(currT) {
-  // Monte Carlo translation move
+  pointPosition = function(currT) {
+    // select a random label
+    var label = lab.randomNode();
 
-      // select a random label
-      var i = Math.floor(Math.random() * lab.length); 
+    // save old coordinates
+    var x_old = label.alpx;
+    var y_old = label.alpy;
 
-      // save old coordinates
-      var x_old = lab[i].x;
-      var y_old = lab[i].y;
+    // old energy
+    var old_energy;
+    if (user_energy) {
+      old_energy = user_defined_energy(label, lab)
+    } else {
+      old_energy = energy(label)
+    }
 
-      // old energy
-      var old_energy;
-      if (user_energy) {old_energy = user_defined_energy(i, lab, anc)}
-      else {old_energy = energy(i)}
+    if (Math.random() < 0.5) { 
+      pointTranslate(label)
+    } else { 
+      pointRotate(label)
+    }
 
-      // random translation
-      lab[i].x += (Math.random() - 0.5) * max_move;
-      lab[i].y += (Math.random() - 0.5) * max_move;
+    // hard wall boundaries
+    if (label.alpx > w) label.alpx = x_old;
+    if (label.alpx < 0) label.alpx = x_old;
+    if (label.alpy > h) label.alpy = y_old;
+    if (label.alpy < 0) label.alpy = y_old;
 
-      // hard wall boundaries
-      if (lab[i].x > w) lab[i].x = x_old;
-      if (lab[i].x < 0) lab[i].x = x_old;
-      if (lab[i].y > h) lab[i].y = y_old;
-      if (lab[i].y < 0) lab[i].y = y_old;
+    // new energy
+    var new_energy;
+    if (user_energy) {
+      new_energy = user_defined_energy(label, lab)
+    } else {
+      new_energy = energy(label)
+    }
 
-      // new energy
-      var new_energy;
-      if (user_energy) {new_energy = user_defined_energy(i, lab, anc)}
-      else {new_energy = energy(i)}
+    // delta E
+    var delta_energy = new_energy - old_energy;
 
-      // delta E
-      var delta_energy = new_energy - old_energy;
-
-      if (Math.random() < Math.exp(-delta_energy / currT)) {
-        acc += 1;
-      } else {
-        // move back to old coordinates
-        lab[i].x = x_old;
-        lab[i].y = y_old;
-        rej += 1;
-      }
-
-  };
-
-  mcrotate = function(currT) {
-  // Monte Carlo rotation move
-
-      // select a random label
-      var i = Math.floor(Math.random() * lab.length); 
-
-      // save old coordinates
-      var x_old = lab[i].x;
-      var y_old = lab[i].y;
-
-      // old energy
-      var old_energy;
-      if (user_energy) {old_energy = user_defined_energy(i, lab, anc)}
-      else {old_energy = energy(i)}
-
-      // random angle
-      var angle = (Math.random() - 0.5) * max_angle;
-
-      var s = Math.sin(angle);
-      var c = Math.cos(angle);
-
-      // translate label (relative to anchor at origin):
-      lab[i].x -= anc[i].x
-      lab[i].y -= anc[i].y
-
-      // rotate label
-      var x_new = lab[i].x * c - lab[i].y * s,
-          y_new = lab[i].x * s + lab[i].y * c;
-
-      // translate label back
-      lab[i].x = x_new + anc[i].x
-      lab[i].y = y_new + anc[i].y
-
-      // hard wall boundaries
-      if (lab[i].x > w) lab[i].x = x_old;
-      if (lab[i].x < 0) lab[i].x = x_old;
-      if (lab[i].y > h) lab[i].y = y_old;
-      if (lab[i].y < 0) lab[i].y = y_old;
-
-      // new energy
-      var new_energy;
-      if (user_energy) {new_energy = user_defined_energy(i, lab, anc)}
-      else {new_energy = energy(i)}
-
-      // delta E
-      var delta_energy = new_energy - old_energy;
-
-      if (Math.random() < Math.exp(-delta_energy / currT)) {
-        acc += 1;
-      } else {
-        // move back to old coordinates
-        lab[i].x = x_old;
-        lab[i].y = y_old;
-        rej += 1;
-      }
+    if (delta_energy < 0 || Math.random() < Math.exp(-delta_energy / currT)) {
+      acc += 1;
+    } else {
+      // move back to old coordinates
+      label.alpx = x_old;
+      label.alpy = y_old;
+      rej += 1;
+    }
       
-  };
+  }
 
-  intersect = function(x1, x2, x3, x4, y1, y2, y3, y4) {
+  pointRotate = function(label) {
+    // random angle
+    var angle = (Math.random() - 0.5) * max_angle;
+
+    var s = Math.sin(angle);
+    var c = Math.cos(angle);
+
+    // translate label (relative to anchor at origin):
+    label.alpx -= label.anchor.alpx
+    label.alpy -= label.anchor.alpy
+
+    // rotate label
+    var x_new = label.alpx * c - label.alpy * s,
+        y_new = label.alpx * s + label.alpy * c;
+
+    // translate label back
+    label.alpx = x_new + label.anchor.alpx
+    label.alpy = y_new + label.anchor.alpy    
+  }
+
+  pointTranslate = function(label) {
+    // random translation
+    label.alpx += (Math.random() - 0.5) * max_move;
+    label.alpy += (Math.random() - 0.5) * max_move;    
+  }
+
   // returns true if two lines intersect, else false
   // from http://paulbourke.net/geometry/lineline2d/
-
+  intersect = function(x1, x2, x3, x4, y1, y2, y3, y4) {
     var mua, mub;
     var denom, numera, numerb;
 
@@ -211,65 +191,84 @@ d3.labeler = function() {
     return false;
   }
 
-  cooling_schedule = function(currT, initialT, nsweeps) {
   // linear cooling
+  cooling_schedule = function(currT, initialT, nsweeps) {
     return (currT - (initialT / nsweeps));
   }
 
-  labeler.start = function(nsweeps) {
   // main simulated annealing function
-      var m = lab.length,
-          currT = 1.0,
-          initialT = 1.0;
+  labeler.start = function(user_nsweeps) {
+    var currT = 1.0,
+        initialT = 1.0,
+        nsweeps = 1000;
+    if (user_nsweeps != undefined) {
+      nsweeps = user_nsweeps;
+    }
 
-      for (var i = 0; i < nsweeps; i++) {
-        for (var j = 0; j < m; j++) { 
-          if (Math.random() < 0.5) { mcmove(currT); }
-          else { mcrotate(currT); }
-        }
-        currT = cooling_schedule(currT, initialT, nsweeps);
-      }
-      return labeler;
+    // set bounding box
+    // assume first label is a child of the SVG boundry
+    var svg = d3.select(lab.node().ownerSVGElement)
+    if (w === undefined) {w = +svg.attr('width')}
+    if (h === undefined) {h = +svg.attr('height')}
+
+    // initialize label attributes
+    lab.each(function(){
+      var label = this;
+      var labelSelection = d3.select(label);
+      if (label.alpx === undefined) {label.alpx = +labelSelection.attr("x")}
+      if (label.alpy === undefined) {label.alpy = +labelSelection.attr("y")}
+      if (label.width === undefined) {label.width = label.getBBox().width}
+      if (label.height === undefined) {label.height = label.getBBox().height}
+      if (label.anchor === undefined) {label.anchor = {}}
+      if (label.anchor.alpx === undefined) {label.anchor.alpx = label.alpx}
+      if (label.anchor.alpy === undefined) {label.anchor.alpy = label.alpy}
+      if (label.anchor.label === undefined) {label.anchor.label = label}
+
+      // XXX Fix this to be the real radius of the anchor if anchor is a point/circle
+      if (label.anchor.r === undefined) {label.anchor.r = 0}
+    })
+
+
+    for (var i = 0; i < nsweeps; i++) {
+      lab.each(function() {
+        pointPosition(currT)
+      })
+      currT = cooling_schedule(currT, initialT, nsweeps);
+    }
+    return labeler;
   };
 
-  labeler.width = function(x) {
   // users insert graph width
+  labeler.width = function(x) {
     if (!arguments.length) return w;
     w = x;
     return labeler;
   };
 
-  labeler.height = function(x) {
   // users insert graph height
+  labeler.height = function(x) {
     if (!arguments.length) return h;
     h = x;    
     return labeler;
   };
 
-  labeler.label = function(x) {
   // users insert label positions
+  labeler.label = function(x) {
     if (!arguments.length) return lab;
     lab = x;
     return labeler;
   };
 
-  labeler.anchor = function(x) {
-  // users insert anchor positions
-    if (!arguments.length) return anc;
-    anc = x;
-    return labeler;
-  };
-
-  labeler.alt_energy = function(x) {
   // user defined energy
+  labeler.alt_energy = function(x) {
     if (!arguments.length) return energy;
     user_defined_energy = x;
     user_energy = true;
     return labeler;
   };
 
-  labeler.alt_schedule = function(x) {
   // user defined cooling_schedule
+  labeler.alt_schedule = function(x) {
     if (!arguments.length) return  cooling_schedule;
     user_defined_schedule = x;
     user_schedule = true;
@@ -280,3 +279,4 @@ d3.labeler = function() {
 };
 
 })();
+
