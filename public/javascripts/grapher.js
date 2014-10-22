@@ -1,6 +1,6 @@
   w = 800
   h = 500
-  padding = 30
+  padding = 35
 
   var addTitle = function(svg) {
     svg.append('text').text("Number of machines")
@@ -19,6 +19,36 @@
         .attr("fill", 'black');
   }
 
+  var getPathYForX = function(path, x) {
+    // binary search for x
+    var length = path.getTotalLength();
+    if (isNaN(length)) {
+      // this is a bug in Firefox, which combined with another FF bug
+      // makes it impossible for us to do this calculation.
+      // Just stick the label along the baseline
+      return d3.scale.linear()
+            .range([padding, h-padding])
+            .domain([w-padding, padding])(x);
+    }
+    var lowerBound = 0;
+    var upperBound = length
+    var xError;
+    var point;
+    do {
+      var lengthMaybe = lowerBound + (upperBound - lowerBound)/2;
+      point = path.getPointAtLength(lengthMaybe);
+      xError = x - point.x;
+      if (xError > 0) {
+        // need upper segment
+        lowerBound = lengthMaybe;
+      } else if (xError < 0) {
+        // need lower segment
+        upperBound = lengthMaybe;
+      }
+    } while(Math.abs(xError) >= 1 && lowerBound != upperBound)
+    return point.y;
+  }
+
   var scaleX = d3.time.scale()
             .range([padding, w-padding])
             .domain(d3.extent(machines_over_time, function(d){return new Date(d[0])}));
@@ -26,11 +56,11 @@
             .range([padding, h-padding])
             .domain([
               d3.max(machines_over_time, function(d){return d[1]}),
-              80//d3.min(machines_over_time, function(d){return d[1]}) 
+              80
             ]);
   var svg = d3.select("body")
               .append("svg")
-              .attr("width", w)
+              .attr("width", w + 50)
               .attr("height", h);
 
   var line = d3.svg.line()
@@ -43,6 +73,74 @@
       .attr("class", "line")
       .attr("stroke", "steelblue")
       .attr("d", line);
+
+  var path = svg.select('path')[0][0];
+
+  var timelineLabels = svg.selectAll("text").data(d3.entries(timeline)).enter()
+    .append("text")
+    .text(function(d){
+      return d.value
+    })
+    .attr("x", function(d) {
+      var date = +d.key*1000;
+      var xpos = scaleX(new Date(date));
+      d.anchorx = xpos;
+      return xpos
+    })
+    .attr("y", function(d){
+      var ypos = getPathYForX(path, d3.select(this).attr('x'));
+      d.anchory = ypos;
+      return ypos
+    })
+    .property("anchor", function(d){
+      return {
+        x:d.anchorx,
+        y:d.anchory,
+        r:35
+      }
+    })
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "12px")
+    .attr("stroke", "white")
+    .attr("stroke-width", 3.0)
+    .attr("paint-order", "stroke")
+    .attr("fill", 'black');
+
+  var links = svg.selectAll(".link")
+      .data(timelineLabels[0])
+      .enter()
+      .append("line")
+      .attr("class", "link")
+      .attr("x1", function(d) {
+        return +d3.select(d).attr('x')
+      })
+      .attr("y1", function(d) {
+        return +d3.select(d).attr('y')
+      })
+      .attr("x2", function(d) {
+        return +d3.select(d).attr('x')
+      })
+      .attr("y2", function(d) {
+        return +d3.select(d).attr('y')
+      })
+      .attr("stroke-width", 0.6)
+      .attr("stroke", "gray");
+
+  d3.labeler()
+    .label(timelineLabels)
+    .start();
+
+  timelineLabels
+    .transition()
+    .duration(0)
+    .attr("x", function(d) { return this.alpx })
+    .attr("y", function(d) { return this.alpy });
+
+  links
+    .transition()
+    .duration(0)
+    .attr("x2",function(d) { return d.alpx })
+    .attr("y2",function(d) { return d.alpy });
 
   var xAxis = d3.svg.axis().scale(scaleX).orient("bottom");
   svg.append("g")
@@ -61,6 +159,16 @@
       .call(yAxis);
 
   addTitle(svg);
+
+  if (isNaN(path.getTotalLength())) {
+    svg.append('text')
+      .text("* A bug in your browser is preventing us from labeling this chart properly. We did the best we could. Sorry :-(")
+      .attr('x', padding + 10)
+      .attr('y', padding + 50)
+      .attr("font-family", "sans-serif")
+      .attr("font-size", "8px")
+      .attr("fill", 'black');
+  }
 
 
 // Individual title analysis
@@ -169,7 +277,7 @@
       .start();
   labeler.label()
       .transition()
-      .duration(800)
+      .duration(0)
       .attr("x", function(d, i) { 
         return this.alpx; 
       })

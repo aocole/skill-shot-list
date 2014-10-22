@@ -2,8 +2,21 @@
 <body>
 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<%= stylesheet_link_tag "graph" %>
-<%= javascript_include_tag "labeler" %>
+<%= stylesheet_link_tag "graph", host: request.host %>
+<%= javascript_include_tag "labeler", host: request.host %>
+  <script>
+    timeline = <%={
+      Time.parse('10/2009').to_i => 'Hooverville reopens',
+      Time.parse('10/2010').to_i => 'SPM opens',
+      Time.parse('10/2011').to_i => 'Tiger Lounge closes',
+      Time.parse('1/2012').to_i => 'Add-A-Ball & Full Tilt Ballard open',
+      Time.parse('8/2012').to_i => 'Narwhal opens',
+      Time.parse('1/2013').to_i => 'John John\'s opens',
+      Time.parse('8/2013').to_i => 'Upper Playfield at SPM opens',
+      Time.parse('10/2013').to_i => 'Point Break at AAB opens'
+
+    }.to_json.html_safe%>
+    </script>
 <%if @action == 'index2'%>
   <script>
     <% ['titles_over_time', 'localities_over_time'].each do |data_over_time| %>
