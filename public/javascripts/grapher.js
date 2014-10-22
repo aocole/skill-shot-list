@@ -101,9 +101,9 @@
     })
     .attr("font-family", "sans-serif")
     .attr("font-size", "12px")
-    .attr("stroke", "white")
-    .attr("stroke-width", 3.0)
-    .attr("paint-order", "stroke")
+    // .attr("stroke", "white")
+    // .attr("stroke-width", 3.0)
+    // .attr("paint-order", "stroke")
     .attr("fill", 'black');
 
   var links = svg.selectAll(".link")
