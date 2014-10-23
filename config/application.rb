@@ -56,5 +56,9 @@ module Skillshot
 
     config.middleware.use Rack::BlockEasouSpider
     config.middleware.use Rack::JSONP
+
+    config.action_controller.asset_host = Proc.new { |source, request = nil, *_|
+      request ? request.protocol + request.host_with_port : nil
+    }
   end
 end

@@ -1,9 +1,10 @@
 <html>
 <body>
-
+<div id="graph-container">
+</div>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<%= stylesheet_link_tag "graph", host: request.host %>
-<%= javascript_include_tag "labeler", host: request.host %>
+<%= stylesheet_link_tag "graph"%>
+<%= javascript_include_tag "labeler"%>
   <script>
     timeline = <%={
       Time.parse('10/2009').to_i => 'Hooverville reopens',
@@ -35,10 +36,6 @@
 
 <%end%>
 <%= javascript_include_tag "grapher" %>
-
-
-<script>
-</script>
 
 </body>
 </html>
