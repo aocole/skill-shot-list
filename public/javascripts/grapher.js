@@ -58,7 +58,7 @@
               d3.max(machines_over_time, function(d){return d[1]}),
               80
             ]);
-  var svg = d3.select("#graph-container")
+  var svg = d3.select("#graph-container-2")
               .append("svg")
               .attr("width", w + 50)
               .attr("height", h);
@@ -185,7 +185,7 @@
   var scaleY = d3.scale.linear()
             .range([padding, h-padding])
             .domain([d3.max(counts_for_scale), 0]);
-  var svg = d3.select("#graph-container")
+  var svg = d3.select("#graph-container-" + index)
               .append("svg")
               .attr("width", w+500)
               .attr("height", h);
