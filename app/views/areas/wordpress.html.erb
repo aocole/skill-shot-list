@@ -1,8 +1,8 @@
-<% @areas.each do |area| %>
-  <%= render :partial => 'listing', :locals => {:area => area, :map => false} %>
-<% end %>
 <ul id="area_index">
   <% @areas.each do |area| %>
     <li><%= link_to area.name, "##{area.cached_slug}"%></li>
   <% end %>
 </ul>
+<% @areas.each do |area| %>
+  <%= render :partial => 'listing', :locals => {:area => area, :map => false} %>
+<% end %>
