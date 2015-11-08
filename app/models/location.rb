@@ -1,6 +1,7 @@
 class Location < ActiveRecord::Base
   acts_as_paranoid :columns => 'deleted_at', :column_type => 'time'
-  default_scope order('locality_id asc, name asc')
+  DEFAULT_ORDER = "regexp_replace(name, '^The ', '')"
+  default_scope order("locality_id asc, #{DEFAULT_ORDER} asc")
   has_many :machines, :include => :title, :dependent => :destroy
   belongs_to :locality
   has_one :area, :through => :locality
