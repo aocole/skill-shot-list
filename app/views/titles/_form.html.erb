@@ -13,11 +13,11 @@
 
   <div class="field">
     <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <%= f.text_field :name %> Enter the same way it would appear on IPDB, e.g. <em>The Walking Dead (Pro)</em>
   </div>
   <div class="field">
-    <%= f.label :ipdb_id %><br />
-    <%= f.number_field :ipdb_id %>
+    <%= f.label :ipdb_id, "IPDB ID" %><br />
+    <%= f.number_field :ipdb_id %> If the game ins't on IPDB yet, leave this blank
   </div>
   <div class="actions">
     <%= f.submit %>
