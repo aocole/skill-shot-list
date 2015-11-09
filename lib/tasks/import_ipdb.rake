@@ -36,21 +36,19 @@ namespace :import do
       encode("UTF-8", 'ASCII', :invalid => :replace, :undef => :replace, :replace => "").
       force_encoding('UTF-8')
     coder = HTMLEntities.new
-    f.scan(/<tr>.+?\?gid=(\d+)&.+?>([^<]*)</) do |ipdb_id, name|
+    f.scan(/<tr>.+?\?gid=(\d+)&.+?>([^<]*)</) do |ipdb_id, encoded_name|
       next if Title.find_by_ipdb_id(ipdb_id)
-      title = Title.new
-      title.name = coder.decode(name)
+      name = coder.decode(encoded_name)
+      title = Title.find_or_initialize_by_name_and_ipdb_id name, nil
       title.ipdb_id = ipdb_id
-      if title.changed?
-        if title.save
-          puts "#{title.name}".green
+      if title.save
+        puts "#{title.name}".green
+      else
+        errors = title.errors.full_messages.join(', ')
+        if errors == 'Ipdb has already been taken'
+          print 'dup '
         else
-          errors = title.errors.full_messages.join(', ')
-          if errors == 'Ipdb has already been taken'
-            print 'dup '
-          else
-            puts "#{ipdb_id}-#{name} failed: #{errors}".red
-          end
+          puts "#{ipdb_id}-#{name} failed: #{errors}".red
         end
       end
     end

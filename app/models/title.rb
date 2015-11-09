@@ -6,7 +6,7 @@ class Title < ActiveRecord::Base
     HIDDEN = 'hidden'
   end
   default_scope where(['status IS NULL OR status != ?', STATUS::HIDDEN])
-  validates_uniqueness_of :ipdb_id
+  validates_uniqueness_of :ipdb_id, allow_nil: true
   validates_presence_of :name
   validates_inclusion_of :status, :in => STATUS.constants.collect{|name|STATUS.const_get(name)}, :allow_nil => true
   has_many :machines
