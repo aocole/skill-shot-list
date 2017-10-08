@@ -54,7 +54,7 @@ var buildInfo = function(location) {
   }
   info += "</strong></div>"
   
-  info += "<a href='http://maps.google.com/maps?q=" + encodeURIComponent([location.address, location.city, location.postal_code].join(', ')) + "'>";
+  info += "<a href='https://maps.google.com/maps?q=" + encodeURIComponent([location.address, location.city, location.postal_code].join(', ')) + "'>";
   info += "<address><div>" 
     + location.address + "</div></address></a>";
 

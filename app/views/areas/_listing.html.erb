@@ -20,7 +20,7 @@
       <a id="<%=location.cached_slug%>"></a>
       <div class="location">
         <h3><%=link_to_if map, location.name, location%> <%if location.all_ages%><span class="aav" title="All-ages Venue">AAV!</span><%end%><%if !location.url.blank? && !map%> <%=link_to "<span>website</span>".html_safe, location.url, :class => 'location_website_link'%><%end%></h3>
-        <h4><%=link_to_unless map, location.address, "http://maps.google.com/maps?q=#{CGI.escape(location.full_street_address)}" %></h4>
+        <h4><%=link_to_unless map, location.address, "https://maps.google.com/maps?q=#{CGI.escape(location.full_street_address)}" %></h4>
         <ul>
           <%location.machines.sort.each do |machine|%>
             <li><%=raw machine.title.name%></li>
