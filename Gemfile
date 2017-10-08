@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.4.2'
+ruby '2.3.5'
 
 gem 'rails', '~>3.2.16'
 
@@ -21,7 +21,7 @@ gem 'jquery-rails', '~> 2.1'
 # using unofficial fork to work around https://github.com/goncalossilva/acts_as_paranoid/issues/62
 gem "acts_as_paranoid", "~>0.4.0", :github => 'tkupari/acts_as_paranoid', :ref => '305151879ea8e525d0cd18761f7595ce330d1794'
 
-gem 'authlogic'
+gem 'authlogic', '~> 3.4.2'
 gem 'rest-client'
 gem 'airbrake'
 gem 'slugged'
