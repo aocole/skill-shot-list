@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
+ruby '2.4.2'
 
 gem 'rails', '~>3.2.16'
 
@@ -14,6 +14,7 @@ gem 'geocoder'
 gem 'htmlentities'
 gem "active_model_serializers"
 gem "rack-contrib"
+gem 'test-unit', '~> 3.0'
 
 gem 'jquery-rails', '~> 2.1'
 
