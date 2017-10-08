@@ -18,7 +18,9 @@ All requests must set the headers `Content-Type: application/json` and `Accept: 
 
 ### Locations
 `GET /locations.json`
+
 `GET /locations/{location_id}.json`
+
 `GET /locations/{location_id}/machines.json`
 
 ### Machines
@@ -26,6 +28,7 @@ All requests must set the headers `Content-Type: application/json` and `Accept: 
 
 ### Titles
 `GET /titles.json` -- Every pinball title ever made
+
 `GET /titles/active.json` -- Every pinball title for which a Machine exists in the database.
 
 ### Localities
@@ -33,7 +36,9 @@ All requests must set the headers `Content-Type: application/json` and `Accept: 
 
 ### Login
 On successful login, sets a `user_credentials` cookie which can be used to authenticate later requests requiring authentication.
+
 `POST /user_session`
+
 Request Payload:
 ```json
 {
@@ -43,6 +48,7 @@ Request Payload:
     }
 }
 ```
+
 Response Payload:
 ```json
 {"success": [bool]}
