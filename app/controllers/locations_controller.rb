@@ -1,10 +1,6 @@
 class LocationsController < ApplicationController
   before_filter :require_admin_user, :except => [:show, :index, :for_wordpress, :for_wordpress_list]
-  caches_action :show, :if => Proc.new{|c|!c.admin? && c.params[:format] != 'json'}, :layout => false, :cache_path => Proc.new{|c|
-    {
-      :mobile => c.mobile_device? ? '1' : '0'
-    }
-  }
+  caches_action :show, :if => Proc.new{|c|!c.admin? && c.params[:format] != 'json'}, :layout => false
   caches_action :show, :if => Proc.new{|c|c.params[:format] == 'json'}, :cache_path => Proc.new{|c|
     {
       :action => c.params[:action],

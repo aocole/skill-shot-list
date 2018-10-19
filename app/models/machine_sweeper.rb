@@ -21,11 +21,9 @@ class MachineSweeper < ActionController::Caching::Sweeper
   private
   def expire_cache_for(machine)
     # Expire the index page now that we added a new machine
-    %w{0 1}.each do |num|
-      expire_action(:controller => 'areas', :action => 'show', :id => machine.location.area, :mobile => num)
-      expire_action(:controller => 'locations', :action => 'show', :id => machine.location, :mobile => num)
-      expire_action(:controller => 'titles', :action => 'active', :mobile => num)
-    end
+    expire_action(:controller => 'areas', :action => 'show', :id => machine.location.area)
+    expire_action(:controller => 'locations', :action => 'show', :id => machine.location)
+    expire_action(:controller => 'titles', :action => 'active')
     expire_action(:controller => 'locations', :action => 'show', :id => machine.location, :format => 'json')
     expire_fragment('trivia')
   end

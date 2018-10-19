@@ -5,7 +5,6 @@ class AreasController < ApplicationController
     :if => Proc.new{|c|!c.admin?}, 
     :layout => false, 
     :cache_path => Proc.new{|c| {
-        :mobile => c.mobile_device? ? '1' : '0',
         :callback => c.params[:callback]
       }
     }
