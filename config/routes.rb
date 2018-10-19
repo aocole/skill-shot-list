@@ -10,6 +10,7 @@ Skillshot::Application.routes.draw do
   get "stats/index2"
 
   resources :areas do
+    get :machines_per_location_report, :on => :member
     get :print, :on => :member
     resources :localities
   end

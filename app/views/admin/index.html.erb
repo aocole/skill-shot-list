@@ -17,6 +17,13 @@ Manage Localities:
 <br/>
 <%=link_to "New Title that isn't on IPDB yet", new_title_url %> (If the game <em>is</em> on IPDB please tell Andrew to re-import)<br/>
 <br/>
+Number of Machines per Location reports:
+<ul>
+  <%Area.all.each do |area|%>
+    <li><%=link_to area.name, machines_per_location_report_area_url(area) %></li>
+  <%end%>
+</ul>
+<br/>
 
 Print View:
 <ul>

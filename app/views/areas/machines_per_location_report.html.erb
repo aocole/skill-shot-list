@@ -1,0 +1,34 @@
+<%
+machines_per_locality = {}
+@area.localities.each do |locality|
+  machines_per_locality[locality] = 0
+  locality.locations.each do |location|
+    machines_per_locality[locality] += location.machines.size
+  end
+end
+%>
+<section class="area_listing">
+  <a id="<%=@area.cached_slug%>"></a>
+  <h1>Number of Machines per Location in <%= @area.name %></h1>
+  <% if @area.localities.size > 1 %>
+    <ul class="locality_index">
+      <%@area.localities.each do |locality|%>
+        <% next if locality.locations.size.zero? %>
+        <li><%=link_to locality.name, "##{locality.cached_slug}"%> - <%= machines_per_locality[locality] %> total</li>
+      <%end%>
+    </ul>
+  <% end %>
+
+  <%@area.localities.each do |locality|%>
+    <% next if locality.locations.size.zero? %>
+    <h2><a id="<%=locality.cached_slug%>"></a><%=locality.name%> - <%= machines_per_locality[locality] %> total</h2>
+    <ul>
+    <%locality.locations.each do |location|%>
+      <a id="<%=location.cached_slug%>"></a>
+      <li class="location">
+        <h3><%=location.name%> - <%= location.machines.size %></h3>
+      </li>
+    <%end%>
+    </ul>
+  <%end%>
+</section>

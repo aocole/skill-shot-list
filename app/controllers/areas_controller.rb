@@ -57,6 +57,10 @@ class AreasController < ApplicationController
     end
   end
 
+  def machines_per_location_report
+    show
+  end
+
   def print
     @area = Area.find_using_slug!(params[:id])
 
