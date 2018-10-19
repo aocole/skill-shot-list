@@ -21,9 +21,11 @@ class LocationsController < ApplicationController
   end
 
   def for_wordpress
+    locations = regular_locations.select{|l| l.machines.size > 0} # TODO: get sql to do this
+
     respond_to do |format|
       format.html {render :layout => false}
-      format.json {render :json => regular_locations, :each_serializer => LocationDetailSerializer}
+      format.json {render :json => locations, :each_serializer => LocationDetailSerializer}
     end
   end
 
