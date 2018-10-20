@@ -4,7 +4,7 @@ class Machine < ActiveRecord::Base
   belongs_to :title
   belongs_to :created_by, :class_name => 'User'
   belongs_to :deleted_by, :class_name => 'User'
-  has_many :machines_changes
+  has_many :machine_changes
   validates_presence_of :location, :title, :created_by
 
   def <=> other

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140103235059) do
+ActiveRecord::Schema.define(:version => 20181019191636) do
 
   create_table "areas", :force => true do |t|
     t.string   "name",        :limit => 510, :null => false

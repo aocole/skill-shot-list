@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   def redirect_to_wordpress
     return if current_user
     return if kind_of? UserSessionsController
+    return if Rails.env.development?
     return unless request.format.html?
     if kind_of?(TitlesController) && request.path_parameters[:action] == 'active'
       redirect_to 'http://www.skill-shot.com/pinball-titles', status: 301

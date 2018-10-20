@@ -8,16 +8,14 @@ class History
 
     @@locations = Location.unscoped
     @@locations = Hash[@@locations.collect{|loc| [loc.name, loc]}]
-    @@locations['12th Ave Laundry'] = Location.find_by_cached_slug 'lather-daddy'
-    @@locations['ADD Motor Works'] = Location.find_by_cached_slug 'add-a-ball-amusements'
     old_locations =<<END
 ---
 Downtown:
   - Thistle
   - Fenix
-Columbia City:
+Columbia City/South Side:
   - AMF Imperial Lanes
-U District/North Side:
+U District/Wallingford:
   - Galway Arms
   - Piccolo's Pizza
   - Rat and Raven
@@ -27,7 +25,7 @@ U District/North Side:
   - Shanty Tavern
   - Resevoir
   - Caroline Tavern
-Greenwood/Green Lake:
+Greenwood/Phinney Ridge:
   - Little Red Hen
   - Sundown Saloon
   - Sweet Lou's
@@ -40,10 +38,10 @@ Georgetown:
   - Tiger Lounge
   - Auto Quest
   - Uncle Mo's
-Pioneer Square/International District:
+International District/Pioneer Square:
   - Cowgirls Inc
   - Fuel
-Belltown/Denny Regrade:
+Belltown:
   - 5 Point Laundry
   - Lava Lounge
   - Nite Lite
@@ -57,7 +55,8 @@ Capitol Hill:
   - Eagle
   - King Cobra
   - Elite
-Fremont/Wallingford:
+  - Lather Daddy
+Fremont/Frelard:
   - Fremont Dock
   - High Dive
   - Buckaroo Tavern
@@ -69,6 +68,7 @@ Ballard:
   - Molly Maguires
   - Zesto's
   - Goofy's
+  - Wingmasters
 Eastlake:
   - El Corazon
   - Cafe Venus
@@ -107,6 +107,11 @@ END
         @@locations[location_name] = Location.new(locality: locality, name: location_name)
       end
     end
+
+    # Locations that have changed name
+    @@locations['12th Ave Laundry'] = @@locations['Lather Daddy']
+    @@locations['ADD Motor Works'] = Location.find_by_cached_slug 'add-a-ball-amusements'
+    @@locations['Ballard Grill'] = Location.find_by_cached_slug '4bs-ballard-grill-alehouse'
 
     @@titles = Title.unscoped.where("status is null or status != ?", Title::STATUS::HIDDEN)
     @@titles = Hash[@@titles.collect{|loc| [loc.name, loc]}]
@@ -169,6 +174,8 @@ END
       'WOZ', "The Wizard of Oz",
       'JP', "Jurassic Park",
       'Pinball', 'Pinball (SS)',
+      'Kiss', 'Kiss (Bally)',
+      'Batman', 'Batman (Stern)',
       'WW', 'White Water'
     ].each do |abbrev, name|
       @@titles[abbrev] = Title.where(name: name).first
@@ -227,6 +234,7 @@ END
         games = location_pair.last
         games.each do |name|
           title = match_list(name, @@titles)
+          raise "Nil title for #{name}" if title.nil?
           new_state[location] << title
         end
       end
@@ -242,6 +250,7 @@ END
       added_games = new_games - old_games
       removed_games = old_games - new_games
       added_games.each do |title|
+        raise "Nil title!" if title.nil?
         mc = MachineChange.new(
           change_type: MachineChange::ChangeType::CREATE, 
         )
@@ -250,6 +259,7 @@ END
         machine_changes << mc
       end
       removed_games.each do |title|
+        raise "Nil title" if title.nil?
         mc = MachineChange.new(
           change_type: MachineChange::ChangeType::DELETE, 
         )
@@ -262,6 +272,7 @@ END
     # locations still left in old_state no longer exist, delete all their games
     old_state.each do |old_location, old_games|
       old_games.each do |title|
+        raise "Nil title" if title.nil?
         mc = MachineChange.new(
           change_type: MachineChange::ChangeType::DELETE, 
         )
@@ -280,12 +291,12 @@ END
     end
     regexp = Regexp.compile(name.sub(/\bthe \b/i, ''), Regexp::IGNORECASE)
     matches = list.keys.select{|n| n.gsub(/’/, "'") =~ regexp}.collect{|n| list[n] }
-    if matches.size == 0
+    if matches.size == 0 || matches.first.nil?
       raise "Couldn't find match for #{name}"
     elsif matches.size > 1
       raise "#{name} matched #{matches.collect(&:name).join(', ')}"
     else
       return matches.first
-    end  
+    end
   end
 end

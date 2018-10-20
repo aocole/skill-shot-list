@@ -22,7 +22,7 @@
 
     }.to_json.html_safe%>
     </script>
-<%if @action == 'index2'%>
+<%if action_name == 'index2'%>
   <script>
     <% ['titles_over_time', 'localities_over_time'].each do |data_over_time| %>
       var <%=data_over_time-%> = <%= instance_variable_get('@'+data_over_time).each do |title, time_series|
@@ -37,7 +37,6 @@
   </script>
 <%else%>
 <%= javascript_include_tag "stat_data" %>
-
 <%end%>
 <%= javascript_include_tag "grapher" %>
 
