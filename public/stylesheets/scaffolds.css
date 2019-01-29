@@ -98,3 +98,7 @@ nav ul a.current, nav ul a:visited.current, nav ul li a.current, nav ul li a:vis
     margin-right: 0.75em;
     font-size: 80%;
 }
+
+.hide-button {
+    display: none;
+}

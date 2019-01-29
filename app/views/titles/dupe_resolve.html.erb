@@ -1,7 +1,8 @@
+<% flash.alert ="The 'hide' button has been removed. Please rename the game so that the name can be differentiated in a list. For instance, if there are multiple games named 'Circus', you could rename one 'Circus (Zaccaria)' and another one 'Circus (Bally)'. If you have questions please ask/email Andrew -- Thanks!" %>
 <%@titles.each do |title|%>
   <div style="margin-bottom: 3em;">
     <%=form_for title do |f|%>
-      <%=f.label :name%>: <%=f.text_field :name, :size => 100%> <%=submit_tag%> <%= link_to 'Hide', title, :method => :delete, :confirm => "Are you sure you want to hide #{title.name}?" %>
+      <%=f.label :name%>: <%=f.text_field :name, :size => 100%> <%=submit_tag%> <%= link_to 'Hide', title, :method => :delete, :confirm => "Are you sure you want to hide #{title.name}?", :class => 'hide-button' %>
     <%end%>
     <%= link_to title.ipdb_url, title.ipdb_url %>
     <iframe src="<%=title.ipdb_url%>" width="100%" height="250px"></iframe>
