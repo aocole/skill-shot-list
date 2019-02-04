@@ -1,31 +1,55 @@
 <section class="area_listing">
-  <a id="<%=area.cached_slug%>"></a>
-  <h1><%= area.name %></h1>
-  <% if map %>
-    <div id="map" style="width:600px; height: 550px; float:right;"></div>
-  <% end %>
-  <% if area.localities.size > 1 %>
-    <ul class="locality_index">
+
+<div class="row">
+  <div class="col">
+    <a id="<%=area.cached_slug%>"></a>
+    <h1><%= area.name %></h1>
+  </div>
+</div>
+
+<% if map %>
+  <div class="row">
+    <div class="col-12">
+      <div id="map" style="height: 400px"></div>
+    </div>
+  </div>
+<% end %>
+
+<% if area.localities.size > 1 %>
+<div class="row">
+  <div class="col">
+    <ul class="nav nav-fill">
       <%area.localities.each do |locality|%>
         <% next if locality.locations.size.zero? %>
-        <li><%=link_to locality.name, "##{locality.cached_slug}"%></li>
+        <li class="nav-item"><%=link_to locality.name, "##{locality.cached_slug}", class:"nav-link" %></li>
       <%end%>
     </ul>
   <% end %>
+  </div>
+</div>
 
   <%area.localities.each do |locality|%>
     <% next if locality.locations.size.zero? %>
-    <h2><a id="<%=locality.cached_slug%>"></a><%=locality.name%></h2>
+    <div class="row">
+      <div class="col">
+        <h4><a id="<%=locality.cached_slug%>"></a><%=locality.name%></h4>
+      </div>
+    </div>
     <%locality.locations.each do |location|%>
-      <a id="<%=location.cached_slug%>"></a>
-      <div class="location">
-        <h3><%=link_to_if map, location.name, location%> <%if location.all_ages%><span class="aav" title="All-ages Venue">AAV!</span><%end%><%if !location.url.blank? && !map%> <%=link_to "<span>website</span>".html_safe, location.url, :class => 'location_website_link'%><%end%></h3>
-        <h4><%=link_to_unless map, location.address, "https://maps.google.com/maps?q=#{CGI.escape(location.full_street_address)}" %></h4>
-        <ul>
-          <%location.machines.sort.each do |machine|%>
-            <li><%=raw machine.title.name%></li>
-          <%end%>
-        </ul>
+      <div class="row">
+        <div class="col-lg-6">
+          <a id="<%=location.cached_slug%>"></a>
+          <div class="card mb-4">
+            <h5 class="card-header"><%=link_to location.name, location%>
+              <%if location.all_ages%><span class="badge badge-primary" title="All-ages Venue">AAV!</span><%end%>
+            </h5>
+            <ul class="list-group list-group-flush">
+              <%location.machines.sort.each do |machine|%>
+                <li class="list-group-item"><%=raw machine.title.name%></li>
+              <%end%>
+            </ul>
+          </div>
+        </div>
       </div>
     <%end%>
   <%end%>

@@ -1,0 +1,12 @@
+<%@titles.each do |title|%>
+  <div style="margin-bottom: 3em;">
+    <%=form_for title do |f|%>
+      <%=f.label :name%>: <%=title.name%> <br/>
+      <%=f.label :ipdb_id, "IPDB ID#"%>: <%=f.text_field :ipdb_id%> <%=submit_tag%>
+    <%end%>
+  </div>
+<%end%>
+<%if @titles.empty?%>
+
+<h1>No Results</h2>
+<%end%>

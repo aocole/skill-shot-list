@@ -1,13 +1,19 @@
-<h1>Listing machines at <%=link_to @location.name, @location%></h1>
+<div class="row">
+  <div class="col">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-primary">
+        <h3>Listing machines at <%=link_to @location.name, @location%></h3>
+      </li>
+      <%@machines.sort.each do |machine|%>
+      <li class="list-group-item"><%= link_to 'Delete', machine, :confirm => "Are you sure you want to remove #{machine.title.name} from #{@location.name}?", :method => :delete, :class => 'btn btn-danger' %> <%=machine.title.name.html_safe%> </li>
+      <%end%>
+    </ul>
+  </div>
+</div>
 
-<ul>
-<% @machines.sort.each do |machine| %>
-    <li><%= machine.title.name %> <%= link_to 'X', machine, :confirm => "Are you sure you want to remove #{machine.title.name} from #{@location.name}?", :method => :delete %></li>
-<% end %>
-</ul>
+<div class="row">
+  <div class="col">
 
-<br />
-<fieldset>
-  <legend>Create New Machine at <%=@location.name%></legend>
-  <%= render 'form' %>
-</fieldset>
+    <%= render 'form', title:"Create New Machine at #{@location.name}" %>
+  </div>
+</div>

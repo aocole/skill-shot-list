@@ -1,32 +1,38 @@
-<%= form_for([@location, @machine]) do |f| %>
-  <% if @machine.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@machine.errors.count, "error") %> prohibited this machine from being saved:</h2>
+<%= form_for([@location, @machine], class:"py-3") do |f| %>
 
-      <ul>
-        <% @machine.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<% if title %>
+  <h3><%=title%></h3>
+<% end %>
 
-  <script type="text/javascript">
-    $(function() {
-      $( "#combobox" ).combobox();
-      $('input.ui-autocomplete-input').focus();
-    });
-  </script>
-  <div class="ui-widget">
-<%= f.label :title_id %><br />
-<select name="title_id" id="combobox">
-      <option value="">Select one...</option>
-      <%@titles.each do |title|%>
-        <option value="<%=title.id%>"><%=title.name.html_safe%></option>
-      <%end%>
-    </select>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<% if @machine.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@machine.errors.count, "error") %> prohibited this machine from being saved:</h2>
+
+  <ul>
+    <% @machine.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<script type="text/javascript">
+  $(function() {
+    $( "#combobox" ).combobox();
+    $('input.ui-autocomplete-input').focus();
+  });
+</script>
+
+<div class="form-group ui-widget">
+  <label for="machine_title_id">Title </label>
+  <select name="title_id" id="combobox" class="form-control">
+    <option value="">Select one...</option>
+    <%@titles.each do |title|%>
+    <option value="<%=title.id%>"><%=title.name.html_safe%></option>
+    <%end%>
+  </select>
+</div>
+
+<%= f.submit(class:'btn btn-primary') %>  
+
 <% end %>
