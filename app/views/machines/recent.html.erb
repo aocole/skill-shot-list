@@ -15,7 +15,7 @@
       <% title = machine_change.machine.title %>
       <td><%=title ? title.name : '?'%></td>
       <td style="padding:0 1em;"><%=machine_change.add? ? 'added to' : 'removed from'%></td>
-      <td><%=link_to machine_change.machine.location.name, machine_change.machine.location%></td>
+      <td<%if machine_change.machine.location.deleted?%> style="text-decoration: line-through;"<%end%>><%=link_to_unless machine_change.machine.location.deleted?, machine_change.machine.location.name, machine_change.machine.location%></td>
       <td><%=machine_change.add? ? machine_change.machine.created_by.initials : machine_change.machine.deleted_by.initials%></td>
       <td title="<%=machine_change.created_at.to_s(:long)%>"><%=machine_change.created_at.to_s(:short)%></td>
     </tr>
