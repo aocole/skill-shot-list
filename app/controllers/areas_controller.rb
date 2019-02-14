@@ -48,6 +48,22 @@ class AreasController < ApplicationController
           }
         }
       ).find_using_slug!(params[:id])
+
+      # check all geocodes
+      failed_geocode = false
+      @area.localities.each do |locality|
+        locality.locations.each do |location|
+          if !location.geocoded? && !failed_geocode
+            begin
+              location.geocode
+            rescue => e
+              failed_geocode = true # keeps us from wasting time if the geocoder api is down
+              notify_airbrake e
+            end
+            location.save
+          end
+        end
+      end
     end
 
     respond_to do |format|

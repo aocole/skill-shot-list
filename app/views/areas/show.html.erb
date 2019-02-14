@@ -36,6 +36,7 @@
           });
     <%@area.localities.each do |locality|%>
       <%locality.locations.each do |location|%>
+        <% next unless location.geocoded? %>
         latlng = new google.maps.LatLng(<%=location.latitude%>, <%=location.longitude%>);
         marker = new google.maps.Marker({
           position: latlng,
