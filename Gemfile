@@ -35,3 +35,7 @@ gem 'pry-rails', group: :development
 # Use unicorn as the web server
 gem 'unicorn'
 
+group :development, :test do
+  gem 'rspec-rails', '~> 3.8'
+end
+
