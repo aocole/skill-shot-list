@@ -54,6 +54,10 @@ class TitlesController < ApplicationController
     @titles = Title.where(:name => params[:name])
   end
 
+  def idless
+    @titles = Title.where(ipdb_id: nil)
+  end
+
   # GET /titles/1
   # GET /titles/1.json
   def show

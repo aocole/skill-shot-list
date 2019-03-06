@@ -32,6 +32,7 @@ Skillshot::Application.routes.draw do
     get :active, :on => :collection
     get :duplicate, :on => :collection
     get :dupe_resolve, :on => :collection
+    get :idless, :on => :collection
   end
 
   get '/wrapper' => 'home#wrapper'
