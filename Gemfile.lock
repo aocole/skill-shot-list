@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/tkupari/acts_as_paranoid
+  remote: https://github.com/aocole/acts_as_paranoid
   revision: 305151879ea8e525d0cd18761f7595ce330d1794
   ref: 305151879ea8e525d0cd18761f7595ce330d1794
   specs:
