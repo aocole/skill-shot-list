@@ -58,7 +58,6 @@ class AreasController < ApplicationController
               location.geocode
             rescue => e
               failed_geocode = true # keeps us from wasting time if the geocoder api is down
-              notify_airbrake e
             end
             location.save
           end
