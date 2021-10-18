@@ -20,8 +20,12 @@ gem "acts_as_paranoid", "~>0.4.0", :git => 'https://github.com/aocole/acts_as_pa
 
 gem 'authlogic', '~> 3.4'
 gem 'rest-client'
-# gem 'airbrake'
 gem 'slugged'
+
+# rails 4 compat
+gem 'actionpack-action_caching'
+gem 'actionpack-page_caching'
+gem 'rails-observers'
 
 # heroku stuff
 gem 'rails_12factor'
