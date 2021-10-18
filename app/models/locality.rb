@@ -1,5 +1,5 @@
 class Locality < ActiveRecord::Base
-  default_scope order('area_id asc, name asc')
+  default_scope -> {order('area_id asc, name asc')}
   belongs_to :area
   has_many :locations
   validates_presence_of :name, :area
