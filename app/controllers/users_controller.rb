@@ -31,9 +31,7 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.xml
   def create
-    valid_keys = %w{email initials password password_confirmation}
-    params[:user].delete_if{|k,v|!valid_keys.include?(k)}
-    @user = User.new(params[:user])
+    @user = User.new(user_params)
     @user.admin = false
 
     respond_to do |format|
@@ -51,10 +49,8 @@ class UsersController < ApplicationController
   # PUT /users/1.xml
   def update
     @user = @current_user
-    valid_keys = %w{email initials password password_confirmation}
-    params[:user].delete_if{|k,v|!valid_keys.include?(k)}
     respond_to do |format|
-      if @user.update_attributes(params[:user])
+      if @user.update_attributes(user_params)
         format.html { redirect_to(@user, :notice => 'User was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -62,6 +58,12 @@ class UsersController < ApplicationController
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
     end
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:email, :initials, :password, :password_confirmation)
   end
 
 end
