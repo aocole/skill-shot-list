@@ -5,7 +5,7 @@ $(function(){
 </script>
 <h1>Login</h1>
 
-<%= form_for @user_session, :url => user_session_path do |f| %>
+<%= form_for @user_session, url: user_session_path do |f| %>
   <% if @user_session.errors.any? %>
     <div id="error_explanation">
       <h2>Can't log you in:</h2>

@@ -1,6 +1,6 @@
 class DeleteMachinesWithHiddenTitles < ActiveRecord::Migration
   def up
-    Machine.unscoped.where(:titles => {:status => 'hidden'}).includes(:title).each do |machine|
+    Machine.unscoped.where(titles: {status: 'hidden'}).includes(:title).each do |machine|
       machine.machine_changes.each do |mc|
         mc.destroy
       end

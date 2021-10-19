@@ -1,9 +1,9 @@
 
 <h1>Duplicate Title Names</h1>
 Search for names not on this list:
-<%=form_tag( search_titles_url, :method => :get) do%>
+<%=form_tag( search_titles_url, method: :get) do%>
   <%=text_field_tag :term%><%=submit_tag :search%>
 <%end%>
 <%@titles.each do |title|%>
-  <%=link_to title.name, :action => :dupe_resolve, :name => title.name %><br/>
+  <%=link_to title.name, action: :dupe_resolve, name: title.name %><br/>
 <%end%>

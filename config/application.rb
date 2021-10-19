@@ -30,12 +30,12 @@ module Skillshot
 
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
-      :address => 'sub4.mail.dreamhost.com',
-      :port => 587,
-      :domain => 'skillshot.ndrew.org',
-      :authentication => :login,
-      :user_name => 'no-reply@skillshot.ndrew.org',
-      :password => 'skillshotmailer'
+      address: 'sub4.mail.dreamhost.com',
+      port: 587,
+      domain: 'skillshot.ndrew.org',
+      authentication: :login,
+      user_name: 'no-reply@skillshot.ndrew.org',
+      password: 'skillshotmailer'
     }
     config.action_mailer.raise_delivery_errors = true
     config.action_mailer.perform_deliveries = true

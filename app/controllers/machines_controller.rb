@@ -1,6 +1,6 @@
 class MachinesController < ApplicationController
-  before_filter :require_location, :except => [:edit, :update, :destroy, :recent]
-  before_filter :require_user, :except => [:show, :index]
+  before_filter :require_location, except: [:edit, :update, :destroy, :recent]
+  before_filter :require_user, except: [:show, :index]
   cache_sweeper :machine_sweeper
 
   def require_location
@@ -16,13 +16,13 @@ class MachinesController < ApplicationController
 
     respond_to do |format|
       format.html {require_user}
-      format.json { render :json => @machines }
+      format.json { render json: @machines }
     end
   end
 
   def recent
     @machine_changes = MachineChange.includes(
-      :machine => [
+      machine: [
           :created_by,
           :title,
           :location
@@ -32,18 +32,18 @@ class MachinesController < ApplicationController
 
   def common
     @all = Machine.find :all,
-      :order => 'cnt desc',
-      :limit => 10,
-      :group => 'title_id',
-      :joins => 'join titles on titles.id=machines.title_id',
-      :select => 'titles.name, count(*) as cnt'
+      order: 'cnt desc',
+      limit: 10,
+      group: 'title_id',
+      joins: 'join titles on titles.id=machines.title_id',
+      select: 'titles.name, count(*) as cnt'
     @seattle = Machine.find :all,
-      :order => 'cnt desc',
-      :limit => 10,
-      :group => 'title_id',
-      :select => 'titles.name, count(*) as cnt',
-      :conditions => 'areas.name = "seattle"',
-      :joins => "\
+      order: 'cnt desc',
+      limit: 10,
+      group: 'title_id',
+      select: 'titles.name, count(*) as cnt',
+      conditions: 'areas.name = "seattle"',
+      joins: "\
         join titles on titles.id=machines.title_id \
         join locations on locations.id=machines.location_id \
         join localities on localities.id=locations.locality_id \
@@ -57,7 +57,7 @@ class MachinesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render :json => @machine }
+      format.json { render json: @machine }
     end
   end
 
@@ -69,7 +69,7 @@ class MachinesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render :json => @machine }
+      format.json { render json: @machine }
     end
   end
 
@@ -84,18 +84,18 @@ class MachinesController < ApplicationController
     @title = Title.find_by_id(params[:title_id])
     logger.debug "Creating a new machine. current user is #{current_user}"
     @machine = Machine.new({
-        :location => @location,
-        :title => @title,
-        :created_by => current_user
+        location: @location,
+        title: @title,
+        created_by: current_user
       })
 
     respond_to do |format|
       if @machine.save
-        format.html { redirect_to location_machines_path(@location), :notice => 'Machine was successfully created.' }
-        format.json { render :json => @machine, :status => :created, :location => @machine }
+        format.html { redirect_to location_machines_path(@location), notice: 'Machine was successfully created.' }
+        format.json { render json: @machine, status: :created, location: @machine }
       else
-        format.html { redirect_to location_machines_path(@location), :notice => @machine.errors.full_messages.join('. ') }
-        format.json { render :json => @machine.errors, :status => :unprocessable_entity }
+        format.html { redirect_to location_machines_path(@location), notice: @machine.errors.full_messages.join('. ') }
+        format.json { render json: @machine.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -110,11 +110,11 @@ class MachinesController < ApplicationController
 #
 #    respond_to do |format|
 #      if @machine.update_attributes(params[:machine])
-#        format.html { redirect_to @machine, :notice => 'Machine was successfully updated.' }
+#        format.html { redirect_to @machine, notice: 'Machine was successfully updated.' }
 #        format.json { head :ok }
 #      else
-#        format.html { render :action => "edit" }
-#        format.json { render :json => @machine.errors, :status => :unprocessable_entity }
+#        format.html { render action: "edit" }
+#        format.json { render json: @machine.errors, status: :unprocessable_entity }
 #      end
 #    end
   end
@@ -128,7 +128,7 @@ class MachinesController < ApplicationController
     @machine.destroy
 
     respond_to do |format|
-      format.html { redirect_to location_machines_path(@machine.location), :notice => 'Machine was deleted.'  }
+      format.html { redirect_to location_machines_path(@machine.location), notice: 'Machine was deleted.'  }
       format.json { head :ok }
     end
   end

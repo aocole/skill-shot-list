@@ -24,7 +24,7 @@ end
 
 namespace :history do
   desc "Tests the history function"
-  task :test => :environment do
+  task test: :environment do
     ActiveRecord::Base.logger = nil
       changes = History.reconstruct_changes
       nil_titles = changes.select{|c| c.machine.title.nil?}

@@ -1,10 +1,10 @@
 class LocationsController < ApplicationController
-  before_filter :require_admin_user, :except => [:show, :index, :for_wordpress, :for_wordpress_list]
-  caches_action :show, :if => Proc.new{|c|!c.admin? && c.params[:format] != 'json'}, :layout => false
-  caches_action :show, :if => Proc.new{|c|c.params[:format] == 'json'}, :cache_path => Proc.new{|c|
+  before_filter :require_admin_user, except: [:show, :index, :for_wordpress, :for_wordpress_list]
+  caches_action :show, if: Proc.new{|c|!c.admin? && c.params[:format] != 'json'}, layout: false
+  caches_action :show, if: Proc.new{|c|c.params[:format] == 'json'}, cache_path: Proc.new{|c|
     {
-      :action => c.params[:action],
-      :format => c.params[:format]
+      action: c.params[:action],
+      format: c.params[:format]
     }
   }
   cache_sweeper :location_sweeper
@@ -12,7 +12,7 @@ class LocationsController < ApplicationController
   def index
     respond_to do |format|
       format.html { redirect_to :root }
-      format.json { render :json => regular_locations}
+      format.json { render json: regular_locations}
     end
   end
 
@@ -20,28 +20,28 @@ class LocationsController < ApplicationController
     locations = regular_locations.select{|l| l.machines.size > 0} # TODO: get sql to do this
 
     respond_to do |format|
-      format.html {render :layout => false}
-      format.json {render :json => locations, :each_serializer => LocationDetailSerializer}
+      format.html {render layout: false}
+      format.json {render json: locations, each_serializer: LocationDetailSerializer}
     end
   end
 
   def for_wordpress_list
     respond_to do |format|
-      format.html {render :layout => false}
+      format.html {render layout: false}
     end
   end
 
   # GET /locations/1
   # GET /locations/1.json
   def show
-    @location = Location.includes(:machines => [:title]).find_using_slug!(params[:id])
+    @location = Location.includes(machines: [:title]).find_using_slug!(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
       format.json {
         render(
-          {:json => @location, :serializer => LocationDetailSerializer},
-          {:layout => false}
+          {json: @location, serializer: LocationDetailSerializer},
+          {layout: false}
         )
       }
     end
@@ -50,11 +50,11 @@ class LocationsController < ApplicationController
   # GET /locations/new
   # GET /locations/new.json
   def new
-    @location = Location.new(:city => 'Seattle', :state => 'WA')
+    @location = Location.new(city: 'Seattle', state: 'WA')
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render :json => @location }
+      format.json { render json: @location }
     end
   end
 
@@ -72,11 +72,11 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       if @location.save
-        format.html { redirect_to @location, :notice => 'Location was successfully created.' }
-        format.json { render :json => @location, :status => :created, :location => @location }
+        format.html { redirect_to @location, notice: 'Location was successfully created.' }
+        format.json { render json: @location, status: :created, location: @location }
       else
-        format.html { render :action => "new" }
-        format.json { render :json => @location.errors, :status => :unprocessable_entity }
+        format.html { render action: "new" }
+        format.json { render json: @location.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -90,11 +90,11 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       if @location.update_attributes(params[:location])
-        format.html { redirect_to @location, :notice => 'Location was successfully updated.' }
+        format.html { redirect_to @location, notice: 'Location was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.json { render :json => @location.errors, :status => :unprocessable_entity }
+        format.html { render action: "edit" }
+        format.json { render json: @location.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -111,7 +111,7 @@ class LocationsController < ApplicationController
     @location.destroy
 
     respond_to do |format|
-      format.html { redirect_to locations_url, :notice => "Location was deleted." }
+      format.html { redirect_to locations_url, notice: "Location was deleted." }
       format.json { head :ok }
     end
   end

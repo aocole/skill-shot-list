@@ -10,9 +10,9 @@ class Title < ActiveRecord::Base
   
   validates_uniqueness_of :ipdb_id, allow_nil: true
   validates_presence_of :name
-  validates_inclusion_of :status, :in => STATUS.constants.collect{|name|STATUS.const_get(name)}, :allow_nil => true
+  validates_inclusion_of :status, in: STATUS.constants.collect{|name|STATUS.const_get(name)}, allow_nil: true
   has_many :machines
-  has_many :locations, :through => :machines
+  has_many :locations, through: :machines
 
   def ipdb_url
     ipdb_id ? "http://ipdb.org/machine.cgi?gid=#{ipdb_id}" : nil

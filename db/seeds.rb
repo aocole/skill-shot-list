@@ -3,23 +3,23 @@
 #
 # Examples:
 #
-#   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
-#   Mayor.create(:name => 'Daley', :city => cities.first)
+#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
+#   Mayor.create(name: 'Daley', city: cities.first)
 Locality.delete_all
 Area.delete_all
 
-seattle = Area.create({:name => 'Seattle'})
-belltown = Locality.create(:name => "Belltown/Denny Regrade", :area => seattle)
+seattle = Area.create({name: 'Seattle'})
+belltown = Locality.create(name: "Belltown/Denny Regrade", area: seattle)
 shortys = Location.create(
-  :name => "Shorty's",
-  :address => "2222 2nd Ave",
-  :city => "Seattle",
-  :state => "WA",
-  :postal_code => "98121",
-  :url => "http://shortydog.com/",
-  :phone => "(206) 441-5449",
-  :locality => belltown,
-  :all_ages => false
+  name: "Shorty's",
+  address: "2222 2nd Ave",
+  city: "Seattle",
+  state: "WA",
+  postal_code: "98121",
+  url: "http://shortydog.com/",
+  phone: "(206) 441-5449",
+  locality: belltown,
+  all_ages: false
 ).save
 
 [
@@ -39,10 +39,10 @@ shortys = Location.create(
     "White Center",
     "Beacon Hill/Columbia City"
 ].each do |name|
-  Locality.create({:name => name, :area => seattle})
+  Locality.create({name: name, area: seattle})
 end
 
-king_county = Area.create({:name => 'King County'})
+king_county = Area.create({name: 'King County'})
 [
     "Auburn",
     "Bellevue",
@@ -55,14 +55,14 @@ king_county = Area.create({:name => 'King County'})
     "Renton",
     "Tukwila"
 ].each do |name|
-  Locality.create({:name => name, :area => king_county})
+  Locality.create({name: name, area: king_county})
 end
 
-tacoma = Area.create({:name => 'Tacoma'})
+tacoma = Area.create({name: 'Tacoma'})
 [
     "Downtown",
     "Enumclaw"
 ].each do |name|
-  Locality.create({:name => name, :area => tacoma})
+  Locality.create({name: name, area: tacoma})
 end
 

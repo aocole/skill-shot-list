@@ -1,15 +1,15 @@
 class TitlesController < ApplicationController
-  before_filter :require_admin_user, :except => [:active]
+  before_filter :require_admin_user, except: [:active]
   layout Proc.new{|c|
     c.request.path_parameters[:action] == 'active' && c.request.format.json? ? 
     'empty' : 
     'application'
   }
   caches_action :active, 
-    :if => Proc.new{|c|!c.admin?}, 
-    :layout => false, 
-    :cache_path => Proc.new{|c| {
-        :callback => c.params[:callback]
+    if: Proc.new{|c|!c.admin?}, 
+    layout: false, 
+    cache_path: Proc.new{|c| {
+        callback: c.params[:callback]
       }
     }
   cache_sweeper :title_sweeper
@@ -20,7 +20,7 @@ class TitlesController < ApplicationController
     @titles = Title.all
     respond_to do |format|
       format.html
-      format.json { render :json => @titles }
+      format.json { render json: @titles }
     end
   end
 
@@ -31,15 +31,15 @@ class TitlesController < ApplicationController
       where('machine.deleted_at is null').
       includes(:locations)
     if params[:wordpress]
-      s = render_to_string :template => 'titles/wordpress', :formats => [:html], :layout => false
+      s = render_to_string template: 'titles/wordpress', formats: [:html], layout: false
       respond_to do |format|
-        format.json { render :json => [s] }
+        format.json { render json: [s] }
       end
       return
     end
     respond_to do |format|
       format.html
-      format.json { render :json => @titles }
+      format.json { render json: @titles }
     end
   end
 
@@ -51,7 +51,7 @@ class TitlesController < ApplicationController
   end
 
   def dupe_resolve
-    @titles = Title.where(:name => params[:name])
+    @titles = Title.where(name: params[:name])
   end
 
   def idless
@@ -65,7 +65,7 @@ class TitlesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render :json => @title }
+      format.json { render json: @title }
     end
   end
 
@@ -76,7 +76,7 @@ class TitlesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render :json => @title }
+      format.json { render json: @title }
     end
   end
 
@@ -92,11 +92,11 @@ class TitlesController < ApplicationController
 
     respond_to do |format|
       if @title.save
-        format.html { redirect_to @title, :notice => 'Title was successfully created.' }
-        format.json { render :json => @title, :status => :created, :location => @title }
+        format.html { redirect_to @title, notice: 'Title was successfully created.' }
+        format.json { render json: @title, status: :created, location: @title }
       else
-        format.html { render :action => "new" }
-        format.json { render :json => @title.errors, :status => :unprocessable_entity }
+        format.html { render action: "new" }
+        format.json { render json: @title.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -110,11 +110,11 @@ class TitlesController < ApplicationController
 
     respond_to do |format|
       if @title.update_attributes(params[:title])
-        format.html { redirect_to @title, :notice => 'Title was successfully updated.' }
+        format.html { redirect_to @title, notice: 'Title was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.json { render :json => @title.errors, :status => :unprocessable_entity }
+        format.html { render action: "edit" }
+        format.json { render json: @title.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -134,10 +134,10 @@ class TitlesController < ApplicationController
   end
 
   def search
-    @titles = params[:term].blank? ? [] : Title.find(:all, :conditions => ["name ilike ?", "%#{params[:term]}%"])
+    @titles = params[:term].blank? ? [] : Title.find(:all, conditions: ["name ilike ?", "%#{params[:term]}%"])
     respond_to do |format|
-      format.html { render :action => 'dupe_resolve'}
-      format.json { render :json => @titles.collect{|title|{:label => title.name, :value => title.id}} }
+      format.html { render action: 'dupe_resolve'}
+      format.json { render json: @titles.collect{|title|{label: title.name, value: title.id}} }
     end
   end
 end
