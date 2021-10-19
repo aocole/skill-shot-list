@@ -41,13 +41,7 @@ class AreasController < ApplicationController
       end
       return
     else
-      @area = Area.includes(
-        :localities => {
-          :locations => {
-            :machines => :title
-          }
-        }
-      ).find_using_slug!(params[:id])
+      @area = Area.includes(localities: {locations: {machines: :title}}).find_using_slug!(params[:id])
 
       # check all geocodes
       failed_geocode = false
