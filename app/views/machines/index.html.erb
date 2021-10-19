@@ -5,7 +5,7 @@
         <h3>Listing machines at <%=link_to @location.name, @location%></h3>
       </li>
       <%@machines.sort.each do |machine|%>
-      <li class="list-group-item"><%= link_to 'Delete', machine, :confirm => "Are you sure you want to remove #{machine.title.name} from #{@location.name}?", :method => :delete, :class => 'btn btn-danger' %> <%=machine.title.name.html_safe%> </li>
+      <li class="list-group-item"><%= link_to 'Delete', machine, data: { confirm: "Are you sure you want to remove #{machine.title.name} from #{@location.name}?" }, method: :delete, class: 'btn btn-danger' %> <%=machine.title.name.html_safe%> </li>
       <%end%>
     </ul>
   </div>

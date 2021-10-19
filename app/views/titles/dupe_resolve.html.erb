@@ -2,7 +2,7 @@
 <%@titles.each do |title|%>
   <div style="margin-bottom: 3em;">
     <%=form_for title do |f|%>
-      <%=f.label :name%>: <%=f.text_field :name, :size => 100%> <%=submit_tag%> <%= link_to 'Hide', title, :method => :delete, :confirm => "Are you sure you want to hide #{title.name}?", :style => 'display:none' %>
+      <%=f.label :name%>: <%=f.text_field :name, :size => 100%> <%=submit_tag%> <%= link_to 'Hide', title, method: :delete, data: { confirm: "Are you sure you want to hide #{title.name}?" }, style: 'display:none' %>
     <%end%>
     <%= link_to title.ipdb_url, title.ipdb_url %>
     <iframe src="<%=title.ipdb_url%>" width="100%" height="250px"></iframe>
