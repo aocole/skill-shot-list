@@ -18,30 +18,30 @@ class LocalitiesControllerTest < ActionController::TestCase
 
   test "should create locality" do
     assert_difference('Locality.count') do
-      post :create, :locality => @locality.attributes
+      post :create, locality: @locality.attributes
     end
 
     assert_redirected_to locality_path(assigns(:locality))
   end
 
   test "should show locality" do
-    get :show, :id => @locality.to_param
+    get :show, id: @locality.to_param
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, :id => @locality.to_param
+    get :edit, id: @locality.to_param
     assert_response :success
   end
 
   test "should update locality" do
-    put :update, :id => @locality.to_param, :locality => @locality.attributes
+    put :update, id: @locality.to_param, locality: @locality.attributes
     assert_redirected_to locality_path(assigns(:locality))
   end
 
   test "should destroy locality" do
     assert_difference('Locality.count', -1) do
-      delete :destroy, :id => @locality.to_param
+      delete :destroy, id: @locality.to_param
     end
 
     assert_redirected_to localities_path

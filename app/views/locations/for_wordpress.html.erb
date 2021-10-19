@@ -7,7 +7,7 @@
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3yh3NiCTfDrlwStpSYLejEO8q42O4rRQ"></script>
 <%= javascript_include_tag 'for_wordpress' %>
-<%= javascript_include_tag url_for(:format => :json, :callback=> 'setLocations') %>
+<%= javascript_include_tag url_for(format: :json, :callback=> 'setLocations') %>
 
 
 <div id="map" style="width:100%; height:100%;"></div>

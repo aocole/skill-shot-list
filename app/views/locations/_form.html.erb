@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :locality_id %><br />
-    <%= f.grouped_collection_select :locality_id, Area.all, :localities, :name, :id, :name, :prompt => true %>
+    <%= f.grouped_collection_select :locality_id, Area.all, :localities, :name, :id, :name, prompt: true %>
   </div>
   <div class="field">
     <%= f.label :address %><br />

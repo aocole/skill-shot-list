@@ -1,11 +1,11 @@
 class AreasController < ApplicationController
-  before_filter :require_admin_user, :except => [:show]
+  before_filter :require_admin_user, except: [:show]
   layout Proc.new{|c|c.params[:id] == 'wordpress' ? 'empty' : 'application'}
   caches_action :show, 
-    :if => Proc.new{|c|!c.admin?}, 
-    :layout => false, 
-    :cache_path => Proc.new{|c| {
-        :callback => c.params[:callback]
+    if: Proc.new{|c|!c.admin?}, 
+    layout: false, 
+    cache_path: Proc.new{|c| {
+        callback: c.params[:callback]
       }
     }
   cache_sweeper :location_sweeper
@@ -19,7 +19,7 @@ class AreasController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render :json => @areas }
+      format.json { render json: @areas }
     end
   end
 
@@ -28,26 +28,20 @@ class AreasController < ApplicationController
   def show
     if params[:id] == 'wordpress'
       @areas = Area.includes(
-        :localities => {
-          :locations => {
-            :machines => :title
+        localities: {
+          locations: {
+            machines: :title
           }
         }
       ).all
-      s = render_to_string :template => 'areas/wordpress', :formats => [:html], :layout => false
+      s = render_to_string template: 'areas/wordpress', formats: [:html], layout: false
       respond_to do |format|
-        format.json { render :json => [s] }
-        format.html { render :text => s }
+        format.json { render json: [s] }
+        format.html { render text: s }
       end
       return
     else
-      @area = Area.includes(
-        :localities => {
-          :locations => {
-            :machines => :title
-          }
-        }
-      ).find_using_slug!(params[:id])
+      @area = Area.includes(localities: {locations: {machines: :title}}).find_using_slug!(params[:id])
 
       # check all geocodes
       failed_geocode = false
@@ -58,7 +52,6 @@ class AreasController < ApplicationController
               location.geocode
             rescue => e
               failed_geocode = true # keeps us from wasting time if the geocoder api is down
-              notify_airbrake e
             end
             location.save
           end
@@ -68,7 +61,7 @@ class AreasController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render :json => @area }
+      format.json { render json: @area }
     end
   end
 
@@ -80,8 +73,8 @@ class AreasController < ApplicationController
     @area = Area.find_using_slug!(params[:id])
 
     respond_to do |format|
-      format.html { render :layout => false}
-      format.json { render :json => @area }
+      format.html { render layout: false}
+      format.json { render json: @area }
     end
   end
 
@@ -92,7 +85,7 @@ class AreasController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render :json => @area }
+      format.json { render json: @area }
     end
   end
 
@@ -108,11 +101,11 @@ class AreasController < ApplicationController
 
     respond_to do |format|
       if @area.save
-        format.html { redirect_to @area, :notice => 'Area was successfully created.' }
-        format.json { render :json => @area, :status => :created, :location => @area }
+        format.html { redirect_to @area, notice: 'Area was successfully created.' }
+        format.json { render json: @area, status: :created, location: @area }
       else
-        format.html { render :action => "new" }
-        format.json { render :json => @area.errors, :status => :unprocessable_entity }
+        format.html { render action: "new" }
+        format.json { render json: @area.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -126,11 +119,11 @@ class AreasController < ApplicationController
 
     respond_to do |format|
       if @area.update_attributes(params[:area])
-        format.html { redirect_to @area, :notice => 'Area was successfully updated.' }
+        format.html { redirect_to @area, notice: 'Area was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render :action => "edit" }
-        format.json { render :json => @area.errors, :status => :unprocessable_entity }
+        format.html { render action: "edit" }
+        format.json { render json: @area.errors, status: :unprocessable_entity }
       end
     end
   end

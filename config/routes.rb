@@ -10,35 +10,35 @@ Skillshot::Application.routes.draw do
   get "stats/index2"
 
   resources :areas do
-    get :machines_per_location_report, :on => :member
-    get :print, :on => :member
+    get :machines_per_location_report, on: :member
+    get :print, on: :member
     resources :localities
   end
 
   resources :machines do
-    get :recent, :on => :collection
+    get :recent, on: :collection
   end
-  resources :locations, :shallow => true do
-    get :for_wordpress, :on => :collection
-    get :for_wordpress_list, :on => :collection
+  resources :locations, shallow: true do
+    get :for_wordpress, on: :collection
+    get :for_wordpress_list, on: :collection
     resources :machines
   end
-  resources :localities, :shallow => true do
+  resources :localities, shallow: true do
     resources :locations
   end
 
   resources :titles do
-    get :search, :on => :collection
-    get :active, :on => :collection
-    get :duplicate, :on => :collection
-    get :dupe_resolve, :on => :collection
-    get :idless, :on => :collection
+    get :search, on: :collection
+    get :active, on: :collection
+    get :duplicate, on: :collection
+    get :dupe_resolve, on: :collection
+    get :idless, on: :collection
   end
 
   get '/wrapper' => 'home#wrapper'
   get '/noop' => 'home#noop'
   get '/login' => 'user_sessions#new'
-  root :controller => :areas, :action => :show, :id => 'seattle'
+  root controller: :areas, action: :show, id: 'seattle'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -48,8 +48,8 @@ Skillshot::Application.routes.draw do
   # Keep in mind you can assign values other than :controller and :action
 
   # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
+  #   match 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+  # This route can be invoked with purchase_url(id: product.id)
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
@@ -76,7 +76,7 @@ Skillshot::Application.routes.draw do
   #   resources :products do
   #     resources :comments
   #     resources :sales do
-  #       get 'recent', :on => :collection
+  #       get 'recent', on: :collection
   #     end
   #   end
 
@@ -89,7 +89,7 @@ Skillshot::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  # root to: 'welcome#index'
 
   # See how all your routes lay out with "rake routes"
 

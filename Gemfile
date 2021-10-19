@@ -1,30 +1,30 @@
 source 'https://rubygems.org'
 
-ruby '2.3.5'
+ruby '2.3.8'
 
-gem 'rails', '~> 3.2'
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+gem 'rails', '~> 4.0.13'
 
 gem 'pg', '~> 0.21'
 gem 'yajl-ruby', '~> 1.3'
 gem 'foreigner', "~> 1.4.2"
-gem 'geocoder', "~> 1.5.0"
+gem 'geocoder', "~> 1.6"
 gem 'htmlentities'
-gem "active_model_serializers"
+gem "active_model_serializers", "~> 0.9.7"
 gem "rack-contrib"
 gem 'test-unit', '~> 3.0'
 
 gem 'jquery-rails', '~> 3.1'
 
-# using unofficial fork to work around https://github.com/goncalossilva/acts_as_paranoid/issues/62
-gem "acts_as_paranoid", "~>0.4.0", :git => 'https://github.com/aocole/acts_as_paranoid', :ref => '305151879ea8e525d0cd18761f7595ce330d1794'
+gem "acts_as_paranoid"
 
-gem 'authlogic', '~> 3.4.2'
+gem 'authlogic', '~> 3.4'
 gem 'rest-client'
-gem 'airbrake'
 gem 'slugged'
+
+# rails 4 compat
+gem 'actionpack-action_caching'
+gem 'actionpack-page_caching'
+gem 'rails-observers'
 
 # heroku stuff
 gem 'rails_12factor'
@@ -36,6 +36,6 @@ gem 'pry-rails', group: :development
 gem 'unicorn'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-rails'
 end
 

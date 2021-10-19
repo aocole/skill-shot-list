@@ -18,30 +18,30 @@ class TitlesControllerTest < ActionController::TestCase
 
   test "should create title" do
     assert_difference('Title.count') do
-      post :create, :title => @title.attributes
+      post :create, title: @title.attributes
     end
 
     assert_redirected_to title_path(assigns(:title))
   end
 
   test "should show title" do
-    get :show, :id => @title.to_param
+    get :show, id: @title.to_param
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, :id => @title.to_param
+    get :edit, id: @title.to_param
     assert_response :success
   end
 
   test "should update title" do
-    put :update, :id => @title.to_param, :title => @title.attributes
+    put :update, id: @title.to_param, title: @title.attributes
     assert_redirected_to title_path(assigns(:title))
   end
 
   test "should destroy title" do
     assert_difference('Title.count', -1) do
-      delete :destroy, :id => @title.to_param
+      delete :destroy, id: @title.to_param
     end
 
     assert_redirected_to titles_path

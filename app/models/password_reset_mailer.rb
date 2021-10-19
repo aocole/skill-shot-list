@@ -1,18 +1,18 @@
 class PasswordResetMailer < ActionMailer::Base
   default_url_options[:host] = "skillshot.ndrew.org"
-  default :from => "Skill Shot Website <noreply@#{default_url_options[:host]}>"
+  default from: "Skill Shot Website <noreply@#{default_url_options[:host]}>"
 
   def password_reset_instructions(user, request)
     options = {
-      :id => user.perishable_token,
-      :host => request.host,
-      :protocol => request.protocol
+      id: user.perishable_token,
+      host: request.host,
+      protocol: request.protocol
     }
     if request.port != 80
        options[:port] = request.port
     end
     @edit_password_reset_url = edit_password_reset_url(options)
-    mail :to => user.email, :subject => "Password Reset Instructions", :body => "A request to reset your password has been made.
+    mail to: user.email, subject: "Password Reset Instructions", body: "A request to reset your password has been made.
 If you did not make this request, simply ignore this email.
 If you did make this request just click the link below:
 #{@edit_password_reset_url}

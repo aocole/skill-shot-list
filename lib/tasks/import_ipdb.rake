@@ -23,7 +23,7 @@ end
 
 namespace :import do
   desc "Imports IPDB file"
-  task :ipdb => :environment do
+  task ipdb: :environment do
     I18n.enforce_available_locales = true
     require 'htmlentities'
     ipdb_file = ARGV[1] || File.join(Rails.root, 'ipdb.html')
@@ -33,7 +33,7 @@ namespace :import do
     end
     ActiveRecord::Base.logger = nil
     f = File.read(ipdb_file).
-      encode("UTF-8", 'ASCII', :invalid => :replace, :undef => :replace, :replace => "").
+      encode("UTF-8", 'ASCII', invalid: :replace, undef: :replace, replace: "").
       force_encoding('UTF-8')
     coder = HTMLEntities.new
     f.scan(/<tr>.+?\?gid=(\d+)&.+?>([^<]*)</) do |ipdb_id, encoded_name|

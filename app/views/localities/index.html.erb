@@ -14,7 +14,7 @@
 
 <br />
 
-<%@locality ||= Locality.new(:area => @area)%>
-<%= form_for(@locality, :url => area_localities_path(@area)) do |f| %>
-  <%= render :partial => 'form', :locals => {:f => f} %>
+<%@locality ||= Locality.new(area: @area)%>
+<%= form_for(@locality, url: area_localities_path(@area)) do |f| %>
+  <%= render partial: 'form', locals: {f: f} %>
 <% end %>
