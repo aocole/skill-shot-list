@@ -15,8 +15,7 @@ gem 'test-unit', '~> 3.0'
 
 gem 'jquery-rails', '~> 3.1'
 
-# using unofficial fork to work around https://github.com/goncalossilva/acts_as_paranoid/issues/62
-gem "acts_as_paranoid", "~>0.4.0", :git => 'https://github.com/aocole/acts_as_paranoid', :ref => '305151879ea8e525d0cd18761f7595ce330d1794'
+gem "acts_as_paranoid"
 
 gem 'authlogic', '~> 3.4'
 gem 'rest-client'
