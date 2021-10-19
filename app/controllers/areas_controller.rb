@@ -97,7 +97,7 @@ class AreasController < ApplicationController
   # POST /areas
   # POST /areas.json
   def create
-    @area = Area.new(params[:area])
+    @area = Area.new(area_params)
 
     respond_to do |format|
       if @area.save
@@ -114,11 +114,9 @@ class AreasController < ApplicationController
   # PUT /areas/1.json
   def update
     @area = Area.find_using_slug!(params[:id])
-    valid_keys = %w{name}
-    params[:area].delete_if{|k,v|!valid_keys.include?(k)}
 
     respond_to do |format|
-      if @area.update_attributes(params[:area])
+      if @area.update_attributes(area_params)
         format.html { redirect_to @area, notice: 'Area was successfully updated.' }
         format.json { head :ok }
       else
@@ -138,5 +136,11 @@ class AreasController < ApplicationController
       format.html { redirect_to areas_url }
       format.json { head :ok }
     end
+  end
+
+  private
+
+  def area_params
+    params.require(:area).permit(:name)
   end
 end

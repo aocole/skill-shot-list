@@ -88,7 +88,7 @@ class TitlesController < ApplicationController
   # POST /titles
   # POST /titles.json
   def create
-    @title = Title.new(params[:title])
+    @title = Title.new(title_params)
 
     respond_to do |format|
       if @title.save
@@ -105,11 +105,9 @@ class TitlesController < ApplicationController
   # PUT /titles/1.json
   def update
     @title = Title.find(params[:id])
-    valid_keys = %w{name ipdb_id}
-    params[:title].delete_if{|k,v|!valid_keys.include?(k)}
 
     respond_to do |format|
-      if @title.update_attributes(params[:title])
+      if @title.update_attributes(title_params)
         format.html { redirect_to @title, notice: 'Title was successfully updated.' }
         format.json { head :ok }
       else
@@ -139,5 +137,11 @@ class TitlesController < ApplicationController
       format.html { render action: 'dupe_resolve'}
       format.json { render json: @titles.collect{|title|{label: title.name, value: title.id}} }
     end
+  end
+
+  private
+
+  def title_params
+    params.require(:title).permit(:ipdb_id, :name)
   end
 end

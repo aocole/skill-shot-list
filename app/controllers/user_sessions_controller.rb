@@ -7,7 +7,7 @@ class UserSessionsController < ApplicationController
   end
 
   def create
-    @user_session = UserSession.new(params[:user_session])
+    @user_session = UserSession.new(session_params.to_h)
     respond_to do |format|
       if @user_session.save
         format.html { redirect_back_or_default root_url, notice: "Login successful!" }
@@ -27,5 +27,11 @@ class UserSessionsController < ApplicationController
   def destroy
     current_user_session.destroy
     redirect_back_or_default new_user_session_url, notice: "Logout successful!"
+  end
+
+  private
+
+  def session_params
+    params.require(:user_session).permit(:email, :password)
   end
 end

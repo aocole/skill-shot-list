@@ -63,10 +63,8 @@ class LocalitiesController < ApplicationController
   def update
     @locality = Locality.find_using_slug!(params[:id])
 
-    valid_keys = %w{name}
-    params[:locality].delete_if{|k,v|!valid_keys.include?(k)}
     respond_to do |format|
-      if @locality.update_attributes(params[:locality])
+      if @locality.update_attributes(update_params)
         format.html { redirect_to area_locality_path(@area, @locality), notice: 'Locality was successfully updated.' }
         format.json { head :ok }
       else
@@ -86,5 +84,9 @@ class LocalitiesController < ApplicationController
       format.html { redirect_to localities_url }
       format.json { head :ok }
     end
+  end
+
+  def update_params
+    params.require(:locality).permit(:name)
   end
 end
