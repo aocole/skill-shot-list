@@ -66,9 +66,7 @@ class LocationsController < ApplicationController
   # POST /locations
   # POST /locations.json
   def create
-    valid_keys = %w{name locality_id address city state postal_code url phone all_ages}
-    params[:location].delete_if{|k,v|!valid_keys.include?(k)}
-    @location = Location.new(params[:location])
+    @location = Location.new(location_params)
 
     respond_to do |format|
       if @location.save
@@ -85,11 +83,8 @@ class LocationsController < ApplicationController
   # PUT /locations/1.json
   def update
     @location = Location.find_using_slug!(params[:id])
-    valid_keys = %w{name locality_id address city state postal_code url phone all_ages}
-    params[:location].delete_if{|k,v|!valid_keys.include?(k)}
-
     respond_to do |format|
-      if @location.update_attributes(params[:location])
+      if @location.update_attributes(location_params)
         format.html { redirect_to @location, notice: 'Location was successfully updated.' }
         format.json { head :ok }
       else
@@ -124,6 +119,10 @@ class LocationsController < ApplicationController
         where('deleted_at is null').
         includes(:machines).
         order('name asc')
+  end
+
+  def location_params
+    params.require(:location).permit(:name, :locality_id, :address, :city, :state, :postal_code, :url, :phone, :all_ages)
   end
 
 end
