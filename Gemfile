@@ -7,7 +7,7 @@ gem 'rails', '~> 4.0.13'
 gem 'pg', '~> 0.21'
 gem 'yajl-ruby', '~> 1.3'
 gem 'foreigner', "~> 1.4.2"
-gem 'geocoder', "~> 1.5.0"
+gem 'geocoder', "~> 1.6"
 gem 'htmlentities'
 gem "active_model_serializers", "~> 0.9.7"
 gem "rack-contrib"

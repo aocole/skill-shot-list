@@ -63,7 +63,7 @@ GEM
     foreigner (1.4.2)
       activerecord (>= 3.0.0)
     foreman (0.87.2)
-    geocoder (1.5.2)
+    geocoder (1.7.0)
     htmlentities (4.3.4)
     http-accept (1.7.0)
     http-cookie (1.0.4)
@@ -184,7 +184,7 @@ DEPENDENCIES
   authlogic (~> 3.4)
   foreigner (~> 1.4.2)
   foreman
-  geocoder (~> 1.5.0)
+  geocoder (~> 1.6)
   htmlentities
   jquery-rails (~> 3.1)
   pg (~> 0.21)
