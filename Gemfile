@@ -2,11 +2,10 @@ source 'https://rubygems.org'
 
 ruby '2.3.8'
 
-gem 'rails', '~> 4.1.16'
+gem 'rails', '~> 4.2.11.3'
 
 gem 'pg', '~> 0.21'
 gem 'yajl-ruby', '~> 1.3'
-gem 'foreigner', "~> 1.4.2"
 gem 'geocoder', "~> 1.6"
 gem 'htmlentities'
 gem "active_model_serializers", "~> 0.9.7"
