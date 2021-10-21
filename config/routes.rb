@@ -1,4 +1,4 @@
-Skillshot::Application.routes.draw do
+Rails.application.routes.draw do
   resource :password_reset
   resource :user_session
   resources :users
