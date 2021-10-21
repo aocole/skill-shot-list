@@ -19,6 +19,7 @@ gem "acts_as_paranoid"
 gem 'authlogic', '~> 3.4'
 gem 'rest-client'
 gem 'slugged'
+gem 'uglifier'
 
 # rails 4 compat
 gem 'actionpack-action_caching'
