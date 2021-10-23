@@ -1,4 +1,4 @@
-class Machine < ActiveRecord::Base
+class Machine < ApplicationRecord
   acts_as_paranoid columns: 'deleted_at', column_type: 'time'
   belongs_to :location, touch: true, with_deleted: true
   belongs_to :title

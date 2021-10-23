@@ -1,6 +1,6 @@
 class MachinesController < ApplicationController
-  before_filter :require_location, except: [:edit, :update, :destroy, :recent]
-  before_filter :require_user, except: [:show, :index]
+  before_action :require_location, except: [:edit, :update, :destroy, :recent]
+  before_action :require_user, except: [:show, :index]
   cache_sweeper :machine_sweeper
 
   def require_location

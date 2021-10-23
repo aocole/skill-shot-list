@@ -1,5 +1,5 @@
 class AreasController < ApplicationController
-  before_filter :require_admin_user, except: [:show]
+  before_action :require_admin_user, except: [:show]
   layout Proc.new{|c|c.params[:id] == 'wordpress' ? 'empty' : 'application'}
   caches_action :show, 
     if: Proc.new{|c|!c.admin?}, 

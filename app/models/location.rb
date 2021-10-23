@@ -1,4 +1,4 @@
-class Location < ActiveRecord::Base
+class Location < ApplicationRecord
   acts_as_paranoid columns: 'deleted_at', column_type: 'time'
   DEFAULT_ORDER = "regexp_replace(name, '^The ', '')"
   default_scope -> {order("locality_id asc, #{DEFAULT_ORDER} asc")}

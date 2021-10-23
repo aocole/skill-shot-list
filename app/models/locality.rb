@@ -1,4 +1,4 @@
-class Locality < ActiveRecord::Base
+class Locality < ApplicationRecord
   default_scope -> {order('area_id asc, name asc')}
   belongs_to :area
   has_many :locations

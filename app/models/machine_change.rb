@@ -1,4 +1,4 @@
-class MachineChange < ActiveRecord::Base
+class MachineChange < ApplicationRecord
   belongs_to :machine, with_deleted: true
   class ChangeType
     CREATE = 'create'

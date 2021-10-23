@@ -1,6 +1,6 @@
 class LocalitiesController < ApplicationController
-  before_filter :require_area
-  before_filter :require_admin_user, except: :index
+  before_action :require_area
+  before_action :require_admin_user, except: :index
 
   def require_area
     @area = Area.includes(:localities).find_using_slug!(params[:area_id])
