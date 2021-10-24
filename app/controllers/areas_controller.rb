@@ -34,10 +34,10 @@ class AreasController < ApplicationController
           }
         }
       ).all
-      s = render_to_string template: 'areas/wordpress', formats: [:html], layout: false
+      s = render_to_string template: 'areas/wordpress', formats: :html, layout: false
       respond_to do |format|
         format.json { render json: [s] }
-        format.html { render text: s }
+        format.html { render plain: s }
       end
       return
     else
