@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   # There is a cron job set up on Dreamhost to hit
   # this action as a keep-alive for Passenger
   def noop
-    render nothing: true
+    head :ok
   end
   
   def wrapper

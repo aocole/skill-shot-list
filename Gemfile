@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.7.4'
 
-gem 'rails', '~> 5.0.7.2'
+gem 'rails', '~> 5.1.7'
 
 gem 'pg', '~> 0.21'
 gem 'yajl-ruby', '~> 1.3'
@@ -28,12 +28,15 @@ gem 'rails-observers'
 
 # heroku stuff
 gem 'rails_12factor'
-gem 'foreman', group: :development
-
-gem 'pry-rails', group: :development
 
 # Use unicorn as the web server
 gem 'unicorn'
+
+group :development, :test do
+  gem 'foreman'
+  gem 'pry-rails'
+  gem 'listen'
+end
 
 group :development, :test do
   gem 'rspec-rails'
