@@ -30,10 +30,10 @@ gem 'rails-observers'
 # heroku stuff
 gem 'rails_12factor'
 
-# Use unicorn as the web server
-gem 'unicorn'
+# Use puma as the web server
+gem 'puma'
 
-group :development, :test do
+group :development do
   gem 'foreman'
   gem 'pry-rails'
   gem 'listen'
