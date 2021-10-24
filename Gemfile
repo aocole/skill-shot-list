@@ -28,12 +28,15 @@ gem 'rails-observers'
 
 # heroku stuff
 gem 'rails_12factor'
-gem 'foreman', group: :development
-
-gem 'pry-rails', group: :development
 
 # Use unicorn as the web server
 gem 'unicorn'
+
+group :development, :test do
+  gem 'foreman'
+  gem 'pry-rails'
+  gem 'listen'
+end
 
 group :development, :test do
   gem 'rspec-rails'
