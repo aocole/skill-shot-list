@@ -1,5 +1,5 @@
 class TitlesController < ApplicationController
-  before_filter :require_admin_user, except: [:active]
+  before_action :require_admin_user, except: [:active]
   layout Proc.new{|c|
     c.request.path_parameters[:action] == 'active' && c.request.format.json? ? 
     'empty' : 

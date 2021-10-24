@@ -1,7 +1,7 @@
 require 'history'
 class StatsController < ApplicationController
-  # before_filter :require_admin_user
-  skip_before_filter :redirect_to_wordpress
+  # before_action :require_admin_user
+  skip_before_action :redirect_to_wordpress
 
   def index
     render layout:false

@@ -1,4 +1,4 @@
-class Area < ActiveRecord::Base
+class Area < ApplicationRecord
   has_many :localities
   validates_presence_of :name
   is_sluggable :name

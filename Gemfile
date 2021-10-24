@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.6.8'
 
-gem 'rails', '~> 4.2.11.3'
+gem 'rails', '~> 5.0.7.2'
 
 gem 'pg', '~> 0.21'
 gem 'yajl-ruby', '~> 1.3'
@@ -12,7 +12,7 @@ gem "active_model_serializers", "~> 0.9.7"
 gem "rack-contrib"
 gem 'test-unit', '~> 3.0'
 
-gem 'jquery-rails', '~> 3.1'
+gem 'jquery-rails'
 
 gem "acts_as_paranoid"
 

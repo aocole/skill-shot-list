@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_session, :current_user, :admin?
-  before_filter :redirect_to_wordpress
+  before_action :redirect_to_wordpress
 
   def redirect_to_wordpress
     return if current_user

@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   acts_as_authentic do |c|
     c.validate_email_field = ::Rails.env != 'development'
     c.crypto_provider = Authlogic::CryptoProviders::Sha512

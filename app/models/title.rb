@@ -1,4 +1,4 @@
-class Title < ActiveRecord::Base
+class Title < ApplicationRecord
   DEFAULT_ORDER = "regexp_replace(name, '^The ', '')"
   default_scope -> {where(['status IS NULL OR status != ?', STATUS::HIDDEN]).order(DEFAULT_ORDER)}
   
