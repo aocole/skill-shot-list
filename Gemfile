@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.7.4'
 
-gem 'rails', '~> 5.0.7.2'
+gem 'rails', '~> 5.1.7'
 
 gem 'pg', '~> 0.21'
 gem 'yajl-ruby', '~> 1.3'
