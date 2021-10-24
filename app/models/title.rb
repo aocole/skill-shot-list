@@ -1,6 +1,6 @@
 class Title < ApplicationRecord
   DEFAULT_ORDER = "regexp_replace(name, '^The ', '')"
-  default_scope -> {where(['status IS NULL OR status != ?', STATUS::HIDDEN]).order(DEFAULT_ORDER)}
+  default_scope -> {where(['status IS NULL OR status != ?', STATUS::HIDDEN]).order(Arel.sql(DEFAULT_ORDER))}
   
   scope :active, -> { joins('as title inner join machines as machine on machine.title_id=title.id') }
 
