@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.7.4'
 
-gem 'rails', '~> 5.1.7'
+gem 'rails', '~> 5.2.6'
 
 gem 'pg', '~> 0.21'
 gem 'yajl-ruby', '~> 1.3'
@@ -11,6 +11,7 @@ gem 'htmlentities'
 gem "active_model_serializers", "~> 0.9.7"
 gem "rack-contrib"
 gem 'test-unit', '~> 3.0'
+gem "bootsnap", ">= 1.1.0", require: false
 
 gem 'jquery-rails'
 

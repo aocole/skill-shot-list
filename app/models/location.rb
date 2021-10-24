@@ -1,7 +1,7 @@
 class Location < ApplicationRecord
   acts_as_paranoid columns: 'deleted_at', column_type: 'time'
   DEFAULT_ORDER = "regexp_replace(name, '^The ', '')"
-  default_scope -> {order("locality_id asc, #{DEFAULT_ORDER} asc")}
+  default_scope -> {order(Arel.sql("locality_id asc, #{DEFAULT_ORDER} asc"))}
   has_many :machines, -> {includes :title}, dependent: :destroy
   belongs_to :locality
   has_one :area, through: :locality
