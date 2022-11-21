@@ -1,17 +1,10 @@
 class AreasController < ApplicationController
   before_action :require_admin_user, except: [:show]
   layout Proc.new{|c|c.params[:id] == 'wordpress' ? 'empty' : 'application'}
-  caches_action :show, 
-    if: Proc.new{|c|!c.admin?}, 
-    layout: false, 
-    cache_path: Proc.new{|c| {
-        callback: c.params[:callback]
-      }
-    }
   cache_sweeper :location_sweeper
   cache_sweeper :title_sweeper
   cache_sweeper :machine_sweeper
-
+  
   # GET /areas
   # GET /areas.json
   def index

@@ -21,10 +21,6 @@ class MachineSweeper < ActionController::Caching::Sweeper
   private
   def expire_cache_for(machine)
     # Expire the index page now that we added a new machine
-    controller.expire_action(controller: 'areas', action: 'show', id: machine.location.area)
-    controller.expire_action(controller: 'locations', action: 'show', id: machine.location)
-    controller.expire_action(controller: 'titles', action: 'active')
-    controller.expire_action(controller: 'locations', action: 'show', id: machine.location, format: 'json')
     expire_fragment('trivia')
   end
 

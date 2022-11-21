@@ -5,13 +5,6 @@ class TitlesController < ApplicationController
     'empty' : 
     'application'
   }
-  caches_action :active, 
-    if: Proc.new{|c|!c.admin?}, 
-    layout: false, 
-    cache_path: Proc.new{|c| {
-        callback: c.params[:callback]
-      }
-    }
   cache_sweeper :title_sweeper
 
   # GET /titles
