@@ -14,6 +14,6 @@ class TitleSweeper < ActionController::Caching::Sweeper
   private
   def expire_cache_for(title)
     # Expire the index page now that we added a new title
-    expire_fragment('trivia')
+    ActionController::Base.new.expire_fragment('trivia')
   end
 end

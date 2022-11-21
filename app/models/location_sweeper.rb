@@ -19,6 +19,6 @@ class LocationSweeper < ActionController::Caching::Sweeper
   private
   def expire_cache_for(location)
     # Expire the index page now that we added a new location
-    expire_fragment('trivia')
+    ActionController::Base.new.expire_fragment('trivia')
   end
 end

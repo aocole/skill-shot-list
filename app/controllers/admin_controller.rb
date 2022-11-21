@@ -5,7 +5,7 @@ class AdminController < ApplicationController
   end
 
   def clear_all_cache
-    expire_fragment /./
+    ActionController::Base.new.expire_fragment /./
     redirect_to({action: :index}, {notice: "All caches cleared."})
   end
 
