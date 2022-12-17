@@ -27,7 +27,7 @@ class MachinesController < ApplicationController
           :title,
           :location
         ]
-    ).order('machine_changes.created_at desc').limit(100)
+    ).order('machine_changes.created_at desc').limit(200)
   end
 
   def common
